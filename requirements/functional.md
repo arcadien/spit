@@ -59,9 +59,9 @@
 
 **Status:** validated
 
-**Dependencies:** [PERF-POWER-MONITOR-001](performance.md#perf-power-monitor-001)
+**Dependencies:** none
 
-**Description:** The firmware measures the voltage at the battery terminals (not the system rail), both on battery and with the external supply connected. Acceptance (on-target Unity test + multimeter): on battery and on the external supply, the value the firmware reports is the B+ voltage within the accuracy of [PERF-POWER-MONITOR-001](performance.md#perf-power-monitor-001); on the external supply it does not follow the system rail (~4.7 V).
+**Description:** The firmware measures the voltage at the battery terminals (not the system rail), both on battery and with the external supply connected. Acceptance (on-target Unity test + multimeter): on battery and on the external supply, the value the firmware reports is the B+ voltage within ±5 % before calibration (the calibrated accuracy is [PERF-POWER-MONITOR-001](performance.md#perf-power-monitor-001)'s); on the external supply it does not follow the system rail (~4.7 V).
 
 ### FUNC-POWER-MONITOR-002
 
