@@ -165,7 +165,7 @@ derives_from: [FUNC-POWER-DETECT-001](functional.md#func-power-detect-001)
 
 **Status:** validated
 
-**Dependencies:** [PLAT-POWER-SWITCH-001](platform.md#plat-power-switch-001), [TECH-POWER-BACKFEED-001](technical.md#tech-power-backfeed-001)
+**Dependencies:** [TECH-POWER-BACKFEED-001](technical.md#tech-power-backfeed-001)
 
 derives_from: [FUNC-POWER-VSENSE-001](functional.md#func-power-vsense-001)
 
