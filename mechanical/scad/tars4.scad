@@ -1413,7 +1413,7 @@ module placed(i, angle = 0) {
 module assembly() {
     for (i = [0:3]) placed(i, i == 0 ? leg_angle[0] : i == 3 ? leg_angle[1] : 0) {
         color(col_mid[i] ? "lightgray" : "gray") column(i);
-        color("darkgray") lid(col_mid[i], sd_reader && i == sd_col, i != sensor_col);
+        color("darkgray") lid(col_mid[i], sd_reader && i == sd_col);
         if (col_mid[i]) color("black") inserts(sound && i == speaker_col);
         %dummies(i);
     }
