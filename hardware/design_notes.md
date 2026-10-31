@@ -83,7 +83,7 @@ and the harness guide [tars4_harness.html](tars4_harness.html). Requirements: `r
 - DS3231 ZS-042 with a CR2032: remove the cell charging resistor; SQW not wired (the S3 wakes on its own timer, the
   RTC keeps the time).
 - Charger detection: USB_DET (GPIO21) high = cable in the charge port (display, no battery cut-off, wake on plug-in).
-  End of charge is deduced from B+ (GPIO1) falling back from 4.2 to ~4.15 V while USB_DET stays high.
+  End of charge is deduced from B+ (GPIO1) falling ≥ 20 mV below its peak (≥ 4.10 V) while USB_DET stays high.
 
 ## Sleep and wake-up
 
