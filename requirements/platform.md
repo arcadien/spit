@@ -239,4 +239,6 @@ derives_from: [FUNC-POWER-CHARGE-001](functional.md#func-power-charge-001)
 
 **Dependencies:** none
 
+derives_from: [FUNC-MECH-JOINT-001](functional.md#func-mech-joint-001)
+
 **Description:** Each column joint turns on a brass tube (7.93 measured outer Ø), glued into one column and turning in the next. The pivot bores are horizontal when the columns print front face down, so they are teardrop-shaped (point toward the print top, self-supporting 45° ceiling, no support inside the bore). Drawn Ø: glued side 8.00 (tube held, no play), turning side 8.05 (turns, micro play only), from tube_test3 (2026-10-28, IBoss PLA Silk, 0.20 mm Ender3 profile). Tight beats loose: a bore that binds is sanded or reamed with an 8 mm drill. Acceptance: `make check` clean (no WARNING); `tube_od` = 7.93, `tube_glue_clr` = 0.07, `tube_run_clr` = 0.12; `pivot_cut` uses `xtear`; first printed joint: glued side holds, turning side turns without wobble.
