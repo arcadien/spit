@@ -119,7 +119,7 @@
 
 **Status:** validated
 
-**Dependencies:** [TECH-POWER-REG-001](technical.md#tech-power-reg-001), [TECH-POWER-VBUS-001](technical.md#tech-power-vbus-001)
+**Dependencies:** [TECH-POWER-REG-001](technical.md#tech-power-reg-001)
 
 **Description:** When a host is plugged into the programming port, the controller's on-board LDO also drives the 3.3 V rail. The main regulator must then not sink current from the rail into the system rail. Acceptance (bench): switch on, on battery, host plugged in with the controller idle: the main regulator's input current stays ≥ 0, and the 3.3 V rail stays within [PERF-POWER-REG-001](performance.md#perf-power-reg-001).
 
