@@ -141,7 +141,7 @@ derives_from: [TECH-POWER-DIST-001](technical.md#tech-power-dist-001)
 
 **Status:** validated
 
-**Dependencies:** [CONF-POWER-ADCCAL-001](configuration.md#conf-power-adccal-001)
+**Dependencies:** none
 
 derives_from: [FUNC-POWER-MONITOR-001](functional.md#func-power-monitor-001)
 
