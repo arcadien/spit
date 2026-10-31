@@ -221,7 +221,7 @@ the carrier plan `renders/tars4_board_s3.svg` and the KiCad schematic (confirm w
   (40–60 mA) → AO3401A high-side from 3V3 to BLK, gate pulled up by 10 k, pulled down by an AO3400A / 2N7002 on BL_EN.
 - **AMP_SD**: with the breakout's 1 M pull-up to VIN, R18 holds SD < 0.05 V (shutdown below 0.16 V) at boot and in
   deep sleep; driven high, SD > 1.4 V selects the left channel: send the same sample on both. Keep AMP_SD and BL_EN low
-  and I2S0 stopped until B+ has been read and validated (with the switch off and the S3 on a PC, a driven amp would be
+  and I2S0 stopped until the VSYS sense (GPIO37) reports the rail (with the switch off and the S3 on a PC, a driven amp would be
   back-powered through its pins).
 - Libraries: TFT_eSPI or LovyanGFX (ST7789, 240×240, two CS), `ESP_I2S` for the MAX98357A (MP3 decoding fits in the PSRAM).
 
@@ -349,7 +349,7 @@ TP4056 OUT+ (cells)   ──► AO3401A P-MOSFET Q1 (D → S) ──┘
   wire (it differs from GND only by the DW01 switches, < 50 mV). Always connected, hence 1 M / 1 M: ~2 µA standing; C6
   holds the high-impedance node for the ADC (**never a tantalum** there: its leakage shifts the reading).
 - While charging (USB_DET high) the reading is 50–100 mV high: show "eating", not a level; after the TP4056 stops, B+
-  relaxes from 4.2 V to ~4.15 V ("full").
+  relaxes from its peak (4.16–4.24 V) by ≥ 20 mV: "full" (relative to the peak, FUNC-POWER-MONITOR-003).
 - Hunger levels, averaged over ~1 min so the amp / Wi-Fi peaks don't make TARS cry wolf: > 3.9 V fed, 3.7 V peckish,
   3.5 V hungry, **3.3 V last words then deep sleep** (unless USB_DET is high). Ignore the cut-off when GPIO1 reads
   < 1.25 V (B+ < 2.5 V: no cells, the S3 runs from a PC's USB).
@@ -361,7 +361,7 @@ TP4056 OUT+ (cells)   ──► AO3401A P-MOSFET Q1 (D → S) ──┘
   LED on GPIO47**; keep the TP4056 charge LEDs, fed from USB only), clear the DS3231's EN32kHz bit (register 0x0F,
   bit 3), `gpio_hold` CS1 / CS2 / RST / BL_EN / AMP_SD, store an "empty" flag in RTC memory (no wake-up until
   recharged), **cut the microSD's 3V3 with Q5** (set CLK / CMD / D0 as inputs first), clear the ADXL345's INT_SOURCE
-  and wait for PIR low before sleeping. Target **~0.35–0.65 mA** with the card powered, less with Q5 off (measure).
+  and wait for PIR low before sleeping. Target **≤ 0.65 mA** with the card cut by Q5 (PERF-POWER-SLEEP-001, provisional until E-M7); estimate ~0.3–0.5 mA (`hardware/power_budget.md`).
 - **Wake-up**: everything is active high → EXT1 ANY_HIGH on GPIO2 (ADXL345 INT1), GPIO3 (PIR) and GPIO21 (USB_DET);
   a source already high when going to sleep (USB_DET on mains, PIR still held) is left out of the mask, or the S3 wakes at once; timed wake-ups on the S3's own timer (the DS3231's SQW is not wired).
 - The DW01 cuts at ~2.4 V: a last resort, not the normal stop.
