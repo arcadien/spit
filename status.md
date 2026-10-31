@@ -16,7 +16,7 @@ Bring the docs in line with the repo (`audits/2026-10-29-audit-full.md`, lot E).
 ## Open questions
 | # | Question | Answer |
 |---|---|---|
-| LE-1 | CLAUDE.md: drop "STLs are re-exported byte-different" and the `hardware/tars4_schematic.html` mention? (yours to edit) | |
+| LE-1 | CLAUDE.md: drop "STLs are re-exported byte-different" and the `hardware/tars4_schematic.html` mention? | already gone from CLAUDE.md |
 | LE-2 | tars4.scad:367 comment still says 13 / 19 / 6 wires: fold into the next mechanical commit? | |
 
 ## Next
