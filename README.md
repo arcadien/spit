@@ -393,7 +393,7 @@ TARS talks **through its lower black panel** (right middle column, `speaker_col 
   the back; the closed column is the enclosure). Never cyanoacrylate near the membrane. Nothing on the lid touches it
   (`lid_mid` and `lid_mid_left` are now the same). To replace it, release the hot glue with a drop of isopropyl alcohol.
 - **Grille**: horizontal slots (1.2 mm every 3 mm) in that column's black plug → `mechanical/stl/tars4_inserts_speaker.stl`.
-- **Amplifier** MAX98357A (~19.4 × 18) in a slot on the inner front wall just above the splint (z 76.7–94.7). I2S0
+- **Amplifier** MAX98357A clone breakout (17.7 along its 7-pin header × 18.8, measured) in a slot on the inner front wall just above the splint (z 76.7–95.5). I2S0
   BCLK / LRC / DIN, VIN / GND on their own pair, C7 470 µF (Ø8 × 12) soldered on VIN / GND and lying across behind the
   board, between X6 and X5 (`c7`). GAIN default (9 dB); SD on AMP_SD (see *Signals*).
 - **Microphone** INMP441 (10 × 10, castellated) in the left middle column between the upper screw posts, just under

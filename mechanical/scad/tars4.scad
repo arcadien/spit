@@ -339,7 +339,8 @@ spk_nub = [3.3, 2];           // notch for the nub in the middle of the short ed
 spk_front_y = wall + splint_t + splint_clr;                       // speaker face: ~1 mm behind the plug's ledge
 spk_z0 = seam_z[1] - splint_h / 2 - 1 - spk[2];                   // just under the splint (it hides the panel's top)
 grille_slot = [1.2, 3];       // slot height, pitch (in the black plug)
-amp = [19.4, 18, 1.6];        // MAX98357A breakout: width (x), length (z), PCB thickness
+amp = [17.7, 18.8, 1.6];      // MAX98357A clone breakout, measured: along the 7-pin header (x), across it (z), PCB thickness
+amp_hdr = 2.4;                // header row from the board's top edge (photo)
 amp_z0 = seam_z[1] + splint_h / 2 + 0.5;                           // just above the splint, below the lid screw row
 
 /* [Switch and feet] */
@@ -1273,7 +1274,7 @@ CONN = [
     on_board(1, "X2", "ADXL345 · 8 p. (5 wires, INT2 removed)", acc_hdr_x, 8, wall + pcb_gap + acc[2], acc_z0, true),
     inline(1, "X3", "INMP441 · pigtail + 5 p. (+1)", col_w - wall - 0.5 - dp_w(6), lid_y - 1 - dp_t, mid_rows[1] + lid_boss_d / 2 + 0.3, dp_w(6), dp_t, dp_inline, 2),
     scr_conn(2, "X4", "screen 2 · 8 p. right-angle"),
-    on_board(2, "X5", "MAX98357A · 4 + 3 p. (GAIN removed)", col_w / 2, 7, wall + pcb_gap + amp[2], amp_z0 + amp[1] - 1.3),
+    on_board(2, "X5", "MAX98357A · 4 + 3 p. (GAIN removed)", col_w / 2, 7, wall + pcb_gap + amp[2], amp_z0 + amp[1] - amp_hdr),
     on_board(2, "X6", "speaker · 2 p.", col_w / 2, 2, wall + pcb_gap + amp[2], amp_z0 + 1.3),
     inline(2, "X7", "AM312 · pigtail + 3 p. (+1)", wall + 3.5, lid_y - 1 - dp_t, scr_z - 12, dp_w(4), dp_t, dp_inline),
     [3, "X8", "DS3231 · 6 p. right-angle (4 wires, 32K removed)", [col_w / 2 - dp_w(6) / 2, wall + rtc[2] - rtc_hdr_y - dp_t / 2, rtc_z0 + rtc[1]],
@@ -1494,7 +1495,8 @@ if (sound) {
     if (spk_z0 + spk[2] > mid_rows[1] - lid_boss_d / 2) echo("WARNING: speaker runs into the lid screw row");
     if (spk_z0 + spk[2] > seam_z[speaker_col] - splint_h / 2 - 0.5) echo("WARNING: speaker runs into the splint");
     if (spk_z0 + spk[2] - spk_pad < bottom_panel_z[0] + 2) echo("WARNING: speaker membrane hidden behind the front wall");
-    if (amp_z0 + amp[1] > mid_rows[1] - lid_boss_d / 2 - 0.5) echo("WARNING: amplifier board runs into the lid screw posts");
+    // nearest point of the board to a post: its top corner (the slot's top stop merges into the posts)
+    if (norm([col_w / 2 - amp[0] / 2 - bx[0], mid_rows[1] - amp_z0 - amp[1]]) < lid_boss_d / 2 + 0.5) echo("WARNING: amplifier board runs into the lid screw posts");
 }
 if (amp_z0 + bb[1] > mid_rows[1] - lid_boss_d / 2 - 0.5 || bb[0] + 0.4 + 2 * rib > col_w - 2 * wall) {
     echo("WARNING: spare breakout slot runs into the lid screw posts / side walls");
