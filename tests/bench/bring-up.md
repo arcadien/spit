@@ -18,7 +18,7 @@ What is left to buy: [shopping_list.md](../../hardware/shopping_list.md). Open q
       26.3 × 17.15 × 0.9, on 0.5 ledges (end pads centred 1.43 from the edge), no side grooves. Cells 65 × 18.3 (fit).
       - [ ] contact plates, switch body.
 - [x] Micro-USB breakout 14.3 × 16 × 1.5, plug overmold 7.9 × 5.5 (fits). - [ ] USB-C plug
-      overmold ≤ 11.5 wide (S3 floor opening); speaker 39 × 22 × 10 and MAX98357A sizes.
+      overmold ≤ 11.5 wide (S3 floor opening). - [x] Speaker 25.27 × 13.80 × 7.15, MAX98357A 17.7 × 18.8 (fit).
 - [x] Power-path perfboard 1.5 thick (26.6 × 20, 10 × 8 holes); D1 lying 5.2 (`pp_parts` 6).
 - [ ] Every board soldered on the wall side (ADXL345, MAX98357A, micro-USB, spare): solder tails ≤ 1 mm (`pcb_gap` 1.2).
 - [x] Screens' backs: parts 3 high from 8.7 below the pad row, clear of the right-angle header + housings (dry fit,

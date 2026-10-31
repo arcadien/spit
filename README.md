@@ -702,7 +702,7 @@ drawn is ~17 mm long (`xh_male_back`, `xh_female`) inside the 22 mm checked box 
 | U10 **AM312** mini PIR motion sensor | 1 | top of the right middle column, z ≈ 233, 1.25 mm right of the axis |
 | J2 microSD breakout, 3.3 V, **no regulator**, 18.2 × 18.2 × 1.5 (21 with the socket) | 1 | left leg |
 | U5 MAX98357A I2S amplifier breakout | 1 | right middle; VIN / GND on their own twisted pair from the power board |
-| LS1 speaker 39 × 22 × 10 mm, 8 Ω | 1 | behind the lower black panel of the right middle column |
+| LS1 speaker 25.3 × 13.8 × 7.2 mm, 4 Ω 2 W | 1 | behind the lower black panel of the right middle column |
 | Q1 P-MOSFET **AO3401A** (or DMG2305UX / SI2301), SOT-23 | 1 | power path, battery side; glued upside down on the perfboard |
 | Q5 P-MOSFET **AO3401A** + R22 **100 kΩ** | 1 + 1 | switch the microSD's 3V3 (SD_EN, GPIO36), on the power-path board |
 | D1 Schottky **1N5822** (through-hole, 3 A) | 1 | power path, USB side, band towards VPATH (before the switch; 1N5818 also does) |
