@@ -16,7 +16,7 @@ MECH requirements for them before any model change.
 - Main merged (requirements reformatted, power safety, charge-port post).
 - Clone amplifier received, 17.7 along the header × 18.8 across, E-M1 passed: `amp` folded in, PLAT-AUDIO-AMP-001 validated.
 - Not merged until AU1: volume cap measured on the bench.
-- Review (audits/2026-10-29-review-mech-audio.md) finding 1 open: schematic, BOM, wiring page, budget still say 8 Ω 39 × 22 × 10; also SW1 ≥ 2 A, volume cap at VSYS 4.7 V, X6, pytest for TECH-AUDIO-SHUTDOWN-001.
+- Review finding 1 (audit A3) done: 4 Ω 2 W speaker in the schematic, BOM, wiring page, budget, bring-up. Still open from A3: SW1 ≥ 2 A, volume cap at VSYS 4.7 V (S7 only looked at the battery: ~2.8 W into 4 Ω on the external supply, above the 2 W rating), X6, pytest for TECH-AUDIO-SHUTDOWN-001. Audit D7: PLAT-MECH-SPEAKER-001 says 1 mm pads, the model 1.5.
 
 ## Findings
 - **Speaker**: the 30 mm is the width of the box itself (the ears are at the ends, inside the 66): it fits neither
