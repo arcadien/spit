@@ -39,7 +39,7 @@
 
 **Status:** validated
 
-**Dependencies:** [TECH-POWER-VBUS-001](technical.md#tech-power-vbus-001)
+**Dependencies:** none
 
 **Description:** A user-operated switch disconnects the system rail from both the battery and the external supply. Acceptance (bench): with the switch off, the system rail reads < 0.1 V both on battery alone and with the external supply connected. Exception: a host plugged into the programming port powers the controller only ([TECH-POWER-VBUS-001](technical.md#tech-power-vbus-001)).
 
