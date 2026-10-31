@@ -16,10 +16,10 @@ checked by `tests/test_mechanical.py`; this sheet is the bench part (E-M1). Manu
 2. Wired on the robot: play the same sample on both I2S channels.
 
 ## Pass criteria
-- Step 1: SD < 0.1 V (with the board's 1 MΩ pull-up, about 40 mV).
+- Step 1: SD < 0.1 V (with the board's 1 MΩ pull-up, 36–40 mV).
 - Step 2: sound from the speaker, none at boot or with GPIO4 low.
 
 ## Results
 | Date | Commit / build | Vin | SD | Sound | Pass | By | Notes |
 |---|---|---|---|---|---|---|---|
-| 2026-10-31 | breakout alone | 4 V | 36 mV | not run | step 1 only | Aurelien | pull-up marked 105; about 1.1 MΩ from this reading |
+| 2026-10-31 | breakout alone | 4 V | 36 mV | not run | step 1 only | Aurelien | pull-up marked 105 (1 MΩ); 36 mV matches 1 MΩ against 10 kΩ in parallel with the chip's internal pull-down (~100 kΩ, from memory of the datasheet, to confirm) |
