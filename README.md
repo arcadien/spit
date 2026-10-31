@@ -699,7 +699,7 @@ drawn is ~17 mm long (`xh_male_back`, `xh_female`) inside the 22 mm checked box 
 | Q5 P-MOSFET **AO3401A** + R22 **100 kΩ** | 1 + 1 | switch the microSD's 3V3 (SD_EN, GPIO36), on the power-path board |
 | D1 Schottky **1N5822** (through-hole, 3 A) | 1 | power path, USB side, band towards VPATH (before the switch; 1N5818 also does) |
 | D3 **TVS SMAJ5.0A / SMBJ5.0A** (unidirectional) | 1 | on the TP4056's IN+ / IN− pads, cathode to IN+ |
-| F1, F2 **polyfuse** (radial PPTC), ≥ 16 V (MF-R160: 30 V), hold **1.6 A** | 2 | one in each cell's + wire, standing on the inner front wall in front of the cell (XF160 15 × 16 × 2.5) |
+| F1, F2 **polyfuse** (radial PPTC), ≥ 16 V (XF160: 30 V), hold **1.6 A** | 2 | one in each cell's + wire, standing on the inner front wall in front of the cell (XF160 15 × 16 × 2.5) |
 | R1 **4.7 kΩ** | 1 | power path, MOSFET gate pull-down |
 | R2, R3 **1 MΩ** | 2 | B+ divider (battery monitor): R2 in line in the harness at the TP4056 B+ pad (heat-shrink), R3 on the power-path perfboard |
 | Q4 NPN **BC547B** + R23 **1 MΩ**, R24 **330 kΩ** 1/4 W | 1 + 2 | VSYS sense into GPIO37: Q4 and R24 standing on the carrier, R23 in line in the harness at the power-path board (heat-shrink) |
