@@ -249,7 +249,8 @@ a bus is drawn as its wires side by side, and the bars across a wire near its en
 | yellow purple green, 1 ring | I2S0 to the MAX98357A, I2S1 from the INMP441 |
 | yellow green, 2 rings | I2C (SCL, SDA) chain to the right leg |
 | yellow purple green, 3 rings | microSD CLK, CMD, D0 (+ blue GND, 3 rings) |
-| brown · red · orange | BL_EN, VBAT/2, AMP_SD and VSENSE_B (1 ring) · PIR (1 ring) · USB_DET |
+| brown · red · orange | BL_EN, AMP_SD (1 ring) · PIR (1 ring) · USB_DET |
+| grey, 30 AWG | analog sense: VBAT/2, VSENSE_B |
 | grey | amplifier → speaker |
 
 The sketch is to scale for the parts; the bus splits are drawn schematically (they physically happen on P1 / P2, see
@@ -499,7 +500,7 @@ With 28 AWG signals the middle tube would be ~60 % full (very hard to pull and t
 **Power goes in pairs** (since 2026-10-27): **red / black** for the battery and 5 V side (B+/B−, VUSB, VPATH, VSYS
 and their GND), **white / blue** for the regulated 3V3 and its logic GND, in 26 AWG and in 30 AWG alike. **Blue is
 power only** (regulated GND), never a signal; never yellow for 3V3. Signals: one colour per *role* (30 AWG, 10-colour
-kit, black and grey unused in 30 AWG), the same on every segment of a signal; heat-shrink rings at both ends tell the
+kit, black unused in 30 AWG), the same on every segment of a signal; heat-shrink rings at both ends tell the
 buses apart: no ring = screens / sense lines, **1 ring = I2S (amp and mic) and PIR**, **2 rings = I2C**, **3 rings =
 microSD**. **Power rails sharing the red / black pair get one coloured band** instead (10 mm of coloured heat-shrink,
 shrunk 2–3 cm from each end, the same on the + wire and on its GND; slide it on before soldering / crimping): none =
@@ -519,11 +520,12 @@ and only loose ones on the 30 AWG.
 | purple (select / frame) | CS1, CS2 · LRC, MIC_WS (1) · SD_CMD (3) | 2.5 m |
 | red (status) | DC, INT1 · PIR, PIR OUT (1) | 2.0 m |
 | orange | RST, USB_DET | 1.5 m |
-| brown | BL_EN, VBAT/2 · AMP_SD, VSENSE_B (1) · SD_EN (3) | 2.8 m |
+| brown (enables) | BL_EN · AMP_SD (1) · SD_EN (3) | 2.2 m |
+| grey (analog sense) | VBAT/2, VSENSE_B | 1.5 m |
 
 Middle tube: SCK yellow, MOSI green, CS2 purple, DC red, RST orange, BL_EN brown, BCLK / LRC / DIN yellow / purple /
 green with 1 ring, AMP_SD brown 1 ring, PIR red 1 ring, SDA / SCL green / yellow 2 rings, 3V3 / GND white / blue. Left
-tube: VBAT/2 brown, USB_DET orange, VSENSE_B brown 1 ring, SD_EN brown 3 rings, SD_CLK / CMD / D0 yellow / purple / green 3 rings, SD GND blue
+tube: VBAT/2 grey, USB_DET orange, VSENSE_B grey, SD_EN brown 3 rings, SD_CLK / CMD / D0 yellow / purple / green 3 rings, SD GND blue
 3 rings. Power (26 AWG): red B+ / black B− (cells, no band), red / black with a white band (OUT+ / OUT−), yellow
 (VPATH), orange (VSYS: star, TPS63020 input, amp pair) or purple band (VUSB), white 3V3 / blue logic GND (TPS63020 → P1
 → S3), grey speaker.
