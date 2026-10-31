@@ -12,10 +12,11 @@ if [ -n "$dirty" ]; then
     echo "$dirty" | sed 's/^/   /'
     exit 1
 fi
-before=$(git diff --name-only | sort)
+# modified tracked files with their content hash: a file already modified and rewritten again by the check is seen too
+snap() { git ls-files -m | while IFS= read -r f; do echo "$(git hash-object -- "$f" 2>/dev/null || echo deleted) $f"; done | sort; }
+before=$(snap)
 scripts/check.sh stl renders meshes || { echo "pre-push: check failed, push refused"; exit 1; }
-after=$(git diff --name-only | sort)
-changed=$(comm -13 <(echo "$before") <(echo "$after"))
+changed=$(comm -13 <(echo "$before") <(snap) | cut -d" " -f2-)
 if [ -n "$changed" ]; then
     echo "pre-push: the check rewrote these tracked files, commit them and push again:"
     echo "$changed" | sed 's/^/   /'
