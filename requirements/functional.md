@@ -142,3 +142,13 @@
 **Dependencies:** none
 
 **Description:** The removable storage card's supply is switched by the firmware and is off while the controller is in reset or has not yet driven the switch. Before cutting it, the firmware stops driving the card's signal lines. Acceptance: bench: card supply < 0.1 V when commanded off and while the controller is held in reset; on-target Unity test: the card signal pins are inputs whenever the supply is commanded off.
+
+### FUNC-MECH-JOINT-001
+
+**Title:** The columns turn on their joints
+
+**Status:** draft
+
+**Dependencies:** none
+
+**Description:** The four columns are joined on one horizontal axis by three joints; each column turns by hand relative to its neighbours, without wobble, and the wires running from column to column cross each joint inside its tube, so turning a column does not pull on them. Acceptance (first assembled robot): each joint turns through the travel the model allows without binding or wobble; 20 turns back and forth leave every wire crossing the joint intact (continuity check P1 / P2 → every housing unchanged).
