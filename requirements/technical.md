@@ -129,9 +129,9 @@
 
 **Status:** validated
 
-**Dependencies:** [PERF-POWER-SLEEP-001](performance.md#perf-power-sleep-001)
+**Dependencies:** none
 
-**Description:** No status LED or free-running clock output that draws current permanently is fed from the battery or from rails fed by the battery. LEDs fed only from the external supply (charger status) are allowed. Acceptance: visual inspection against the bring-up checklist, plus the deep-sleep current of [PERF-POWER-SLEEP-001](performance.md#perf-power-sleep-001).
+**Description:** No status LED or free-running clock output that draws current permanently is fed from the battery or from rails fed by the battery. LEDs fed only from the external supply (charger status) are allowed. Acceptance: visual inspection against the bring-up checklist (the resulting deep-sleep current is [PERF-POWER-SLEEP-001](performance.md#perf-power-sleep-001)'s).
 
 ### TECH-BUILD-ARTIFACTS-001
 
