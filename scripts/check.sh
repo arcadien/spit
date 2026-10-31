@@ -120,9 +120,12 @@ stage_overhang() {
 }
 
 stage_meshes() {
-    local p
+    local p out
     for p in mechanical/3mf/tars4.3mf mechanical/3mf/tars4_cr10.3mf; do
-        python3 -I tools/update_orca_project.py "$p" || return 1
+        out=$(python3 -I tools/update_orca_project.py "$p") || return 1
+        echo "$out"
+        # an object left without its STL keeps a stale mesh: the updater only notes it
+        if grep -q "no STL mapped" <<< "$out"; then echo "ERROR meshes: $p has objects with no STL (build4.sh stl, NAME_TO_STL)"; return 1; fi
     done
 }
 
