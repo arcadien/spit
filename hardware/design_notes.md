@@ -91,7 +91,7 @@ and the harness guide [tars4_harness.html](tars4_harness.html). Requirements: `r
   USB_DET → EXT1 ANY_HIGH on GPIO 2, 3 and 21. Remove from the mask any source already high when going to sleep
   (GPIO21 on mains, GPIO3 while the PIR holds), otherwise the S3 wakes at once. Timed wake-up: the S3 timer. Clear the
   ADXL345 INT_SOURCE and wait for PIR low before sleeping.
-- Aim at ~0.2–0.4 mA in sleep: remove the S3 RGB LED (GPIO47, 0.3–1 mA even off) and every status LED fed by the
+- Sleep target ≤ 0.65 mA with the card cut (PERF-POWER-SLEEP-001), estimate ~0.3–0.5 mA (power_budget.md): remove the S3 RGB LED (GPIO47, 0.3–1 mA even off) and every status LED fed by the
   battery (ZS-042, TPS63020 module, GY-291, microSD reader), keep the TP4056 charge LEDs (USB only); disable the DS3231
   32 kHz output (register 0x0F bit 3); send SLPIN to the screens; `gpio_hold` on CS1 / CS2 / RST / BL_EN / AMP_SD; Q5
   cuts the microSD 3V3 (SD_EN high or floating).
