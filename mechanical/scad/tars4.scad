@@ -1263,7 +1263,7 @@ function inline(i, ref, what, x0, y0, z0, w, t, l, ends = 2 * bend) = [i, ref, w
 function scr_conn(i, ref, what) = scr_hdr_ra
     ? [i, ref, what, [scr_x - dp_w(8) / 2, wall + scr_t, scr_hdr_z + 1.25 - dp_on - 2], [scr_x + dp_w(8) / 2, wall + scr_t + scr_hdr_back + key_rib + 0.3, scr_hdr_z + 1.25]]
     : on_board(i, ref, what, scr_x, 8, wall + scr_t, scr_hdr_z);
-c7_y = wall + pcb_gap + amp[2] + 0.5;               // C7 lying across behind the amplifier, between X6 and X5
+c7_y = wall + pcb_gap + amp[2] + 0.5;               // C7 lying across behind the amplifier, below X5 (speaker pair soldered on OUT+ / OUT−)
 c7_z = amp_z0 + 3.5;
 // bundle corridor in the middle columns: from the tube end down behind the screen to P1 / P2 (no connector there)
 corridor = [[col_w / 2 - 6, 13.5, hub_z0 + hub_b[1] + 4], [col_w / 2 + 6, 25, pivot_z[0] - collar[0] / 2]]; // behind the screen connectors
@@ -1275,7 +1275,6 @@ CONN = [
     inline(1, "X3", "INMP441 · pigtail + 5 p. (+1)", col_w - wall - 0.5 - dp_w(6), lid_y - 1 - dp_t, mid_rows[1] + lid_boss_d / 2 + 0.3, dp_w(6), dp_t, dp_inline, 2),
     scr_conn(2, "X4", "screen 2 · 8 p. right-angle"),
     on_board(2, "X5", "MAX98357A · 4 + 3 p. (GAIN removed)", col_w / 2, 7, wall + pcb_gap + amp[2], amp_z0 + amp[1] - amp_hdr),
-    on_board(2, "X6", "speaker · 2 p.", col_w / 2, 2, wall + pcb_gap + amp[2], amp_z0 + 1.3),
     inline(2, "X7", "AM312 · pigtail + 3 p. (+1)", wall + 3.5, lid_y - 1 - dp_t, scr_z - 12, dp_w(4), dp_t, dp_inline),
     [3, "X8", "DS3231 · 6 p. right-angle (4 wires, 32K removed)", [col_w / 2 - dp_w(6) / 2, wall + rtc[2] - rtc_hdr_y - dp_t / 2, rtc_z0 + rtc[1]],
         [col_w / 2 + dp_w(6) / 2, wall + rtc[2] - rtc_hdr_y + dp_t / 2, rtc_z0 + rtc[1] + dp_on + bend]],
@@ -1343,7 +1342,7 @@ xh_female = [7, 1.7];         // XHP female housing: length, part left outside t
 // Dupont connectors drawn in detail: [ref, pins, mating axis (0 x, 1 y, 2 z), wires leaving towards + (1) or - (-1),
 // inline pair?]; the pins spread along the box's longer remaining side
 DP = [["X1", 8, 2, -1, false], ["X2", 8, 1, 1, false], ["X3", 6, 2, 1, true], ["X4", 8, 2, -1, false],
-      ["X5", 7, 1, 1, false], ["X6", 2, 1, 1, false], ["X7", 4, 2, 1, true], ["X8", 6, 2, 1, false],
+      ["X5", 7, 1, 1, false], ["X7", 4, 2, 1, true], ["X8", 6, 2, 1, false],
       ["X9", 4, 1, 1, false], ["X15", 6, 2, 1, true]];
 module conn_dummies(i) { if (plugs) for (j = [0:len(CONN) - 1]) if (CONN[j][0] == i) {
     dp = [for (d = DP) if (d[0] == CONN[j][1]) d];

@@ -9,7 +9,7 @@ the README describes the current state (no decision log any more: history in `re
 
 | # | Problem | What was done |
 |---|---|---|
-| B1 | Dupont housings without keying | useless pin removed + cavity plugged (X2 INT2, X8 32K, X5 GAIN with X5 as 4 + 3); one more cavity plugged on the female side of the inline pairs (X3, X7, X15); screens: right-angle header + rib glued on the housing; X14 as JST-PH 3; X6 and X9 unkeyed (reversed, nothing breaks). Pin order in the README (*Connectors*) |
+| B1 | Dupont housings without keying | useless pin removed + cavity plugged (X2 INT2, X8 32K, X5 GAIN with X5 as 4 + 3); one more cavity plugged on the female side of the inline pairs (X3, X7, X15); screens: right-angle header + rib glued on the housing; X14 as JST-PH 3; X9 unkeyed (reversed, nothing breaks). Pin order in the README (*Connectors*) |
 | B2 | TP4056 against the lip of its groove | no upper lip any more (support underneath only) for the TP4056 and the TPS63020, a lid tab holds the back edge; since 2026-10-27 the TP4056 (trimmed to 26.3, micro-USB desoldered) sits on 0.5 ledges without grooves; C9 / D3 lying on the IN end (`charger_h` 5.5) |
 
 ## 2. Decisions — taken

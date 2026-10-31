@@ -15,7 +15,7 @@ links were found on 2026-10-21, price and stock not guaranteed.
 | Insulated **30 AWG** wire-wrap wire (Kynar), small reel | 1 | Q1 / Q5 legs on the power-path board (instead of bare strands), insulated jumpers | [Amazon (search)](https://www.amazon.fr/s?k=fil+wrapping+30+AWG+kynar) |
 | Bare tinned copper wire 0.5–0.6 mm | ~0.5 m | GND bus (carrier column E, power-path board row 1); resistor lead offcuts are enough | [Amazon (search)](https://www.amazon.fr/s?k=fil+cuivre+etame+0.6mm) |
 | Cyanoacrylate or 5 min epoxy glue | — | female headers glued on the single-sided S3 carrier | probably already in stock |
-| Male header 1 × 40 (breakable), straight + **right-angle** | 1 + 1 | X6 (amplifier speaker output); 1 × 8 right-angle headers on the back of both screens (X1, X4); pins for modules shipped without | [Amazon (search)](https://www.amazon.fr/s?k=barrette+male+secable+2.54+droite+coudee) |
+| Male header 1 × 40 (breakable), straight + **right-angle** | 1 + 1 | 1 × 8 right-angle headers on the back of both screens (X1, X4); pins for modules shipped without | [Amazon (search)](https://www.amazon.fr/s?k=barrette+male+secable+2.54+droite+coudee) |
 | Heat-shrink 1.5 / 2 / 3 mm, **colour assortment** (at least black, white, yellow, orange, purple) | 1 assortment | under the contacts' insulation wings (30 AWG too thin), solder joints, tube exits; black rings of the signal buses (1 / 2 / 3); **coloured bands of the power rails** on red / black, Ø2–3 mm (white OUT+, yellow VPATH, orange VSYS, purple VUSB: ~40 bands of 10 mm) | [Amazon (search)](https://www.amazon.fr/s?k=gaine+thermoretractable+assortiment+1.5mm) |
 
 ## 2. Wire

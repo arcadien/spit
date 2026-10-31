@@ -395,7 +395,7 @@ TARS talks **through its lower black panel** (right middle column, `speaker_col 
 - **Grille**: horizontal slots (1.2 mm every 3 mm) in that column's black plug → `mechanical/stl/tars4_inserts_speaker.stl`.
 - **Amplifier** MAX98357A clone breakout (17.7 along its 7-pin header × 18.8, measured) in a slot on the inner front wall just above the splint (z 76.7–95.5). I2S0
   BCLK / LRC / DIN, VIN / GND on their own pair, C7 470 µF (Ø8 × 12) soldered on VIN / GND and lying across behind the
-  board, between X6 and X5 (`c7`). GAIN default (9 dB); SD on AMP_SD (see *Signals*).
+  board, below X5 (`c7`); the speaker pair is soldered on OUT+ / OUT− (no screw terminal, no X6). GAIN default (9 dB); SD on AMP_SD (see *Signals*).
 - **Microphone** INMP441 (10 × 10, castellated) in the left middle column between the upper screw posts, just under
   P1, far from the speaker: top-port MEMS, **chip side against the wall**, the sound hole facing a Ø1 hole in the
   vertical decor groove (invisible). Seal with a ring of foam tape, never glue on it. Own I2S1 (GPIO 14, 38, 15, local
@@ -627,7 +627,6 @@ drawn is ~17 mm long (`xh_male_back`, `xh_female`) inside the 22 mm checked box 
 | X3 | INMP441 | pigtail + inline Dupont 1 × 6 (SCK WS SD VDD GND + 1 empty; L/R bridged to GND on the board) · empty position plugged on the female side · VDD / GND female contacts carry **two wires** (from P1 + on to X2), so unplugging the mic keeps the ADXL345 powered | left middle, parked against the lid, 103–131 |
 | X4 | screen 2 | as X1 | right middle, 205–223 |
 | X5 | MAX98357A | **two housings**: 1 × 4 (LRC BCLK DIN GAIN) with the **GAIN pin pulled**, cavity plugged, + 1 × 3 (SD GND VIN) · the 3-way reversed only swaps SD and VIN through R10 1 k (harmless); mark the 4-way's side | right middle, top edge of the amp, ~93 |
-| X6 | speaker | Dupont 1 × 2 on a 2-pin header in place of the screw terminal · no key (reversed = polarity swap, harmless) | right middle, bottom edge of the amp, ~78 |
 | X7 | AM312 | pigtail + inline Dupont 1 × 4 (VIN OUT GND + 1 empty) · empty position plugged | right middle, parked against the lid beside the screen, 191–225 |
 | X8 | DS3231 (ZS-042) | Dupont 1 × 6 on its right-angle header (32K SQW SCL SDA VCC GND; 4 wires) · **32K pin pulled**, cavity plugged | right leg, above the board, 145–166 |
 | X9 | BME280 | Dupont 1 × 4 (VCC GND SCL SDA) · no key: reversed, the I2C bus just hangs (no supply short) · all 4 contacts carry **two wires** (from P2 + on to X8) | right leg, top edge, ~204 |
@@ -729,7 +728,6 @@ drawn is ~17 mm long (`xh_male_back`, `xh_female`) inside the 22 mm checked box 
 | **Single-sided** perfboard (FR4) with separate pads, cut to **25.6 × 34.4** (10 × 13 holes) | 1 | the S3's carrier, `renders/tars4_board_s3.svg` |
 | Female headers **2 × 8**, 2.54, 8.5 mm high | 2 | the S3's socket (`s3_sock_h` MEASURE) |
 | **Right-angle** male header 1 × 8 | 2 | X1 / X4, on the screens' backs, pins down |
-| Male header 1 × 2 | 1 | X6, in place of the amp's screw terminal |
 | **Dupont 2.54 crimp kit**: housings 1 × 2 … 1 × 8, female contacts (**~100**, ~55 used), male contacts (~20) | 1 kit | X1–X9, X15; ratchet crimper SN-28B / PA-09; spare male pins to plug the keyed cavities |
 | **JST-XH** (2.50 pitch) inline pairs to crimp: housings 2- and 4-pin, male + female, with their contacts | 2 + 3 | X12, X16; X10, X13, X14 (SN-28B crimper; 30 AWG folded like in the Dupont contacts) |
 | Silicone wire **30 AWG**, tinned copper (not CCA), **10-colour kit** (needs purple and blue) | ~20.3 m | cut lengths from the 3D model in `hardware/tars4_harness.pdf` (estimate + 3 cm each, service loops and pigtails included); ≤ 3.6 m per colour (yellow); 8 colours used, no black / grey |
