@@ -44,7 +44,6 @@ Everything that gets printed lives in `mechanical/`:
 | Path | What | Who writes it |
 |---|---|---|
 | `mechanical/scad/tars4.scad` | the model: every dimension is a named parameter at the top of the file | **you** |
-| `mechanical/scad/column_sections.scad` | helper for the column section drawing | rarely edited |
 | `mechanical/stl/` | one STL per part, in print orientation; **not in git**: `make check-stl` before a print | `tools/build4.sh stl` |
 | `mechanical/3mf/tars4.3mf` | **the Orca project** (plates arranged by hand, Ender 3) | Orca, then `tools/update_orca_project.py` |
 | `mechanical/3mf/tars4_cr10.3mf` | the CR-10 Orca project (one-piece parts) | Orca, then `tools/update_orca_project.py` |
@@ -78,8 +77,6 @@ one step by hand instead:
 | `tools/build4.sh tests` | trial print `tube_test3` (finished trials `pir_test`, `tube_test`, `tube_test2` stay in the model, export them one-off) |
 | `openscad -D 'part="print_<part>"' -o <part>.stl mechanical/scad/tars4.scad` | any other part, one-off (e.g. `test_level`, `test_screen`: kept in the model, no longer exported) |
 | `tools/build4.sh renders` | `renders/*.png` (README pictures, connector details) |
-| `python3 -I tools/column_sections.py` | `renders/tars4_column_sections.svg` |
-| `python3 -I tools/tube_section.py` | `renders/tars4_tube_sections.svg` |
 | `python3 -I tools/harness.py` | `hardware/tars4_harness.html` + `.pdf` (wire lengths are read from the model) |
 | `tools/build4.sh 3mf` | raw plates in `mechanical/3mf/tars4_plate*.3mf` (**not** the Orca projects) |
 
