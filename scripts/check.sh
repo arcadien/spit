@@ -85,7 +85,7 @@ inputs() {
         overhang) echo mechanical/stl/tars4_*.stl scripts/overhang.py scripts/overhang_allow.json ;;
         orca) echo mechanical/stl/tars4_*.stl mechanical/3mf/tars4.3mf mechanical/3mf/tars4_cr10.3mf scripts/orca_check.py scripts/orca_profile.py \
                    tools/update_orca_project.py tools/stl2_3mf.py "$ORCA_PRESETS"/machine/*.json "$ORCA_PRESETS"/process/*.json ;;
-        erc) echo hardware/kicad/*.kicad_sch hardware/kicad/*.kicad_sym hardware/kicad/*.kicad_pro hardware/kicad/sym-lib-table \
+        erc) echo tools/kicad_sch_gen.py hardware/kicad/lib_src/* hardware/kicad/*.kicad_sch hardware/kicad/*.kicad_sym hardware/kicad/*.kicad_pro hardware/kicad/sym-lib-table \
                   tests/*.py tests/bench/*.md tests/manual/*.md requirements/*.md audits/exclusions.yml \
                   mechanical/scad/*.scad tools/boards.py tools/harness.py .gitignore \
                   $(git ls-files -co --exclude-standard 'software/*.c' 'software/*.cpp' 'software/*.h') ;;   # Unity req tags
@@ -138,6 +138,9 @@ stage_erc() {
     local cli=(kicad-cli)
     [ -n "$KICAD" ] && cli=("$KICAD" kicad-cli)
     command -v "${cli[0]}" >/dev/null || { echo "KiCad not found: kicad-cli on the PATH or a kicad AppImage in ~/bin (KICAD=...)"; return 1; }
+    # the schematic is generated: regenerate it (netlist checked against the generator, PDF exported); a commit that
+    # changed the generator without its output sees the files rewritten
+    KICAD=$KICAD python3 -I -X utf8 tools/kicad_sch_gen.py || return 1
     "${cli[@]}" sch erc --severity-all --format json -o "$LOG/erc.json" hardware/kicad/tars4.kicad_sch || return 1
     python3 -I - "$LOG/erc.json" <<'EOF' || return 1
 import json, sys
