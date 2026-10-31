@@ -155,6 +155,9 @@
 
 ### TECH-AUDIO-SHUTDOWN-001
 **Title:** The amplifier is shut down whenever no sound plays and in deep sleep
+
 **Status:** validated
+
 **Dependencies:** [TECH-POWER-BACKFEED-001](technical.md#tech-power-backfeed-001)
+
 **Description:** The audio amplifier has a hardware shutdown input driven by the controller. The firmware keeps it shut down from reset, in deep sleep and whenever no sound has played for 2 s; it is enabled only to play. Acceptance: pytest on the schematic (AMP_SD from GPIO4 to the amplifier SD through R10, pulled down by R18); on-target Unity test (AMP_SD low at boot, in sleep, 2 s after the last sample); bench: amplifier supply current < 1 µA with AMP_SD low ([power_budget.md](../hardware/power_budget.md), amplifier row).
