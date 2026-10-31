@@ -81,7 +81,7 @@
 
 **Dependencies:** [FUNC-POWER-DETECT-001](functional.md#func-power-detect-001), [FUNC-POWER-MONITOR-001](functional.md#func-power-monitor-001)
 
-**Description:** While the external supply is present, the firmware reports the battery state as "charging" instead of a level, then "full" once the charge has ended. The end of charge is inferred from the battery voltage alone; the charger's status output is not wired. Acceptance (native Unity test, injected supply flag and voltages): supply present and rising → charging; supply present and the voltage relaxed to ≤ 4.17 V after reaching ≥ 4.19 V → full; supply removed → back to the [FUNC-POWER-MONITOR-002](functional.md#func-power-monitor-002) level.
+**Description:** While the external supply is present, the firmware reports the battery state as "charging" instead of a level, then "full" once the charge has ended. The end of charge is inferred from the battery voltage alone; the charger's status output is not wired. Acceptance (native Unity test, injected supply flag and voltages): supply present and rising → charging; supply present, the 60 s average having reached ≥ 4.10 V, then fallen ≥ 20 mV below its highest value → full (relative to the peak: a charger terminating anywhere in 4.158–4.242 V is seen); supply removed → back to the [FUNC-POWER-MONITOR-002](functional.md#func-power-monitor-002) level.
 
 ### FUNC-POWER-DETECT-001
 
