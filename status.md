@@ -13,8 +13,8 @@ Fix the build-pipeline findings C1–C10 of `audits/2026-10-29-audit-full.md`, o
 ## Open questions
 | # | Question | Answer |
 |---|---|---|
-| L3-1 | C6: tube_section.py hard-codes stale wire lists. Derive them from harness.py (tube routes), or drop the tube / column section SVGs? | |
+| L3-1 | C6: tube_section.py hard-codes stale wire lists. Derive them from harness.py (tube routes), or drop the tube / column section SVGs? | drop them (2026-10-31): done |
 
 ## Next
 C4 (hooks: content hashes, dirty-input guard), C8 (commit-prefix check on push), C10 (labels, shared part ↔ STL
-mapping, overhang_allow.json), C6 once L3-1 is answered.
+mapping, overhang_allow.json).
