@@ -147,7 +147,7 @@
 
 **Title:** The columns turn on their joints
 
-**Status:** draft
+**Status:** validated
 
 **Dependencies:** none
 
