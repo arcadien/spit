@@ -7,13 +7,16 @@ current, answer the questions here.
 Fit the speaker and the I2S amplifier actually bought into the right middle column (column 2), and write the AUDIO /
 MECH requirements for them before any model change.
 
-## State (2026-10-29)
+## State (2026-10-31)
 - AUDIO domain written: FUNC-AUDIO-SPEAK-001, TECH-AUDIO-SHUTDOWN-001, PLAT-MECH-SPEAKER-001 validated;
   PERF-AUDIO-PEAK-001 (volume cap) and PLAT-AUDIO-AMP-001 (clone board size) draft until measured.
 - Model: 4 Ω 2 W speaker 25.27 × 13.80 × 7.15 just under the splint (z 30–55), on pads under its short-end tabs,
   side rails + stop notched for its lower nub, glued; lid speaker tabs removed; grille widened. `make check` and
   `make check-overhang` clean, renders and harness lengths regenerated, README / measurements / open questions (AU1).
-- Not merged until AU1: amplifier board measured (→ `amp`), volume cap measured on the bench.
+- Main merged (requirements reformatted, power safety, charge-port post).
+- Clone amplifier received: 18.8 × 17.7. `amp` not committed yet: the `commit-msg` hook needs PLAT-AUDIO-AMP-001 validated, and it stays draft until E-M1 (A5).
+- Not merged until AU1: `amp` folded in, volume cap measured on the bench.
+- Review (audits/2026-10-29-review-mech-audio.md) finding 1 open: schematic, BOM, wiring page, budget still say 8 Ω 39 × 22 × 10; also SW1 ≥ 2 A, volume cap at VSYS 4.7 V, X6, pytest for TECH-AUDIO-SHUTDOWN-001.
 
 ## Findings
 - **Speaker**: the 30 mm is the width of the box itself (the ears are at the ends, inside the 66): it fits neither
@@ -36,7 +39,9 @@ MECH requirements for them before any model change.
 |---|---|---|
 | A1 | Marking of the amplifier chip (the SOIC-8 in the middle)? | |
 | A2 | The two holes: Ø 4.7 at 16 mm between centres, or is 4.7 the width of the white band? | |
-| A3 | Buy a MAX98357A breakout (~8 €) instead of adapting the current board? | recommended: keeps the design as is (SD pin on GPIO4, < 1 µA in sleep, 19.4 × 18 slot, schematic, budget and requirements unchanged); a clone (purple board, SD / GAIN pins) at 1–3 € does the same; the current board stays the fallback (CTRL trace cut or P-MOSFET switch). User picked a purple clone 19 × 17 (LRC, BCLK, DIN, GAIN, SD, GND, Vin; Adafruit pinout) on 2026-10-28: fits the modelled 19.4 × 18 slot, nothing else changes; leave its screw terminal off (speaker wires soldered); measure the board on arrival (→ `amp`), bench E-M1 (SD pull-up) still applies |
+| A3 | Buy a MAX98357A breakout (~8 €) instead of adapting the current board? | recommended: keeps the design as is (SD pin on GPIO4, < 1 µA in sleep, 19.4 × 18 slot, schematic, budget and requirements unchanged); a clone (purple board, SD / GAIN pins) at 1–3 € does the same; the current board stays the fallback (CTRL trace cut or P-MOSFET switch). User picked a purple clone 19 × 17 (LRC, BCLK, DIN, GAIN, SD, GND, Vin; Adafruit pinout) on 2026-10-28: fits the modelled 19.4 × 18 slot, nothing else changes; leave its screw terminal off (speaker wires soldered); measure the board on arrival (→ `amp`), bench E-M1 (SD pull-up) still applies. **Received, measured 18.8 × 17.7** (2026-10-31): taken as x along the 7-pin header, z across (A4) |
+| A4 | Is the 7-pin header along the 18.8 side? | |
+| A5 | E-M1 on the received board: VIN powered, 10 k from SD to GND, voltage on SD (< 0.1 V expected, shutdown below 0.16 V)? | |
 | S1 | Speaker: open its box and use the bare driver (option 1), or another speaker from stock (option 2)? | looking in the drawers (2026-10-28) |
 | S4 | Round speaker candidate: diameter, impedance, power? | depth 5 mm (2026-10-28): fits easily (≤ 15); diameter must be ≤ Ø23; diameter and impedance still to read |
 | S3 | Which impedance, which shape if bought new? | **8 Ω** (4 Ω also works but doubles the current peaks on VSYS: ~1 A at full volume vs ~0.5 A), 0.5–2 W. Face against the lower black panel (27.2 wide inside, minus the side rails ≈ 23; panel 33.5 tall): **oval 20 × 30, long axis vertical**, fits; **round Ø28 does not** (wider than the interior); a round one must be ≤ Ø23. Depth ≤ ~15 with its wires |
@@ -46,7 +51,7 @@ MECH requirements for them before any model change.
 | S7 | Power rating (W) printed on the 4 Ω speaker? | **2 W** (2026-10-29): the MAX98357A on VSYS (3.7–4.2 V) gives at most ~1.7–2.2 W into 4 Ω, so the speaker is safe at any volume; the firmware volume cap is only for the VSYS current peaks (~1 A at full volume) |
 
 ## Next
-- Clone amplifier arrives: measure it (→ `amp`), fold into PLAT-AUDIO-AMP-001, validate it.
+- A4 + A5 answered: fold `amp` into PLAT-AUDIO-AMP-001, validate it, commit the model.
 - Bench: volume cap (PERF-AUDIO-PEAK-001), E-M1 (SD pull-up), FUNC-AUDIO-SPEAK-001 SPL check.
 - Cleanup (own change): `lid_mid_left` is now identical to `lid_mid` (remove the part: build4.sh, Orca mapping,
   CONTRIBUTING.md).
