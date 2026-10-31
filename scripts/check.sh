@@ -87,7 +87,8 @@ inputs() {
                    tools/update_orca_project.py tools/stl2_3mf.py "$ORCA_PRESETS"/machine/*.json "$ORCA_PRESETS"/process/*.json ;;
         erc) echo hardware/kicad/*.kicad_sch hardware/kicad/*.kicad_sym hardware/kicad/*.kicad_pro hardware/kicad/sym-lib-table \
                   tests/*.py tests/bench/*.md tests/manual/*.md requirements/*.md audits/exclusions.yml \
-                  mechanical/scad/*.scad tools/boards.py tools/harness.py ;;
+                  mechanical/scad/*.scad tools/boards.py tools/harness.py .gitignore \
+                  $(git ls-files -co --exclude-standard 'software/*.c' 'software/*.cpp' 'software/*.h') ;;   # Unity req tags
         renders) echo mechanical/scad/*.scad tools/build4.sh scripts/check_renders.py ;;
         docs) echo mechanical/scad/*.scad tools/boards.py tools/kicad_sch_gen.py tools/harness.py tools/html2pdf.py tools/wiring_svg.js hardware/tars4_wiring.html ;;
     esac
