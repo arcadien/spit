@@ -80,7 +80,7 @@ fi
 inputs() {
     case $1 in
         model) echo mechanical/scad/*.scad ;;
-        stl) echo mechanical/scad/*.scad tools/build4.sh tools/stl2_3mf.py ;;
+        stl) echo mechanical/scad/*.scad tools/build4.sh tools/stl2_3mf.py mechanical/stl/tars4_*.stl ;;   # its own outputs: STLs are not in git, so they may be another branch's or gone
         meshes) echo mechanical/stl/tars4_*.stl mechanical/3mf/tars4.3mf mechanical/3mf/tars4_cr10.3mf tools/update_orca_project.py ;;
         overhang) echo mechanical/stl/tars4_*.stl scripts/overhang.py scripts/overhang_allow.json ;;
         orca) echo mechanical/stl/tars4_*.stl mechanical/3mf/tars4.3mf mechanical/3mf/tars4_cr10.3mf scripts/orca_check.py scripts/orca_profile.py \
