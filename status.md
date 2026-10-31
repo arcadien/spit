@@ -19,9 +19,10 @@ MECH requirements for them before any model change.
 - Review finding 1 (audit A3) done: 4 Ω 2 W speaker in the schematic, BOM, wiring page, budget, bring-up.
 - 2026-10-31 (session Tars): pytest for TECH-AUDIO-SHUTDOWN-001; X6 removed, speaker pair soldered on OUT+ / OUT−
   (model, boards, harness, wiring page, README, renders, `make check` clean); 2.2 kΩ dropped from the shopping list.
-  Drafted for validation (uncommitted): PLAT-POWER-SWITCH-001 ≥ 2 A (stays draft until E-M6, SW1's marking),
+  Validated and committed: PLAT-POWER-SWITCH-001 ≥ 2 A (stays draft until E-M6, SW1's marking),
   PERF-AUDIO-PEAK-001 cap also ≤ 2 W at VSYS 4.7 V, TECH-AUDIO-SHUTDOWN-001 ≤ 10 µA with the pull-up (audit D4),
-  PLAT-MECH-SPEAKER-001 1.5 mm pads (audit D7).
+  PLAT-MECH-SPEAKER-001 1.5 mm pads (audit D7); power budget amplifier sleep ~4 µA; SW1 at 2 A in the bring-up / BOM.
+  Audit 2026-10-29 has nothing left on this branch. Still blocking the merge: E-M6 (SW1 marking) and AU1 (volume cap).
 
 ## Findings
 - **Speaker**: the 30 mm is the width of the box itself (the ears are at the ends, inside the 66): it fits neither
