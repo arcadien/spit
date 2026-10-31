@@ -692,7 +692,7 @@ drawn is ~17 mm long (`xh_male_back`, `xh_female`) inside the 22 mm checked box 
 | Battery contact plates 13 × 18 × 1.2: spring (Ø5, 10.7 high) + button (+, 1.8 overall) | 2 pairs | one pair per leg, wires soldered on the tabs |
 | U1 TP4056 charger breakout, **protected (DW01)**, 28.7 × 17.15 × 0.9 (26.3 once its micro-USB is desoldered and the nubs filed) | 1 | left leg, flat above the TPS63020; fed by J1 on its IN pads; **R_PROG swapped for 2.4 k** (0.5 A) |
 | J1 micro-USB breakout | 1 | charge port in the left foot, plug from behind at the heel |
-| SW1 mini slide switch, 3 pins (1P2T), body 12.95 × 6.9, lever 5.15 | 1 | left leg floor; **check its current rating** (≥ 1 A) |
+| SW1 mini slide switch, 3 pins (1P2T), body 12.95 × 6.9, lever 5.15 | 1 | left leg floor; **check its current rating** (≥ 2 A: the 4 Ω speaker's peaks) |
 | U9 **TPS63020** buck-boost module, 3.3 V, EN + PS/SYNC, ~17.4 × 26.2 | 1 | left leg, flat above the microSD; EN to VIN, PS/SYNC to GND |
 | U7 DS3231 RTC board (ZS-042) + CR2032 | 1 | right leg, I2C; SQW not wired |
 | U8 ADXL345 accelerometer board (GY-291) | 1 | left middle, I2C |

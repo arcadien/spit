@@ -59,7 +59,7 @@ cells until step 3.5; nothing goes on the 3V3 before step 3.6 is green)
 
 *3.2 Power path (Q1, D1, R1) + SW1, VSYS loaded with 33 Ω (~110 mA)*
 - [ ] Power-path drops → [PERF-POWER-PATH-001](PERF-POWER-PATH-001.md); USB out: VUSB < 0.5 V within ~1 s.
-- [ ] Switch off → [FUNC-POWER-SWITCH-001](FUNC-POWER-SWITCH-001.md). SW1 on with 1 A load (3.9 Ω 5 W): Q1 and SW1 barely warm.
+- [ ] Switch off → [FUNC-POWER-SWITCH-001](FUNC-POWER-SWITCH-001.md). SW1 on with a 2 A load (bench supply at 4.0 V, limit 3 A, 2 Ω ≥ 10 W): Q1 and SW1 barely warm; read SW1's marking first (E-M6, ≥ 2 A).
 
 *3.3 Dividers on the power-path board*
 - [ ] VBAT/2 = B+ / 2 ± 2 % with the switch on **and** off, and with the charger plugged in (10 MΩ multimeter loads the 500 k
