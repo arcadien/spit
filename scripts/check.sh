@@ -53,7 +53,7 @@ if command -v cygpath >/dev/null; then
 fi
 KICAD=${KICAD:-$(ls ~/bin/kicad-*.AppImage 2>/dev/null | sort | tail -1)}
 GS=$(command -v gs || command -v gswin64c)
-ORCA_PRESETS=~/.config/OrcaSlicer/user/default
+ORCA_PRESETS=~/.config/OrcaSlicer/user/default   # Linux only: the orca stage runs the OrcaSlicer AppImage
 FAILED=()
 T0=$(date +%s)
 
