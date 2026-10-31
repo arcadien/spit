@@ -71,7 +71,7 @@
 
 **Dependencies:** [FUNC-POWER-MONITOR-001](functional.md#func-power-monitor-001), [CONF-POWER-THRESH-001](configuration.md#conf-power-thresh-001)
 
-**Description:** On battery, the firmware averages the battery voltage over a 60 s sliding window and classifies it as: fed (≥ 3.90 V), peckish (3.70–3.90 V), hungry (3.50–3.70 V), starving (3.30–3.50 V), empty (≤ 3.30 V). The 60 s average is the only hysteresis: there is no extra band, so one sample (a Wi-Fi or amplifier peak) cannot change the level. Acceptance (native Unity test with injected samples): each band gives its level at the boundaries; a 2 s dip of 0.3 V inside a stable window does not change the level.
+**Description:** On battery, the firmware averages the battery voltage over a 60 s sliding window and classifies it as: fed (≥ 3.90 V), peckish (3.70 V ≤ v < 3.90 V), hungry (3.50 V ≤ v < 3.70 V), starving (3.30 V < v < 3.50 V), empty (≤ 3.30 V): each boundary belongs to exactly one band. The 60 s average is the only hysteresis: there is no extra band, so one sample (a Wi-Fi or amplifier peak) cannot change the level. Acceptance (native Unity test with injected samples): each band gives its level at the boundaries; a 2 s dip of 0.3 V inside a stable window does not change the level.
 
 ### FUNC-POWER-MONITOR-003
 
