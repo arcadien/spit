@@ -108,7 +108,7 @@ STEPS = [
       '5 V on X10 cavities 1–2: charge LED, USB_DET ≈ 3 V on X14 cavity 2, Q1 off.']),
     (2, 'Charge port, switch, cells', 'the foot and cell cables up to X10, X12 and X16',
      ['Solder F1 on the left + plate (F2 on the right one at step 7). Never solder on a cell.',
-      'Right cell wires: long enough to cross the three tubes (length from the table, already + 3 cm, offered up on TARS before cutting). Crimp X16 (female) now; the right cell end stays bare.'],
+      'Right cell wires: long enough to cross the three tubes (length from the table, already + 3 cm, offered up on TARS before cutting). Crimp X16 (female) now; the right cell end stays bare (soldered at step 7, once the right tube is fitted).'],
      ['Left cell alone: X12 plugged in, switch on, VSYS ≈ B+.',
       'Charger on J1: charge LED; unplugged: VUSB < 0.5 V within ~1 s.']),
     (3, 'S3 carrier', 'the 27 controller wires, soldered on the carrier side',
@@ -122,17 +122,20 @@ STEPS = [
       'X2 SDA and SCL: double contact, crimp together (without folding back) the S3 wire and the one leaving for P2 (bare end, soldered at step 6).'],
      ['Before any power-up: every still-free end capped with closed heat-shrink (shrunk, end pinched while hot).', 'S3 on USB, switch off: screen 1 displays, the mic gives I2S samples, the ADXL345 answers at 0x53 and INT1 toggles.']),
     (5, 'Left tube: power block ↔ left middle, microSD', 'everything crossing the left tube',
-     ['Thread the left brass tube onto the listed wires BEFORE crimping the far end. The amplifier pair (step 6) and the right cell pair (step 2) also cross this tube: thread them at the same time.',
+     ['Thread the left brass tube onto the listed wires, bare, BEFORE crimping their left leg end. The amplifier pair (step 6) and the right cell pair (step 2) also cross this tube: thread them at the same time.',
+      'After the bench test, the tube-side contacts of X13, X14, X15 and X16 come out of their housings again (needle under the latch) to fit the left tube (section Joints), then go back in.',
       'microSD reader: C4 10 µF tantalum lying flat (+ on VCC; only ~6.6 mm up to the TPS63020) and C5 100 nF on its VCC / GND pins; without pull-ups on the reader, R5–R9 10 k from CMD, D0, D1, D2 and D3 to VCC (SD_3V3). Then a 5-wire pigtail (male contacts, X15).'],
      ['Before any power-up: every still-free end capped with closed heat-shrink (shrunk, end pinched while hot).', 'Without USB, switch on: the S3 boots from the cells (3.3 V on the carrier).',
       'VBAT/2 and USB_DET read by the S3; the microSD is read; SD_EN high cuts its 3.3 V.']),
     (6, 'Middle tube and right middle', 'screen 2, amplifier, speaker, AM312, P2',
      ['Plan renders/tars4_board_p2.svg. Right-angle header on the back of screen 2 (X4). Amplifier: 1 × 4 (GAIN removed) + 1 × 3 headers (X5), 2-pin header instead of the screw terminal (X6), C7 + on VIN, band (−) to GND.',
-      'AM312: 3-wire pigtail (male contacts, X7), breakout pins trimmed flush, breakout slipped into a heat-shrink sock (it passes 5 mm from the middle tube exit). Thread the middle tube before crimping.'],
+      'AM312: 3-wire pigtail (male contacts, X7), breakout pins trimmed flush, breakout slipped into a heat-shrink sock (it passes 5 mm from the middle tube exit).',
+      'Thread the middle tube onto the bare wires, then fit it (section Joints) BEFORE soldering their P2 ends and crimping their X4 / X5 ends: this step is tested with the two middle columns joined.'],
      ['Before any power-up: every still-free end capped with closed heat-shrink (shrunk, end pinched while hot).', 'Screen 2 displays; sound in the speaker; AMP_SD low cuts the amplifier; PIR rises when a hand passes.']),
     (7, 'Right tube and right leg', 'DS3231, BME280, right cell',
      ['DS3231: right-angle header, 32K removed, coin-cell charging resistor removed. BME280: 1 × 4 header, LED removed.',
-      'Thread the right tube. F2 on the right + plate, then solder the two right cell wires (step 2).',
+      'Thread the right tube onto the bare wires and fit it (section Joints) BEFORE crimping X9 and soldering the right cell wires: this step is tested with the right leg joined.',
+      'F2 on the right + plate, then solder the two right cell wires (step 2).',
       'X9: each contact takes two wires (P2 + the continuation to X8), crimped together without folding back.',
       'Right tube: twist SDA with GND and SCL with 3V3 (long I2C bus, next to SCK / BCLK).'],
      ['I2C scan: 0x53 (ADXL345), 0x57 (DS3231 EEPROM), 0x68 (DS3231), 0x76 or 0x77 (BME280).',
@@ -146,6 +149,9 @@ def geometry():
             'fuse_z0 sw_y usbb_y0 spk_z0 spk_front_y charger bk spk').split()
     q = '\\"'                       # an escaped quote inside the SCAD string
     items = [(k, k) for k in keys] + [('pivot_z', 'pivot_z[0]'), ('conn_names', '[for (c = CONN) c[1]]'),
+                                      ('tube_cut', '2 * (wall + pivot_boss_l) + gap + collar[1] + tube_over'),
+                                      ('tube_bores', '[tube_od + tube_glue_clr, tube_od + tube_run_clr]'),
+                                      ('collar', 'collar'), ('tube_over', 'tube_over'), ('detent_n', 'detent_n'),
                                       ('conn_box', '[for (c = CONN) [c[0], c[3], c[4]]]')]
     body = ', '.join(f'"{"," if n else ""}{q}{k}{q}:", {v}' for n, (k, v) in enumerate(items))
     scad = f'include <{os.path.join(ROOT, "mechanical", "scad", "tars4.scad")}>\necho(str("GEOJSON{{", {body}, "}}"));\n'
@@ -462,6 +468,40 @@ def table(ws, show_step=False):
             f'<th>tubes</th><th>length cm<br><small>estimated → to cut</small></th></tr>{"".join(rows)}</table></div>')
 
 
+def joints(g):
+    """fitting the three pivot tubes: which side of each bundle stays loose, then glue and collar"""
+    g8, r8 = g['tube_bores']
+    rows = [('left (left leg ↔ left middle)', 'left leg: the tube-side contacts of X13, X14, X15, X16, out of their housings',
+             'from inside the left middle, towards the left leg', 'slipped on over the loose ends BEFORE the tube goes in: it rides on the tube in the left middle'),
+            ('middle (left middle ↔ right middle)', 'right middle: P2 ends not soldered yet, X4 / X5 contacts not crimped, right cell pair bare',
+             'from inside the left middle, towards the right middle', 'slipped on over the loose ends once the tube is in place'),
+            ('right (right middle ↔ right leg)', 'right leg: X9 contacts not crimped, right cell pair bare',
+             'from inside the right middle, towards the right leg', 'slipped on over the loose ends once the tube is in place')]
+    table = ''.join(f'<tr><td>{esc(a)}</td><td>{esc(b)}</td><td>{esc(c)}</td><td>{esc(d)}</td></tr>' for a, b, c, d in rows)
+    steps = [f'First joint only, a dry run without glue: tube in, collar against the boss, the leg clicks every {360 // g["detent_n"]}° by hand '
+             f'(the walls flex to let the bumps out). A tight turning bore is reamed by hand with an 8 mm drill.',
+             'Both columns side by side, the bearing ring against the dimpled face. Thread the loose ends through the two bores, '
+             'ahead of the tube (a few contacts at a time), then push the tube until its end in the fixed column is flush with the '
+             'inner face of the boss there.',
+             'Fixed side: slow epoxy, a fillet around the tube where it leaves the boss inside the fixed column. Never in the gap '
+             'between the columns nor in the turning bore. Let it cure.',
+             f'Collar: columns pressed together (bumps in their dimples), collar against the turning column’s boss, a drop of epoxy '
+             f'between collar and tube only, never on the boss. The tube sticks out {g["tube_over"]} mm past it.',
+             'Swing the leg: a click every step, no side play. Then the contacts back in their housings (connector cards below), '
+             'the loose ends soldered or crimped, a short heat-shrink sleeve on the bundle at each tube exit.']
+    return f'''<section class="step" id="joints"><h2>Joints: fitting the tubes</h2>
+    <p class="sub">One brass tube 8 / 7 per joint, cut to {g['tube_cut']:.1f} mm and deburred inside and out, and one PETG collar
+    Ø{g['collar'][0]} × {g['collar'][1]}. In each joint the left-hand column is <b>fixed</b>: the tube is glued in its teardrop bore
+    Ø{g8:.2f}, its right face carries {g['detent_n']} detent dimples. The right-hand column <b>turns</b> on the tube (bore Ø{r8:.2f}),
+    on a Ø16 bearing ring with 2 bumps. The collar, glued on the tube inside the turning column, holds the joint together.</p>
+    <p class="small">A wire with a board on its end does not go through a wall bore: at fitting, one end of every wire in the
+    tube is loose (bare, or a crimped contact out of its housing: they pass the Ø8 bore a few at a time). That side sets the
+    direction the tube is pushed. Fit the tubes left to right.</p>
+    <div class="tbl"><table><tr><th>tube</th><th>loose ends</th><th>push the tube</th><th>collar</th></tr>{table}</table></div>
+    <h4>For each joint</h4><ol>{"".join(f"<li>{esc(s)}</li>" for s in steps)}</ol>
+  </section>'''
+
+
 def page(wires):
     steps = []
     for n, title, sub, prep, tests in STEPS:
@@ -496,7 +536,8 @@ def page(wires):
         kind = 'x' if ref in XH else 'd'
         conn_cards.append(f'<div class="card"><p><span class="e {kind}">{ref}</span> {esc(title)}</p><div class="pins">{cells}</div></div>')
     n26 = sum(1 for w in wires if w['awg'] == 26)
-    geo_pz = json.load(open(GEO_CACHE))['pivot_z']
+    geo = json.load(open(GEO_CACHE))
+    geo_pz = geo['pivot_z']
     tot = {}
     for w in wires:
         tot[(w['awg'], w['colr'])] = tot.get((w['awg'], w['colr']), 0) + w['cut']
@@ -612,7 +653,8 @@ svg .ps {{ font: 600 11px var(--f-mono); fill: #c0392b; }}
   <header>
     <h1>TARS4 — wiring guide</h1>
     <p class="lead">The {len(wires)} TARS wires ({n26} in 26 AWG, the rest in 30 AWG), in build order. Each step is tested
-    on the bench before the next; everything is done outside TARS, fitting comes at the end. The board plans
+    on the bench before the next. Steps 1–5 are done outside TARS; a tube is fitted in its columns before the far ends
+    of its wires are finished (section Joints), so steps 6–7 are tested with the columns joined. The board plans
     (renders/tars4_board_*.svg) give hole by hole, this guide gives both ends of every wire.</p>
   </header>
   <section>
@@ -636,9 +678,10 @@ svg .ps {{ font: 600 11px var(--f-mono); fill: #c0392b; }}
       <div><span class="fr" style="border-color:#f07800">X</span><span><b>JST-XH connector</b>, one side (female or male).</span></div>
     </div>
   </section>
-  <nav><h3>Steps</h3><ol>{"".join(f'<li><a href="#e{n}">{n}. {esc(t)}</a></li>' for n, t, *_ in STEPS)}<li><a href="#long">Lengths</a></li><li><a href="#tous">Full list</a></li><li><a href="#conn">Connectors</a></li></ol></nav>
+  <nav><h3>Steps</h3><ol>{"".join(f'<li><a href="#e{n}">{n}. {esc(t)}</a></li>' for n, t, *_ in STEPS)}<li><a href="#joints">Joints</a></li><li><a href="#long">Lengths</a></li><li><a href="#tous">Full list</a></li><li><a href="#conn">Connectors</a></li></ol></nav>
   <p class="small">In the diagrams, TARS is seen from the front (left leg on the left), one column per TARS column, the tubes between them. A block = a board, a module or one side of a connector; each line = one wire end. A wire started at one step and finished later leaves the block with an arrow "→ st. n".</p>
   {"".join(steps)}
+  {joints(geo)}
   <section class="step" id="long"><h2>Wire lengths</h2>
     <p class="sub">Taken from the 3D model (tars4.scad): route from one end to the other along the column, through the pivot (z {geo_pz:.0f}) when the wire changes column, +10 % for bends, + service loop at each end (7 cm at the P3 carrier, 4 cm at connectors, 2–3 cm at boards and modules), + 3 cm per tube (leg rotation). Length to cut = estimated + {TOL} cm; module pigtails are {PIGTAIL} cm. Cut at assembly time, after offering the wire up in TARS if possible.</p>
     {totals}

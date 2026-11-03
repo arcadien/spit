@@ -468,7 +468,7 @@ as the amplifier on the other side: free.
 
 - **One pivot per joint, at the top** (238.4 mm, as high as the bosses allow so it clears the screen board): the
   two-legged walk. The wires run through the tubes, so there is no centre pivot (no crutch walk / wheel).
-- Tube: **brass 8 / 7 mm** (`tube_od = 7.93` measured), ~20 mm long per joint. Glued into the left-hand column of the
+- Tube: **brass 8 / 7 mm** (`tube_od = 7.93` measured), cut to 16.5 mm per joint. Glued into the left-hand column of the
   joint (teardrop hole 8.00), turning in the right-hand one (teardrop hole 8.05, PLAT-MECH-PIVOT-001) on a Ø16 bearing ring with 2 detent bumps; 24 dimples on the fixed side
   → a click every 15°. A printed collar (Ø13 × 2, `collar`) glued on the tube inside the turning column holds the joint
   together; the tube sticks out 0.5 past it (`tube_over`). Bosses Ø14 × 5 inside the walls; nothing else at that height.
@@ -663,7 +663,9 @@ drawn is ~17 mm long (`xh_male_back`, `xh_female`) inside the 22 mm checked box 
 1. Print, glue the halves and splints.
 2. Parts on the front wall: screens, ADXL345, INMP441, amp, BME280, DS3231 with B+ pre-formed, speaker, charge port,
    switch, fuses + contact plates.
-3. Tubes glued in their fixed column, harness threaded bare, collars.
+3. Harness steps 1–5 on the bench, the tubes threaded on the bare wires. Then each tube fitted, left to right: its
+   loose ends through the bores, glued in its fixed column, collar (wiring guide, *Joints*); harness steps 6–7 after,
+   the far ends finished with the columns joined.
 4. Flat boards bottom-up from the back (microSD, power block); P1 / P2; the S3 + carrier last.
 5. Plug X1–X15, continuity check P1 / P2 → every housing, tie the bundles to the printed anchors.
 6. Close the lids (nothing over a post), test, cells last.
@@ -742,7 +744,7 @@ drawn is ~17 mm long (`xh_male_back`, `xh_female`) inside the 22 mm checked box 
 
 | Item | Qty | Notes |
 |---|---|---|
-| Brass tube 8 / 7 mm, cut to ~20 mm | 3 | one per joint |
+| Brass tube 8 / 7 mm, cut to 16.5 mm | 3 | one per joint |
 | M2.5 × 6 (or × 8) screws, **thin / ultra-low head, black** (head Ø~5, height ≤ 2) | 32 | lids: 7 per middle column, 9 per leg. Threaded **straight into the printed bosses** (Ø2.1 pilot, 9 deep) through the lid (Ø2.9 hole): × 6 engages 4.4 mm, × 8 6.4 mm. Good for ~10–20 openings: turn backwards until the thread clicks, then tighten, snug only. Upgrade: drill the pilots to 3.5 for M2.5 heat-set inserts |
 | M2 × 5 self-tapping screws | (8) | only if the measured screen has usable mounting holes |
 | Rubber feet, stick-on Ø8 (e.g. 3M Bumpon) | 16 | 4 per column |
