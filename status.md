@@ -1,20 +1,21 @@
-# audit-lotD — requirements coherence (audit 2026-10-29, lot D), stacked on audit-lotE
+# mech-collar-bore — collar bore on its own clearance (PLAT-MECH-COLLAR-001), stacked on audit-lotD
 
 ## Goal
-Fix lot D of `audits/2026-10-29-audit-full.md` (D4, D7 belong to mech-audio).
+The tube collar bore stops sharing the glued pivot clearance (8.00): printed flat, it is a vertical hole that prints
+much smaller. Requirement = the principle (collar glued on each tube, bore sized for the print process); the values
+live in `hardware/measurements.md`.
 
 ## State
-- Done (validated 2026-10-31): D1 (cycles FUNC/TECH ↔ PERF removed), D2 (validated requirements no longer depend
-  on drafts; PLAT-POWER-DETECT-001 → PLAT-POWER-PATH-001 already fine), D3 (FUNC-MECH-JOINT-001, parent of
-  PLAT-MECH-PIVOT-001, manual sheet), D5 (full = 20 mV below the peak ≥ 4.10 V), D6 (half-open hunger bands),
-  D8 (runtime on 2 × ≥ 2500 mAh, kept at ≥ 20 h: the bench decides; sleep docs aligned on ≤ 0.65 mA), D9 (backfeed
-  gated on GPIO37 in README / bring-up), D10 (VBAT/2 and VSENSE_B in grey 30 AWG, no ring).
-- Pushed 2026-11-01 (the 2026-10-31 failure was Pageant without the key, not the network). PR #18, stacked on #17.
+- `test:` bench sheet `tests/bench/PLAT-MECH-COLLAR-001.md`; `req:` validated (2026-11-05); `feat:` `collar_clr` 0.32
+  (Ø8.25, Ender 3 PETG, collars_petg 2026-11-05), `tube_collar()` uses it, model test in `tests/test_mechanical.py`,
+  measurements row, README. `make check` clean.
+- Stacked on audit-lotD because the parent FUNC-MECH-JOINT-001 is only there (audit D3).
 
 ## Open questions
 | # | Question | Answer |
 |---|---|---|
-| LD-1 | CLAUDE.md colour table: add `grey | analog sense (VBAT/2, VSENSE_B)` and drop VBAT/2 from brown? | Yes, done |
+| MC-1 | Values in the requirement? | No: principle only, values and their justification in measurements.md (user, 2026-11-05) |
+| MC-2 | PLAT-MECH-PIVOT-001 still carries its values (8.00 / 8.05, tube_test3): slim it the same way? | open, separate change |
 
 ## Next
-Merge order: audit-lot3, audit-lotE, audit-lotD (merge commits). Then mech-audio (A3, D4, D7, the amplifier rows).
+Bench sheet at bring-up step 4 (6 PETG collars Ø8.25 printed). Merge after audit-lotD.
