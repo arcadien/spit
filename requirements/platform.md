@@ -73,7 +73,7 @@ derives_from: [TECH-POWER-PROTECT-002](technical.md#tech-power-protect-002)
 
 derives_from: [FUNC-POWER-PATH-001](functional.md#func-power-path-001)
 
-**Description:** The circuit is: a 1N5822 Schottky D1 from VUSB to VPATH; a logic-level P-MOSFET Q1 (AO3401A, D on OUT+, S on VPATH, G on VUSB); R1 4.7 kΩ from Q1's gate to GND, chosen so that a warm D1 leaking up to 50 µA still leaves the gate below 0.25 V (Q1 fully on, no leakage measurement needed); it also discharges VUSB twice as fast on unplugging. Acceptance: pytest on the schematic (these nets, Q1 and D1 the right way round); bench: VUSB < 0.5 V within 1 s of unplugging.
+**Description:** The circuit is: a 1N5822 Schottky D1 from VUSB to VPATH; a logic-level P-MOSFET Q1 (AO3401A, D on OUT+, S on VPATH, G on VUSB); R1 4.7 kΩ from Q1's gate to GND. The choice of parts and values is justified in [design_notes.md](../hardware/design_notes.md) (*Parts*). Acceptance: pytest on the schematic (these nets, Q1 and D1 the right way round); bench: VUSB < 0.5 V within 1 s of unplugging.
 
 ### PLAT-POWER-SWITCH-001
 
