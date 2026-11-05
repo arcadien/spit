@@ -73,7 +73,7 @@ derives_from: [TECH-POWER-PROTECT-002](technical.md#tech-power-protect-002)
 
 derives_from: [FUNC-POWER-PATH-001](functional.md#func-power-path-001)
 
-**Description:** The circuit is: a 1N5822 Schottky D1 from VUSB to VPATH; a logic-level P-MOSFET Q1 (AO3401A, D on OUT+, S on VPATH, G on VUSB); R1 4.7 kΩ from Q1's gate to GND, chosen so that a warm D1 leaking up to 50 µA still leaves the gate below 0.25 V (Q1 fully on, no leakage measurement needed); it also discharges VUSB twice as fast on unplugging. Acceptance: pytest on the schematic (these nets, Q1 and D1 the right way round); bench: VUSB < 0.5 V within 1 s of unplugging.
+**Description:** The circuit is: a 1N5822 Schottky D1 from VUSB to VPATH; a logic-level P-MOSFET Q1 (AO3401A, D on OUT+, S on VPATH, G on VUSB); R1 4.7 kΩ from Q1's gate to GND. The choice of parts and values is justified in [design_notes.md](../hardware/design_notes.md) (*Parts*). Acceptance: pytest on the schematic (these nets, Q1 and D1 the right way round); bench: VUSB < 0.5 V within 1 s of unplugging.
 
 ### PLAT-POWER-SWITCH-001
 
@@ -121,7 +121,7 @@ derives_from: [TECH-POWER-REG-002](technical.md#tech-power-reg-002)
 
 derives_from: [TECH-POWER-REG-001](technical.md#tech-power-reg-001)
 
-**Description:** C1, a 220 µF polymer tantalum (Panasonic 10TPE220ML, 10 V, ESR ≤ 25 mΩ), sits at the S3 Mini's 3V pin on the carrier, about 35 cm of wire away from the TPS63020, with + on 3V3. Acceptance: pytest on the schematic (C1 between +3V3 and GND at the S3); bench polarity check before the first power-up.
+**Description:** C1, a 220 µF 10 V low-ESR polymer capacitor (ESR ≤ 25 mΩ), sits at the S3 Mini's 3V pin on the carrier, with + on 3V3. The fitted part and why it is needed: [design_notes.md](../hardware/design_notes.md) (*Parts*). Acceptance: pytest on the schematic (C1 between +3V3 and GND at the S3); bench polarity check before the first power-up.
 
 ### PLAT-POWER-DIST-001
 
@@ -145,7 +145,7 @@ derives_from: [TECH-POWER-DIST-001](technical.md#tech-power-dist-001)
 
 derives_from: [FUNC-POWER-MONITOR-001](functional.md#func-power-monitor-001)
 
-**Description:** R2 / R3 (1 MΩ / 1 MΩ) divide the TP4056 B+ pad voltage. R2 is soldered in line in the harness at the B+ pad end, so the sense wire to the power-path board carries B+ only behind 1 MΩ; R3 sits on the power-path board. The midpoint (VBAT/2) goes to GPIO1, an ADC1 channel usable with Wi-Fi on. C6 100 nF ceramic (never tantalum) sits from GPIO1 to GND at the S3. Acceptance: pytest on the schematic (these values and nets); bench: VBAT/2 = B+ / 2 ± 2 % with the switch on, the switch off and the charger plugged in.
+**Description:** R2 / R3 (1 MΩ / 1 MΩ) divide the TP4056 B+ pad voltage; the sense wire carries B+ only behind R2. The midpoint (VBAT/2) goes to GPIO1, an ADC1 channel usable with Wi-Fi on. C6 100 nF ceramic (never tantalum) sits from GPIO1 to GND at the S3. Where each resistor sits: [design_notes.md](../hardware/design_notes.md) (*Parts*). Acceptance: pytest on the schematic (these values and nets); bench: VBAT/2 = B+ / 2 ± 2 % with the switch on, the switch off and the charger plugged in.
 
 ### PLAT-POWER-DETECT-001
 
@@ -169,7 +169,7 @@ derives_from: [FUNC-POWER-DETECT-001](functional.md#func-power-detect-001)
 
 derives_from: [FUNC-POWER-VSENSE-001](functional.md#func-power-vsense-001)
 
-**Description:** BC547: base from VSYS through 1 MΩ, 330 kΩ base to GND, emitter to GND, collector to GPIO37 with the internal pull-up enabled only while reading. Rail present = GPIO37 low, from a VSYS threshold of 2.3–2.7 V over the NPN's V_BE and gain spread (above the 2.5 V the amplifier needs, below the ~3.2 V minimum of the rail on battery); no voltage above 3V3 reaches the pin. Fitted: BC547B (Q4). R23 (VSYS side) is soldered in line in the harness at the power-path board end, so the wire through the left tube carries VSYS only behind 1 MΩ; R24 and Q4 stand on the S3 carrier, the base line reaching it through X14. Acceptance: pytest on the schematic; bench: GPIO37 low at VSYS 3.0 and 5.0 V, high at 0 V. Standing current ~3–4 µA: [power_budget.md](../hardware/power_budget.md).
+**Description:** BC547: base from VSYS through 1 MΩ, 330 kΩ base to GND, emitter to GND, collector to GPIO37 with the internal pull-up enabled only while reading. Rail present = GPIO37 low, from a VSYS threshold above the amplifier's minimum supply and below the minimum of the rail on battery; no voltage above 3V3 reaches the pin. The wire through the tube carries VSYS only behind 1 MΩ. Fitted: BC547B (Q4). Placement, threshold spread and standing current: [design_notes.md](../hardware/design_notes.md) (*Parts*) and [power_budget.md](../hardware/power_budget.md). Acceptance: pytest on the schematic; bench: GPIO37 low at VSYS 3.0 and 5.0 V, high at 0 V. Standing current ~3–4 µA: [power_budget.md](../hardware/power_budget.md).
 
 ### PLAT-POWER-VBUS-001
 
