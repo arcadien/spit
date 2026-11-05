@@ -125,13 +125,13 @@
 
 ### FUNC-POWER-CUTOFF-002
 
-**Title:** An empty battery stays asleep until it is charging and above 3.5 V
+**Title:** An empty battery stays asleep until it is charging and above the lockout release voltage
 
 **Status:** validated
 
 **Dependencies:** [FUNC-POWER-CUTOFF-001](functional.md#func-power-cutoff-001), [FUNC-POWER-DETECT-002](functional.md#func-power-detect-002)
 
-**Description:** After a low-battery shutdown, the firmware records an "empty" state that survives deep sleep. While it is set, every wake returns to deep sleep without turning on the screens, the amplifier or the radio. It is cleared only when the external supply is present and the battery is above 3.50 V. While the supply is present, the controller wakes on a timer every re-check interval ([CONF-POWER-THRESH-001](configuration.md#conf-power-thresh-001)) to test this; on battery alone no timer wake is armed, so an empty battery is not drained further. Acceptance (on-target Unity test): with the state set, a wake goes back to sleep within 200 ms with the enables low; supply present: the next timer wake comes after the re-check interval ±10 %; supply absent: no timer wake within 2 intervals; supply + 3.4 V keeps the state set; supply + 3.6 V clears it.
+**Description:** After a low-battery shutdown, the firmware records an "empty" state that survives deep sleep. While it is set, every wake returns to deep sleep without turning on the screens, the amplifier or the radio. It is cleared only when the external supply is present and the battery is above the empty-lockout release voltage ([CONF-POWER-THRESH-001](configuration.md#conf-power-thresh-001)). While the supply is present, the controller wakes on a timer every re-check interval ([CONF-POWER-THRESH-001](configuration.md#conf-power-thresh-001)) to test this; on battery alone no timer wake is armed, so an empty battery is not drained further. Acceptance (on-target Unity test): with the state set, a wake goes back to sleep within 200 ms with the enables low; supply present: the next timer wake comes after the re-check interval ±10 %; supply absent: no timer wake within 2 intervals; supply + a battery 0.1 V below the release voltage keeps the state set; 0.1 V above it clears it.
 
 ### FUNC-POWER-GATE-001
 
