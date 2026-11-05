@@ -15,6 +15,8 @@ Fix lot D of `audits/2026-10-29-audit-full.md` (D4, D7 belong to mech-audio).
   (defaults → design_notes.md *Battery thresholds*), FUNC-POWER-MONITOR-002 and FUNC-POWER-CUTOFF-002 (bounds from
   CONF, no duplicated values), PLAT-POWER-CHARGE-002 (R_PROG value and fallback → measurements.md / open_questions.md).
   Done here, not on a new branch: this branch had rewritten three of them (no clash; mech-collar-bore merges it).
+  Then PLAT-POWER-PATH-001, -VSENSE-001, -REG-003, -MONITOR-001: rationale / placement left to design_notes.md
+  (*Parts*), acceptance unchanged; the B+ / VSYS-only-behind-1 MΩ wires stay as a safety property.
 
 ## Open questions
 | # | Question | Answer |
