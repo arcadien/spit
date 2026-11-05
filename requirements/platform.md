@@ -121,7 +121,7 @@ derives_from: [TECH-POWER-REG-002](technical.md#tech-power-reg-002)
 
 derives_from: [TECH-POWER-REG-001](technical.md#tech-power-reg-001)
 
-**Description:** C1, a 220 µF polymer tantalum (Panasonic 10TPE220ML, 10 V, ESR ≤ 25 mΩ), sits at the S3 Mini's 3V pin on the carrier, about 35 cm of wire away from the TPS63020, with + on 3V3. Acceptance: pytest on the schematic (C1 between +3V3 and GND at the S3); bench polarity check before the first power-up.
+**Description:** C1, a 220 µF 10 V low-ESR polymer capacitor (ESR ≤ 25 mΩ), sits at the S3 Mini's 3V pin on the carrier, with + on 3V3. The fitted part and why it is needed: [design_notes.md](../hardware/design_notes.md) (*Parts*). Acceptance: pytest on the schematic (C1 between +3V3 and GND at the S3); bench polarity check before the first power-up.
 
 ### PLAT-POWER-DIST-001
 
