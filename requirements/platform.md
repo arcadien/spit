@@ -247,7 +247,7 @@ derives_from: [FUNC-MECH-JOINT-001](functional.md#func-mech-joint-001)
 
 **Title:** Each joint is held together by a collar glued on its tube, its bore sized for the print process
 
-**Status:** draft
+**Status:** validated
 
 **Dependencies:** none
 
