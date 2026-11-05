@@ -374,6 +374,7 @@ pivot_boss_l = 5;             // boss depth inside the column (bearing / glue le
 pivot_ring_d = 16;            // bearing ring on the turning side, thickness = gap
 collar = [13, 2];             // retaining collar glued on the tube inside the turning column (OD, thickness; 2 leaves room for the motion sensor)
 tube_over = 0.5;              // tube end past the collar
+collar_clr = 0.32;            // collar bore over tube_od (printed flat: a vertical hole): calibrated per printer / filament, hardware/measurements.md
 detent_r = 6.5;
 detent_n = 24;
 detent_bump_d = 1.6;
@@ -1162,7 +1163,7 @@ module inserts(speaker = false) { // black flush plugs for the panel holes of a 
 }
 
 module tube_collar() {
-    difference() { cylinder(d = collar[0], h = collar[1]); translate([0, 0, -eps]) cylinder(d = tube_od + tube_glue_clr, h = collar[1] + 2 * eps); }
+    difference() { cylinder(d = collar[0], h = collar[1]); translate([0, 0, -eps]) cylinder(d = tube_od + collar_clr, h = collar[1] + 2 * eps); }
 }
 
 module test_screen() { // front wall of a middle column around the screen

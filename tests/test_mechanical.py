@@ -9,7 +9,7 @@ import pytest
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SCAD = os.path.join(ROOT, 'mechanical', 'scad', 'tars4.scad')
-VALUES = ('tube_od', 'tube_glue_clr', 'tube_run_clr')
+VALUES = ('tube_od', 'tube_glue_clr', 'tube_run_clr', 'collar_clr')
 
 
 @pytest.fixture(scope='session')
@@ -46,9 +46,21 @@ def test_plat_mech_pivot_001_teardrop_bores_sized_from_tube_test3(model):
     # Given the evaluated model
     values, warnings = model
     # Then the tube and its two clearances are the measured ones
-    assert values == {'tube_od': 7.93, 'tube_glue_clr': 0.07, 'tube_run_clr': 0.12}
+    assert {k: values[k] for k in VALUES[:3]} == {'tube_od': 7.93, 'tube_glue_clr': 0.07, 'tube_run_clr': 0.12}
     # And every pivot bore is a teardrop (pivot_cut cuts with xtear only)
     body = re.search(r'module pivot_cut\(i\) \{(.*?)\n\}', source(), re.S).group(1)
     assert 'xtear(' in body and 'cylinder(' not in body
+    # And the model is clean
+    assert warnings == []
+
+
+@pytest.mark.req('PLAT-MECH-COLLAR-001')
+def test_plat_mech_collar_001_collar_bore_is_its_own_parameter(model):
+    # Given the evaluated model
+    values, warnings = model
+    # Then the collar bore has its own clearance (calibrated per print process), not the glued pivot one
+    assert values['collar_clr'] > 0
+    body = re.search(r'module tube_collar\(\) \{(.*?)\n\}', source(), re.S).group(1)
+    assert 'tube_od + collar_clr' in body and 'tube_glue_clr' not in body
     # And the model is clean
     assert warnings == []

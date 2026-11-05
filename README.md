@@ -98,7 +98,7 @@ priority of the design: everything derives from `D` (depth).
 | Middle lid, bottom / top | `mechanical/stl/tars4_lid_mid_bottom.stl`, `mechanical/stl/tars4_lid_mid_top.stl` (right middle), `mechanical/stl/tars4_lid_mid_left_bottom.stl`, `mechanical/stl/tars4_lid_mid_left_top.stl` (left middle, no speaker tabs) | 1 + 1 each | 112.2 / 132.0 | split at 0.46·H; bottom: controller lug, 4 tabs behind the controller, speaker tabs (right only), 45° gussets; top: two continuous screen ribs |
 | Splints | `mechanical/stl/tars4_splint.stl` | 1 set of 4 | 20 tall | glued inside across each seam |
 | Black plugs | `mechanical/stl/tars4_inserts.stl` (left middle), `mechanical/stl/tars4_inserts_speaker.stl` (right middle, grille) | 1 + 1 set | | screen panel (with window) + lower panel, **black filament** |
-| Tube collars | `mechanical/stl/tars4_collar.stl` | 1 set of 3 | | glued on the pivot tubes, PETG |
+| Tube collars | `mechanical/stl/tars4_collar.stl` | 1 set of 3 | | glued on the pivot tubes, PETG, bore Ø8.25 (`collar_clr`, calibrated on the Ender 3: [measurements.md](hardware/measurements.md)) |
 
 Overhangs: none needs support (45° slopes, teardrop pads, short bridges ≤ 11.6 mm, 8 mm tube bores): supports off.
 
@@ -469,7 +469,7 @@ as the amplifier on the other side: free.
   two-legged walk. The wires run through the tubes, so there is no centre pivot (no crutch walk / wheel).
 - Tube: **brass 8 / 7 mm** (`tube_od = 7.93` measured), ~20 mm long per joint. Glued into the left-hand column of the
   joint (teardrop hole 8.00), turning in the right-hand one (teardrop hole 8.05, PLAT-MECH-PIVOT-001) on a Ø16 bearing ring with 2 detent bumps; 24 dimples on the fixed side
-  → a click every 15°. A printed collar (Ø13 × 2, `collar`) glued on the tube inside the turning column holds the joint
+  → a click every 15°. A printed collar (Ø13 × 2, `collar`, its own bore `collar_clr`, PLAT-MECH-COLLAR-001) glued on the tube inside the turning column holds the joint
   together; the tube sticks out 0.5 past it (`tube_over`). Bosses Ø14 × 5 inside the walls; nothing else at that height.
 - Swinging back and forth is fine; endless rotation would need a Ø12.5 slip ring.
 
