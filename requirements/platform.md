@@ -242,3 +242,15 @@ derives_from: [FUNC-POWER-CHARGE-001](functional.md#func-power-charge-001)
 derives_from: [FUNC-MECH-JOINT-001](functional.md#func-mech-joint-001)
 
 **Description:** Each column joint turns on a brass tube (7.93 measured outer Ø), glued into one column and turning in the next. The pivot bores are horizontal when the columns print front face down, so they are teardrop-shaped (point toward the print top, self-supporting 45° ceiling, no support inside the bore). Drawn Ø: glued side 8.00 (tube held, no play), turning side 8.05 (turns, micro play only), from tube_test3 (2026-10-28, IBoss PLA Silk, 0.20 mm Ender3 profile). Tight beats loose: a bore that binds is sanded or reamed with an 8 mm drill. Acceptance: `make check` clean (no WARNING); `tube_od` = 7.93, `tube_glue_clr` = 0.07, `tube_run_clr` = 0.12; `pivot_cut` uses `xtear`; first printed joint: glued side holds, turning side turns without wobble.
+
+### PLAT-MECH-COLLAR-001
+
+**Title:** Each joint is held together by a collar glued on its tube, its bore sized for the print process
+
+**Status:** draft
+
+**Dependencies:** none
+
+derives_from: [FUNC-MECH-JOINT-001](functional.md#func-mech-joint-001)
+
+**Description:** Each joint is held together axially by a printed collar glued on the tube inside the turning column, against its boss: the turning column cannot slide off the tube, and still turns. The collar bore is its own dimension, sized for the print process used (printer, filament, print orientation), not derived from the pivot bores: the collar goes on the tube by hand up to the boss, without play that would let it tilt. The calibrated value and its measurements are recorded in [measurements.md](../hardware/measurements.md). Acceptance: `make check` clean (no WARNING); the collar bore is a model parameter of its own; printed collars go on the tube by hand up to the boss, and the glued joint holds axially while it turns.
