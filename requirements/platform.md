@@ -17,7 +17,7 @@ derives_from: [FUNC-POWER-CHARGE-001](functional.md#func-power-charge-001)
 
 ### PLAT-POWER-CHARGE-002
 
-**Title:** Charge current set to 0.5 A by R_PROG 2.4 kΩ
+**Title:** Charge current set by R_PROG on the TP4056 module
 
 **Status:** validated
 
@@ -25,7 +25,7 @@ derives_from: [FUNC-POWER-CHARGE-001](functional.md#func-power-charge-001)
 
 derives_from: [TECH-POWER-CHARGE-001](technical.md#tech-power-charge-001)
 
-**Description:** The TP4056 module's R_PROG (1.2 kΩ "122" from the factory) is replaced by 2.4 kΩ ("242"), which sets the charge current to 0.5 A. If E-M8 fails (wall > 45 °C), the fallback is 3.6 kΩ (0.33 A); D13 is decided after E-M8. Acceptance (bench): with the module unpowered, the fitted R_PROG is within ± 5 %; the charge current into a half-empty cell is 0.45–0.55 A (fallback 0.30–0.36 A); in open air, the TP4056 case is < 60 °C after 15 min.
+**Description:** The TP4056 module's factory R_PROG (1.2 kΩ, 1 A) is replaced by a resistor that sets a charge current within the thermal limit of [PERF-POWER-THERMAL-001](performance.md#perf-power-thermal-001). The fitted value, its fallback and the decisions they depend on (E-M8, D13) are recorded in [measurements.md](../hardware/measurements.md) and [open_questions.md](../open_questions.md). Acceptance (bench): with the module unpowered, the fitted R_PROG is within ± 5 % of the recorded value; the charge current into a half-empty cell is 1200 / R_PROG (A, R in Ω) within ± 10 %; in open air, the TP4056 case is < 60 °C after 15 min.
 
 ### PLAT-POWER-HOTPLUG-001
 

@@ -11,6 +11,11 @@ live in `hardware/measurements.md`.
   measurements row, README. `make check` clean.
 - Stacked on audit-lotD because the parent FUNC-MECH-JOINT-001 is only there (audit D3).
 
+- Requirements slimmed (2026-11-05, user: principle in requirements, values in a log): CONF-POWER-THRESH-001
+  (defaults → design_notes.md *Battery thresholds*), FUNC-POWER-MONITOR-002 and FUNC-POWER-CUTOFF-002 (bounds from
+  CONF, no duplicated values), PLAT-POWER-CHARGE-002 (R_PROG value and fallback → measurements.md / open_questions.md).
+  Done here, not on a new branch: this branch had rewritten three of them (no clash; mech-collar-bore merges it).
+
 ## Open questions
 | # | Question | Answer |
 |---|---|---|

@@ -65,6 +65,23 @@ and the harness guide [tars4_harness.html](tars4_harness.html). Requirements: `r
   little 3.3 V leaks back through the ME6211 to VBUS (to measure, cable plugged into a PC that is off).
 - To check: the TPS63020 must not start from its output (VSYS < 2.5 V), the max input voltage of the unpowered MAX98357A.
 
+### Battery thresholds
+
+Defaults of the configuration constants of [CONF-POWER-THRESH-001](../requirements/configuration.md#conf-power-thresh-001)
+(used by FUNC-POWER-MONITOR-002, FUNC-POWER-CUTOFF-001 / 002, FUNC-POWER-DETECT-002), from the cell datasheet and the
+TPS63020 input range; the bench measurements may move them (record the measured value in
+[measurements.md](measurements.md)).
+
+| Constant | Default | Why |
+|---|---|---|
+| Level bounds fed / peckish / hungry | 3.90 / 3.70 / 3.50 V | hunger levels of the README (*Battery monitor*); to check against the cells' discharge on the bench |
+| Cut-off (empty) | 3.30 V | ~5–10 % left (*Sleep and wake-up*); the TPS63020 holds 3.3 V down to ~2.5 V in, so the cut-off only spares the cells |
+| No-battery limit | 2.50 V | GPIO1 < 1.25 V: no cells, the S3 runs from a PC's USB: the cut-off is ignored |
+| Averaging window | 60 s | longer than any Wi-Fi / amplifier peak: the only hysteresis of the levels |
+| Charge full | peak ≥ 4.10 V, then 20 mV below the peak | end of charge deduced from B+ while USB_DET stays high (*Signals*; audit D5) |
+| Empty-lockout release | 3.50 V | = the hungry bound: the robot wakes up hungry, not starving |
+| Lockout re-check interval | 10 min | timer wake on the supply only; no wake on battery alone |
+
 ## Signals
 
 - BL_EN (GPIO7) only drives the backlights: PWM possible (LEDC, ~20 kHz). R4 holds it low at boot, `gpio_hold` in
