@@ -42,11 +42,12 @@ def test_plat_mech_chargeport_001_charge_port_geometry_asserts_hold(model):
 
 
 @pytest.mark.req('PLAT-MECH-PIVOT-001')
-def test_plat_mech_pivot_001_teardrop_bores_sized_from_tube_test3(model):
+def test_plat_mech_pivot_001_teardrop_bores_glued_tighter_than_turning(model):
     # Given the evaluated model
     values, warnings = model
-    # Then the tube and its two clearances are the measured ones
-    assert {k: values[k] for k in VALUES[:3]} == {'tube_od': 7.93, 'tube_glue_clr': 0.07, 'tube_run_clr': 0.12}
+    # Then the tube Ø and both clearances are model parameters (calibrated values: hardware/measurements.md),
+    # the glued side tighter than the turning side
+    assert values['tube_od'] > 0 and 0 < values['tube_glue_clr'] < values['tube_run_clr']
     # And every pivot bore is a teardrop (pivot_cut cuts with xtear only)
     body = re.search(r'module pivot_cut\(i\) \{(.*?)\n\}', source(), re.S).group(1)
     assert 'xtear(' in body and 'cylinder(' not in body

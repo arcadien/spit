@@ -5,15 +5,15 @@ teardrop bores, no WARNING) is checked by `tests/test_mechanical.py`; this sheet
 bring-up step **4** ([bring-up.md](bring-up.md)); add a line to *Results* every time it is run.
 
 ## Equipment
-- Two printed neighbouring columns (first joint), the brass tube (7.93 measured) cut to length.
+- Two printed neighbouring columns (first joint), the brass tube cut to length (its measured Ø and the calibrated clearances: [measurements.md](../../hardware/measurements.md), *Brass tube*).
 - Epoxy or cyanoacrylate glue; an 8 mm drill bit to ream a bore that binds.
 
 ## Setup
 1. Clean the bores of any stringing. Dry-fit the tube in both bores without glue.
 
 ## Steps
-1. Glued side (8.00 teardrop): push the tube in. It must hold without play; glue it and let it cure.
-2. Turning side (8.05 teardrop): slide the neighbouring column on and swing it through its full travel ten times.
+1. Glued side (teardrop, `tube_od + tube_glue_clr`): push the tube in. It must hold without play; glue it and let it cure.
+2. Turning side (teardrop, `tube_od + tube_run_clr`): slide the neighbouring column on and swing it through its full travel ten times.
 3. Hold the glued column and try to wobble the turning one sideways.
 
 ## Pass criteria
