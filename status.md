@@ -11,6 +11,11 @@ Fix lot D of `audits/2026-10-29-audit-full.md` (D4, D7 belong to mech-audio).
   gated on GPIO37 in README / bring-up), D10 (VBAT/2 and VSENSE_B in grey 30 AWG, no ring).
 - Pushed 2026-11-01 (the 2026-10-31 failure was Pageant without the key, not the network). PR #18, stacked on #17.
 
+- Requirements slimmed (2026-11-05, user: principle in requirements, values in a log): CONF-POWER-THRESH-001
+  (defaults → design_notes.md *Battery thresholds*), FUNC-POWER-MONITOR-002 and FUNC-POWER-CUTOFF-002 (bounds from
+  CONF, no duplicated values), PLAT-POWER-CHARGE-002 (R_PROG value and fallback → measurements.md / open_questions.md).
+  Done here, not on a new branch: this branch had rewritten three of them (no clash; mech-collar-bore merges it).
+
 ## Open questions
 | # | Question | Answer |
 |---|---|---|
