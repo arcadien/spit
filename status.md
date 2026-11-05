@@ -15,7 +15,7 @@ live in `hardware/measurements.md`.
 | # | Question | Answer |
 |---|---|---|
 | MC-1 | Values in the requirement? | No: principle only, values and their justification in measurements.md (user, 2026-11-05) |
-| MC-2 | PLAT-MECH-PIVOT-001 still carries its values (8.00 / 8.05, tube_test3): slim it the same way? | open, separate change |
+| MC-2 | PLAT-MECH-PIVOT-001 still carries its values (8.00 / 8.05, tube_test3): slim it the same way? | Yes, on this branch (user, 2026-11-05): principle only, test checks structure, values in measurements.md |
 
 ## Next
 Bench sheet at bring-up step 4 (6 PETG collars Ø8.25 printed). Merge after audit-lotD.
