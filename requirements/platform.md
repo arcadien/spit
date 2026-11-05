@@ -169,7 +169,7 @@ derives_from: [FUNC-POWER-DETECT-001](functional.md#func-power-detect-001)
 
 derives_from: [FUNC-POWER-VSENSE-001](functional.md#func-power-vsense-001)
 
-**Description:** BC547: base from VSYS through 1 MΩ, 330 kΩ base to GND, emitter to GND, collector to GPIO37 with the internal pull-up enabled only while reading. Rail present = GPIO37 low, from a VSYS threshold of 2.3–2.7 V over the NPN's V_BE and gain spread (above the 2.5 V the amplifier needs, below the ~3.2 V minimum of the rail on battery); no voltage above 3V3 reaches the pin. Fitted: BC547B (Q4). R23 (VSYS side) is soldered in line in the harness at the power-path board end, so the wire through the left tube carries VSYS only behind 1 MΩ; R24 and Q4 stand on the S3 carrier, the base line reaching it through X14. Acceptance: pytest on the schematic; bench: GPIO37 low at VSYS 3.0 and 5.0 V, high at 0 V. Standing current ~3–4 µA: [power_budget.md](../hardware/power_budget.md).
+**Description:** BC547: base from VSYS through 1 MΩ, 330 kΩ base to GND, emitter to GND, collector to GPIO37 with the internal pull-up enabled only while reading. Rail present = GPIO37 low, from a VSYS threshold above the amplifier's minimum supply and below the minimum of the rail on battery; no voltage above 3V3 reaches the pin. The wire through the tube carries VSYS only behind 1 MΩ. Fitted: BC547B (Q4). Placement, threshold spread and standing current: [design_notes.md](../hardware/design_notes.md) (*Parts*) and [power_budget.md](../hardware/power_budget.md). Acceptance: pytest on the schematic; bench: GPIO37 low at VSYS 3.0 and 5.0 V, high at 0 V. Standing current ~3–4 µA: [power_budget.md](../hardware/power_budget.md).
 
 ### PLAT-POWER-VBUS-001
 
