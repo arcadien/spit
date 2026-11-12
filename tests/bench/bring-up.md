@@ -44,7 +44,7 @@ What is left to buy: [shopping_list.md](../../hardware/shopping_list.md). Open q
 - [ ] TP4056 R_PROG 2.4 k → [PLAT-POWER-CHARGE-002](PLAT-POWER-CHARGE-002.md)
 - [ ] Battery-fed LEDs removed → [PLAT-POWER-SLEEP-001](PLAT-POWER-SLEEP-001.md), [TECH-POWER-SLEEP-001](TECH-POWER-SLEEP-001.md)
 - [ ] TPS63020 output and idle current → [PLAT-POWER-REG-001](PLAT-POWER-REG-001.md)
-- [ ] Slide switch current rating (≥ 1 A).
+- [ ] Slide switch current rating (≥ 2 A, E-M6).
 - [ ] ZS-042: CR2032 charging resistor removed.
 - [ ] Cells matched → [TECH-POWER-CELL-002](TECH-POWER-CELL-002.md)
 

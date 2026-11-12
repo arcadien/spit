@@ -19,7 +19,7 @@ and the harness guide [spit_harness.html](spit_harness.html). Requirements: `req
 | Q1 | AO3401A, logic-level P-MOSFET | power path: cells → VSYS, off on mains (gate on VUSB) |
 | D1 | 1N5822, 3 A Schottky, through-hole | VUSB → VPATH on mains; band on the VPATH side, before the switch |
 | R1 | 4.7 k | Q1 gate → GND: fast switch-over when unplugged (~50 ms); a warm D1 leaking 50 µA leaves the gate < 0.25 V |
-| SW1 | slide switch, ≥ 1 A | after the merge point; rating to check (often only 0.3–0.5 A) |
+| SW1 | slide switch, ≥ 2 A | after the merge point; rating to check (often only 0.3–0.5 A) |
 | U9 | TPS63020 module, 3.3 V | buck-boost in the left leg, 3.3 V to the S3 3V3 pin; EN to VIN, PS/SYNC to GND (solder bridge, never high). Its own VSYS / GND pair from the star; the logic GND to P1 leaves from its GND pad, along its 3V3 wire |
 | C1 | 220 µF 10 V polymer tantalum 7343 (Panasonic 10TPE220ML, ESR 25 mΩ), band = + | mandatory: 3V3 → GND as close as possible to the S3 3V pin, flat on the carrier under the S3, ~35 cm of wire from the TPS63020 |
 | R15, R16 | 68 k + 100 k | on the power-path board: VUSB → USB_DET (GPIO21), ~3 V with the charger plugged in, 30 µA on USB only; switch off with the charger in, ~60 µA flow from this ~40 k divider into the unpowered 3V3 through GPIO21's protection diode (harmless, well below the pin's injection limit) |
