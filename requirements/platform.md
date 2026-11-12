@@ -25,7 +25,7 @@ derives_from: [FUNC-POWER-CHARGE-001](functional.md#func-power-charge-001)
 
 derives_from: [TECH-POWER-CHARGE-001](technical.md#tech-power-charge-001)
 
-**Description:** The TP4056 module's factory R_PROG (1.2 kΩ, 1 A) is replaced by a resistor that sets a charge current within the thermal limit of [PERF-POWER-THERMAL-001](performance.md#perf-power-thermal-001). The fitted value, its fallback and the decisions they depend on (E-M8, D13) are recorded in [measurements.md](../hardware/measurements.md) and [open_questions.md](../open_questions.md). Acceptance (bench): with the module unpowered, the fitted R_PROG is within ± 5 % of the recorded value; the charge current into a half-empty cell is 1200 / R_PROG (A, R in Ω) within ± 10 %; in open air, the TP4056 case is < 60 °C after 15 min.
+**Description:** The TP4056 module's factory R_PROG (1.2 kΩ, 1 A) is replaced by a resistor that sets a charge current within the thermal limit of [PERF-POWER-THERMAL-001](performance.md#perf-power-thermal-001). The fitted value, its fallback and the decisions they depend on (E-M8) are recorded in [measurements.md](../hardware/measurements.md) and [open_questions.md](../open_questions.md). Acceptance (bench): with the module unpowered, the fitted R_PROG is within ± 5 % of the recorded value; the charge current into a half-empty cell is 1200 / R_PROG (A, R in Ω) within ± 10 %; in open air, the TP4056 case is < 60 °C after 15 min.
 
 ### PLAT-POWER-HOTPLUG-001
 

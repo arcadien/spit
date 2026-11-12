@@ -11,9 +11,11 @@ TARS robot, `tars4` variant. `README.md` is the project documentation; `mechanic
   plates are not in git (TECH-BUILD-ARTIFACTS-001): `make check-stl` before a print. OpenSCAD pinned to 2026.11-RC0.
 - Commit prefixes (RBD pre-push hook): req, test, feat, tech, perf, ui, conf, arch, plan, chore, fix, docs, style,
   refactor; `feat(ID):`-style ones need a validated requirement. Granular commits, push after each.
-- Branches: each work branch keeps its state in `status.md` at the repo root (goal, state, findings, open questions with
-  their answers, next step). Read it first when the branch is picked up again, keep it current, commit it with the
-  branch's changes (`plan:`); the questions asked to me on that branch live there. Remove it before the branch is merged (main has none).
+- Branches: each work branch keeps its state in `status.md` at the repo root (goal, state, findings, the branch's open
+  questions, next step). Read it first when the branch is picked up again, keep it current, commit it with the
+  branch's changes (`plan:`); the questions asked to me on that branch live there while open. An answered question
+  leaves `status.md` and `open_questions.md`: its answer goes into the document it changes (measurements, requirement,
+  model, README). A blocker shared with main is an item of `open_questions.md`, named by its ID in `status.md`, never copied. Remove it before the branch is merged (main has none).
 - Branch `bench-tests`: bench firmware for the D1 mini and the S3 Mini, not merged.
 - Requirements: draft a whole domain for review; keep a requirement `draft` while a bench measurement is pending;
   a PLAT requirement is validated only after its FUNC / TECH parent.
@@ -26,7 +28,7 @@ tests where they apply, then the change in a `<feat|tech|perf|ui|conf|fix>(ID):`
 measurements in `hardware/measurements.md` (`docs:`, straight on main).
 Work happens on a branch. A branch whose change still depends on a pending measurement (a `MEASURE` value it
 introduced or relies on, a bench check in draft) is **not merged** until the measurement is done and folded in: a risk
-remains. List it in `open_questions.md` with the branch name.
+remains. List it in `open_questions.md` (an ID, the requirement, the branch name).
 
 A change in `mechanical/` also requires, in the same change:
 - `make check` clean: no OpenSCAD WARNING, every plate on its bed (Ender 3 220 × 220 halves, CR-10 one-piece);
