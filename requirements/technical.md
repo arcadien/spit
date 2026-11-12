@@ -133,6 +133,16 @@
 
 **Description:** No status LED or free-running clock output that draws current permanently is fed from the battery or from rails fed by the battery. LEDs fed only from the external supply (charger status) are allowed. Acceptance: visual inspection against the bring-up checklist (the resulting deep-sleep current is [PERF-POWER-SLEEP-001](performance.md#perf-power-sleep-001)'s).
 
+### TECH-BUILD-DOCS-001
+
+**Title:** Each fact is written once, in the document that owns it
+
+**Status:** validated
+
+**Dependencies:** none
+
+**Description:** Values and limits live in the requirements; why each part is there, where it sits and how it is wired live in [design_notes.md](../hardware/design_notes.md) (parts, power and ground, signals and GPIO map, sleep, placement, wiring, colour code, boards, connectors); the bill of materials in [bom.md](../hardware/bom.md); currents in [power_budget.md](../hardware/power_budget.md); measured values in [measurements.md](../hardware/measurements.md); the build workflow and validation stages in [CONTRIBUTING.md](../CONTRIBUTING.md). The README is the entry point: overview, where to find what, printing, assembly, rebuild; other documents link to the owner instead of repeating a value. Documentation commits that only move, merge or correct text under these rules carry this ID. Acceptance (pytest): every relative link of the README resolves to a versioned file; the README has no bill of materials, GPIO table, colour code or connector table; `hardware/bom.md` and `hardware/design_notes.md` hold them.
+
 ### TECH-BUILD-NAME-001
 
 **Title:** The project is named SPIT
