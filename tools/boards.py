@@ -39,7 +39,7 @@ def rings_text(r):
     return f', {r} ring{"s" if r > 1 else ""}'
 POWER = {'VUSB', 'VPATH', 'VSYS', 'OUT+', 'B+'}
 GPIO = {'USB_DET', 'VBAT/2', 'SD_EN'}
-# Connectors X1–X15 (harness side), pins from pin 1: (name, net); net 'key' = module pin pulled and cavity plugged,
+# Connectors X1–X16 (harness side), pins from pin 1: (name, net); net 'key' = module pin pulled and cavity plugged,
 # None = contact left empty (pin tied on the module), '|' = gap between two housings. A wire's 7th field lists the
 # contacts it is crimped into ('X1.CS'); its net must be the contact's. X6 (speaker), X12 / X16 (cells) meet no board.
 CONNS = {
