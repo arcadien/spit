@@ -11,7 +11,7 @@
 
 **Dependencies:** none
 
-**Description:** The battery is two 18650 lithium-ion cells in parallel (1S2P), connected to one charger and one protection circuit. Two chargers or two protection circuits in parallel are not allowed. Acceptance (pytest on kicad/tars4.kicad_sch): exactly one charger/protection module; both cell branches end on the same BAT+ net and the same B− net.
+**Description:** The battery is two 18650 lithium-ion cells in parallel (1S2P), connected to one charger and one protection circuit. Two chargers or two protection circuits in parallel are not allowed. Acceptance (pytest on kicad/spit.kicad_sch): exactly one charger/protection module; both cell branches end on the same BAT+ net and the same B− net.
 
 ### TECH-POWER-CELL-002
 
@@ -133,6 +133,16 @@
 
 **Description:** No status LED or free-running clock output that draws current permanently is fed from the battery or from rails fed by the battery. LEDs fed only from the external supply (charger status) are allowed. Acceptance: visual inspection against the bring-up checklist (the resulting deep-sleep current is [PERF-POWER-SLEEP-001](performance.md#perf-power-sleep-001)'s).
 
+### TECH-BUILD-NAME-001
+
+**Title:** The project is named SPIT
+
+**Status:** validated
+
+**Dependencies:** none
+
+**Description:** The robot and the project are named **SPIT** ("SPit Is not TARS"): the model is `mechanical/scad/spit.scad`, every generated or versioned file carries the `spit` prefix (`spit_*`), the KiCad symbol library is `spit`, and the documentation calls the robot SPIT; the left middle column is engraved "SPIT" in letters and in braille. TARS from *Interstellar* is named only as the inspiration (README introduction, reference images). Archived reviews and audits keep their original wording. Acceptance (pytest): no versioned path outside `references/`, `reviews/` and `audits/` contains "tars"; the model engraves "SPIT" and its braille cells spell S P I T.
+
 ### TECH-BUILD-ARTIFACTS-001
 
 **Title:** Print files are generated from the model, not versioned
@@ -141,7 +151,7 @@
 
 **Dependencies:** none
 
-**Description:** The STL parts (`mechanical/stl/`) and the raw plates (`mechanical/3mf/tars4_plate*.3mf`) are build outputs of `mechanical/scad/tars4.scad`: git ignores them, and they are regenerated on demand before a print (`make check-stl`, `tools/build4.sh 3mf`). The hand-arranged Orca projects (`mechanical/3mf/tars4.3mf`, `tars4_cr10.3mf`), the renders and the wiring / harness / schematic documents stay versioned. The OpenSCAD version used for the exports is pinned, in [CONTRIBUTING.md](../CONTRIBUTING.md) and in CI. Acceptance: `git ls-files mechanical/stl 'mechanical/3mf/tars4_plate*'` is empty and both paths are in `.gitignore`; on a fresh clone, `make check-stl` produces every part listed in `tools/build4.sh` with no OpenSCAD WARNING and every plate on its bed.
+**Description:** The STL parts (`mechanical/stl/`) and the raw plates (`mechanical/3mf/spit_plate*.3mf`) are build outputs of `mechanical/scad/spit.scad`: git ignores them, and they are regenerated on demand before a print (`make check-stl`, `tools/build4.sh 3mf`). The hand-arranged Orca projects (`mechanical/3mf/spit.3mf`, `spit_cr10.3mf`), the renders and the wiring / harness / schematic documents stay versioned. The OpenSCAD version used for the exports is pinned, in [CONTRIBUTING.md](../CONTRIBUTING.md) and in CI. Acceptance: `git ls-files mechanical/stl 'mechanical/3mf/spit_plate*'` is empty and both paths are in `.gitignore`; on a fresh clone, `make check-stl` produces every part listed in `tools/build4.sh` with no OpenSCAD WARNING and every plate on its bed.
 
 ### TECH-BUILD-CHECKS-001
 
@@ -151,7 +161,7 @@
 
 **Dependencies:** [TECH-BUILD-ARTIFACTS-001](technical.md#tech-build-artifacts-001)
 
-**Description:** The pre-commit hook runs only checks lasting seconds: model evaluation without export (every model WARNING), board / wiring / harness documents, ERC when the schematic changed. The pre-push hook runs the slow checks: STL export with bed fit (Ender 3 halves, CR-10 one-piece) and renders; it also refreshes the meshes of the Orca projects (`mechanical/3mf/tars4.3mf`, `tars4_cr10.3mf`) from the STLs when they changed, keeping plates, positions and settings; it refuses the push when a check fails or rewrites a tracked file. A CI job on every push and pull request to main runs the model, STL, ERC and docs checks with the pinned OpenSCAD, and main's branch protection requires it. `make hook` installs the pre-commit, commit-msg and pre-push hooks. Acceptance: pre-commit takes ≤ 30 s when `tars4.scad` changed; a model WARNING blocks the commit; a part off its bed blocks the push and fails CI; a push whose STLs differ from the meshes of an Orca project is refused, with the project rewritten to match; a push with up-to-date meshes leaves the projects byte-identical; a pull request with a failing CI job cannot be merged.
+**Description:** The pre-commit hook runs only checks lasting seconds: model evaluation without export (every model WARNING), board / wiring / harness documents, ERC when the schematic changed. The pre-push hook runs the slow checks: STL export with bed fit (Ender 3 halves, CR-10 one-piece) and renders; it also refreshes the meshes of the Orca projects (`mechanical/3mf/spit.3mf`, `spit_cr10.3mf`) from the STLs when they changed, keeping plates, positions and settings; it refuses the push when a check fails or rewrites a tracked file. A CI job on every push and pull request to main runs the model, STL, ERC and docs checks with the pinned OpenSCAD, and main's branch protection requires it. `make hook` installs the pre-commit, commit-msg and pre-push hooks. Acceptance: pre-commit takes ≤ 30 s when `spit.scad` changed; a model WARNING blocks the commit; a part off its bed blocks the push and fails CI; a push whose STLs differ from the meshes of an Orca project is refused, with the project rewritten to match; a push with up-to-date meshes leaves the projects byte-identical; a pull request with a failing CI job cannot be merged.
 
 ### TECH-HARNESS-BOARDS-001
 

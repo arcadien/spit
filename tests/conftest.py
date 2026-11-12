@@ -13,7 +13,7 @@ import xml.etree.ElementTree as ET
 import pytest
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SCH = os.path.join(ROOT, 'hardware', 'kicad', 'tars4.kicad_sch')
+SCH = os.path.join(ROOT, 'hardware', 'kicad', 'spit.kicad_sch')
 sys.path.insert(0, os.path.join(ROOT, 'tools'))   # boards.py / harness.py wire lists
 
 
@@ -56,9 +56,9 @@ class Netlist:
 
 @pytest.fixture(scope='session')
 def sch(tmp_path_factory):
-    if os.environ.get('TARS_NETLIST'):   # a given netlist (e.g. a deliberately broken one, to see a test fail)
-        return Netlist(os.environ['TARS_NETLIST'])
-    out = str(tmp_path_factory.mktemp('netlist') / 'tars4.xml')
+    if os.environ.get('SPIT_NETLIST'):   # a given netlist (e.g. a deliberately broken one, to see a test fail)
+        return Netlist(os.environ['SPIT_NETLIST'])
+    out = str(tmp_path_factory.mktemp('netlist') / 'spit.xml')
     cli = [os.environ['KICAD'], 'kicad-cli'] if os.environ.get('KICAD') else [shutil.which('kicad-cli') or 'kicad-cli']
     subprocess.run([*cli, 'sch', 'export', 'netlist', '--format', 'kicadxml', '-o', out, SCH], check=True,
                    capture_output=True)

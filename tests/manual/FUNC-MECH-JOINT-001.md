@@ -6,7 +6,7 @@ assembled robot (harness fitted, lids on), then after any change to the joints o
 
 ## Equipment
 - The assembled robot, switched off, cells out.
-- A multimeter (continuity), the wiring guide (`hardware/tars4_harness.html`, housing pin-outs).
+- A multimeter (continuity), the wiring guide (`hardware/spit_harness.html`, housing pin-outs).
 
 ## Setup
 1. Robot lying on its back on a soft cloth, columns aligned.

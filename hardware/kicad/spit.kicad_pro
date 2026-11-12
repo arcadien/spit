@@ -492,7 +492,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "tars4.kicad_pro",
+    "filename": "spit.kicad_pro",
     "version": 3
   },
   "net_settings": {
@@ -672,8 +672,8 @@
     "subpart_id_separator": 0,
     "top_level_sheets": [
       {
-        "filename": "tars4.kicad_sch",
-        "name": "tars4",
+        "filename": "spit.kicad_sch",
+        "name": "spit",
         "uuid": "00000000-0000-0000-0000-000000000000"
       }
     ],

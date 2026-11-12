@@ -1,4 +1,4 @@
-"""PLAT-MECH acceptance criteria checked on the model (requirements/platform.md): mechanical/scad/tars4.scad is
+"""PLAT-MECH acceptance criteria checked on the model (requirements/platform.md): mechanical/scad/spit.scad is
 evaluated once by OpenSCAD without any export (part="none"), its echoed values and WARNINGs are read back."""
 import os
 import re
@@ -8,7 +8,7 @@ import subprocess
 import pytest
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SCAD = os.path.join(ROOT, 'mechanical', 'scad', 'tars4.scad')
+SCAD = os.path.join(ROOT, 'mechanical', 'scad', 'spit.scad')
 VALUES = ('tube_od', 'tube_glue_clr', 'tube_run_clr')
 
 
@@ -34,7 +34,7 @@ def source():
 def test_plat_mech_chargeport_001_charge_port_geometry_asserts_hold(model):
     # Given the model and its charge-port geometry asserts (axis, mouth depth, height, clearances)
     asserts = re.findall(r'echo\("WARNING: charge port', source())
-    assert len(asserts) >= 6, 'charge port asserts removed from tars4.scad'
+    assert len(asserts) >= 6, 'charge port asserts removed from spit.scad'
     # When it is evaluated
     _, warnings = model
     # Then it prints no WARNING / ERROR at all (make check clean)

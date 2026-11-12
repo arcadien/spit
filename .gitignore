@@ -7,10 +7,10 @@ __pycache__/
 tools/harness_geometry.json
 result.json
 .rbd/.push-validated
-# print files are build outputs of tars4.scad (TECH-BUILD-ARTIFACTS-001): `make check-stl`, `tools/build4.sh 3mf`
+# print files are build outputs of spit.scad (TECH-BUILD-ARTIFACTS-001): `make check-stl`, `tools/build4.sh 3mf`
 mechanical/stl/
-mechanical/3mf/tars4_plate*.3mf
-mechanical/3mf/tars4_cr10_plate.3mf
+mechanical/3mf/spit_plate*.3mf
+mechanical/3mf/spit_cr10_plate.3mf
 # KiCad local files: automatic backups, per-user window / view settings
 hardware/kicad/*-backups/
 *.kicad_prl

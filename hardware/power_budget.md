@@ -1,4 +1,4 @@
-# TARS4 power budget
+# SPIT power budget
 
 Current drawn by every module, **estimated** (datasheet typical or README figure) and **measured** on the bench
 as soon as the part is wired. Fill the *Measured* columns with the date; keep the estimate for comparison.
@@ -6,7 +6,7 @@ Requirements in `requirements/performance.md` (PERF-POWER-*) refer to this table
 
 Conventions:
 - Currents are at the module's own supply pin (rail in the second column), not at the cells.
-- *Sleep* = TARS deep sleep: S3 in deep sleep, screens in SLPIN with BL_EN low, AMP_SD low, microSD cut
+- *Sleep* = SPIT deep sleep: S3 in deep sleep, screens in SLPIN with BL_EN low, AMP_SD low, microSD cut
   by Q5, sensors in their low-power mode (README *Deep sleep*).
 - `?` = no reliable figure yet: measure first. *To check* = estimate from memory of the datasheet, confirm
   against the datasheet when the module is measured.

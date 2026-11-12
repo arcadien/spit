@@ -1,8 +1,8 @@
-// Export the wiring sketch of tars4_wiring.html as a static SVG for the README (light theme, no JavaScript).
-// usage: node tools/wiring_svg.js [hardware/tars4_wiring.html] [renders/tars4_wiring.svg]
+// Export the wiring sketch of spit_wiring.html as a static SVG for the README (light theme, no JavaScript).
+// usage: node tools/wiring_svg.js [hardware/spit_wiring.html] [renders/spit_wiring.svg]
 const fs = require('fs');
-const src = process.argv[2] || 'hardware/tars4_wiring.html';
-const out = process.argv[3] || 'renders/tars4_wiring.svg';
+const src = process.argv[2] || 'hardware/spit_wiring.html';
+const out = process.argv[3] || 'renders/spit_wiring.svg';
 const html = fs.readFileSync(src, 'utf8');
 
 // light theme tokens from the first :root block

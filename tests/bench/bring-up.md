@@ -3,8 +3,8 @@
 The order matters: nothing goes on the 3V3 before step 3.6. A line ending in → links the bench test sheet that holds the procedure, the pass criteria and the results; the other lines are checks with no requirement behind them.
 What is left to buy: [shopping_list.md](../../hardware/shopping_list.md). Open questions and measurements: [open_questions.md](../../open_questions.md).
 
-**1. Measure and update the `MEASURE` values in `mechanical/scad/tars4.scad`** (then `tools/build4.sh stl`,
-`python3 -I tools/update_orca_project.py mechanical/3mf/tars4.3mf`)
+**1. Measure and update the `MEASURE` values in `mechanical/scad/spit.scad`** (then `tools/build4.sh stl`,
+`python3 -I tools/update_orca_project.py mechanical/3mf/spit.3mf`)
 - [x] LOLIN S3 Mini: 25.4 × 34.5 × 1.0, notch 2 × 7, BOOT sticks out 1.3 on the right (window through the wall,
       `d1_boot_window`). All measurements of 2026-10-27: `hardware/measurements.md`.
 - [x] 1.3" CS screen: 27.35 × 42.12 × 3.3, glass 7.2 / 5 from the short edges (`active_dz` −1.1, assuming the active
@@ -104,13 +104,13 @@ cells until step 3.5; nothing goes on the 3V3 before step 3.6 is green)
 - [ ] Charge from the heel, switch on / off, time, wall temperature, supply voltage → [FUNC-POWER-CHARGE-001](FUNC-POWER-CHARGE-001.md), [FUNC-POWER-SWITCH-002](FUNC-POWER-SWITCH-002.md), [PERF-POWER-CHARGE-001](PERF-POWER-CHARGE-001.md), [PERF-POWER-THERMAL-001](PERF-POWER-THERMAL-001.md), [PERF-POWER-MAINS-001](PERF-POWER-MAINS-001.md); TP4056, Q1, D1, TPS63020 finger-warm at most.
 - [ ] Note every measured value here (it feeds the `MEASURE` values and the firmware thresholds).
 
-**4. Print** (`mechanical/3mf/tars4.3mf`, or the CR-10 plate)
+**4. Print** (`mechanical/3mf/spit.3mf`, or the CR-10 plate)
 - [ ] bed levelling (`part="print_test_level"`) and screen fit (`part="print_test_screen"`), exported by hand from the scad if needed, then the plates; PETG collars, black PLA plugs.
 - [ ] Check the lid slot / microSD, the TPS63020 and P1 / P2 grooves on the printed parts before gluing the splints.
 - [ ] Charge port in the left leg, first pivot joint → [PLAT-MECH-CHARGEPORT-001](PLAT-MECH-CHARGEPORT-001.md), [PLAT-MECH-PIVOT-001](PLAT-MECH-PIVOT-001.md)
 
 **5. Firmware**
-- [ ] GPIO map from the README *Signals* table and the carrier plan (`renders/tars4_board_s3.svg`); SPI 26.7 MHz first (scope SCK at screen 2 if possible), then 40 MHz;
+- [ ] GPIO map from the README *Signals* table and the carrier plan (`renders/spit_board_s3.svg`); SPI 26.7 MHz first (scope SCK at screen 2 if possible), then 40 MHz;
       backlight PWM ~20 kHz; `RST = -1`; I2S0 amp, I2S1 microphone; SDMMC 1-bit 10 MHz; I2C 100 kHz.
 - [ ] Charger detect: USB_DET high = on mains (no cut-off, charging icon); charge done = B+ falling ≥ 20 mV below its
       peak (≥ 4.10 V) with USB_DET still high.
