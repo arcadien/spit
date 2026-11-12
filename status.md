@@ -26,6 +26,14 @@ MECH requirements for them before any model change.
   PLAT-MECH-SPEAKER-001 1.5 mm pads (audit D7); power budget amplifier sleep ~4 µA; SW1 at 2 A in the bring-up / BOM.
   Audit 2026-10-29 has nothing left on this branch. Merge blocked by E-M6 and AU1 (see *Open questions*).
 
+- 2026-11-12: main merged again (SPIT rename, slimmed README: the audio text now lives in `hardware/design_notes.md`
+  and `hardware/bom.md`). E-M6: SW1 to be replaced by a TRU COMPONENTS TC-R13-603C-05 (3 A 250 V AC, flange
+  19.5 × 8 with 2 screw holes; in the shopping list, exception to stock-only); the model change waits for the part
+  (lever travel, hole Ø and spacing to measure). AU1: bench sheet `tests/bench/PERF-AUDIO-PEAK-001.md` written; the
+  requirement accepts a 33 Ω load on 3V3 in place of the screens (full backlight) until they are fitted. Bench power
+  resistors ordered (33, 1 Ω 5 W; 6.8 Ω 10 W; 4.7, 2 × 3.9 Ω 11 W: the two 3.9 Ω in parallel load SW1 at 2 A).
+  `check.sh` prefers the pinned OpenSCAD RC0 on Windows.
+
 ## Findings
 - **Speaker**: the first one (66 × 30 × 17 box, bare driver 28.6 wide) does not fit the 27.2 interior; replaced by
   the 4 Ω 2 W speaker from stock.
@@ -40,7 +48,10 @@ None on this branch. Blocking the merge: [E-M6](open_questions.md) (SW1 rating, 
 [AU1](open_questions.md) (volume cap, PERF-AUDIO-PEAK-001).
 
 ## Next
-- Bench: volume cap (PERF-AUDIO-PEAK-001), FUNC-AUDIO-SPEAK-001 SPL check, sound step of PLAT-AUDIO-AMP-001.
+- On receipt of the TC-R13-603C-05: measure it, fit it in the left-leg floor (model, renders, harness, BOM), then the
+  2 A heating test (E-M6).
+- Bench: volume cap (PERF-AUDIO-PEAK-001, bench firmware needs tones, 1 dB steps and a boot counter first),
+  FUNC-AUDIO-SPEAK-001 SPL check, sound step of PLAT-AUDIO-AMP-001.
 - Cleanup (own change): `lid_mid_left` is now identical to `lid_mid` (remove the part: build4.sh, Orca mapping,
   CONTRIBUTING.md).
 - Remove status.md before merging.
