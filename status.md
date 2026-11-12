@@ -9,8 +9,8 @@ MECH requirements for them before any model change.
 
 ## State (2026-11-12)
 - Main merged again (audit lots 2, C, D, E, OpenSCAD RC, charge-port front post): grey sense wires, XF160 in the
-  shopping list, FUNC-MECH-JOINT-001 next to the audio requirements. Questions A1, A2, S1–S5 removed:
-  superseded by A3 (clone breakout) and S6 (4 Ω speaker).
+  shopping list, FUNC-MECH-JOINT-001 next to the audio requirements. Answered questions removed:
+  their answers are in the requirements, the model, `measurements.md` and the shopping list.
 - AUDIO domain written: FUNC-AUDIO-SPEAK-001, TECH-AUDIO-SHUTDOWN-001, PLAT-MECH-SPEAKER-001 validated;
   PERF-AUDIO-PEAK-001 (volume cap) and PLAT-AUDIO-AMP-001 (clone board size) draft until measured.
 - Model: 4 Ω 2 W speaker 25.27 × 13.80 × 7.15 just under the splint (z 30–55), on pads under its short-end tabs,
@@ -18,35 +18,28 @@ MECH requirements for them before any model change.
   `make check-overhang` clean, renders and harness lengths regenerated, README / measurements / open questions (AU1).
 - Main merged (requirements reformatted, power safety, charge-port post).
 - Clone amplifier received, 17.7 along the header × 18.8 across, E-M1 passed: `amp` folded in, PLAT-AUDIO-AMP-001 validated.
-- Not merged until AU1: volume cap measured on the bench.
 - Review finding 1 (audit A3) done: 4 Ω 2 W speaker in the schematic, BOM, wiring page, budget, bring-up.
 - 2026-10-31 (session Tars): pytest for TECH-AUDIO-SHUTDOWN-001; X6 removed, speaker pair soldered on OUT+ / OUT−
   (model, boards, harness, wiring page, README, renders, `make check` clean); 2.2 kΩ dropped from the shopping list.
   Validated and committed: PLAT-POWER-SWITCH-001 ≥ 2 A (stays draft until E-M6, SW1's marking),
   PERF-AUDIO-PEAK-001 cap also ≤ 2 W at VSYS 4.7 V, TECH-AUDIO-SHUTDOWN-001 ≤ 10 µA with the pull-up (audit D4),
   PLAT-MECH-SPEAKER-001 1.5 mm pads (audit D7); power budget amplifier sleep ~4 µA; SW1 at 2 A in the bring-up / BOM.
-  Audit 2026-10-29 has nothing left on this branch. Still blocking the merge: E-M6 (SW1 marking) and AU1 (volume cap).
+  Audit 2026-10-29 has nothing left on this branch. Merge blocked by E-M6 and AU1 (see *Open questions*).
 
 ## Findings
 - **Speaker**: the first one (66 × 30 × 17 box, bare driver 28.6 wide) does not fit the 27.2 interior; replaced by
-  the 4 Ω 2 W speaker from stock (S6, S7).
-- **Amplifier**: the generic "I2S DAC AMP" module has no shutdown pin; replaced by the purple MAX98357A clone (A3,
-  3 in stock), SD on GPIO4 as designed.
+  the 4 Ω 2 W speaker from stock.
+- **Amplifier**: the generic "I2S DAC AMP" module has no shutdown pin; replaced by the purple MAX98357A clone (3 in
+  stock), SD on GPIO4 as designed.
 - Requirements touched later: [PLAT-POWER-DIST-001](requirements/platform.md#plat-power-dist-001) (MAX98357A on its own
   VSYS pair, C7), [TECH-POWER-BACKFEED-001](requirements/technical.md#tech-power-backfeed-001) (amplifier enable low at start-up),
   `hardware/power_budget.md` amplifier row.
 
 ## Open questions
-| # | Question | Answer |
-|---|---|---|
-| A3 | Buy a MAX98357A breakout (~8 €) instead of adapting the current board? | recommended: keeps the design as is (SD pin on GPIO4, < 1 µA in sleep, 19.4 × 18 slot, schematic, budget and requirements unchanged); a clone (purple board, SD / GAIN pins) at 1–3 € does the same; the current board stays the fallback (CTRL trace cut or P-MOSFET switch). User picked a purple clone 19 × 17 (LRC, BCLK, DIN, GAIN, SD, GND, Vin; Adafruit pinout) on 2026-10-28: fits the modelled 19.4 × 18 slot, nothing else changes; leave its screw terminal off (speaker wires soldered); measure the board on arrival (→ `amp`), bench E-M1 (SD pull-up) still applies. **Received, measured 18.8 × 17.7** (2026-10-31): see A4 |
-| A4 | Is the 7-pin header along the 18.8 side? | **no** (caliper photo, 2026-10-31): 18.78 is across, the 7-pin header runs along the 17.7 side, so `amp` = [17.7, 18.8, 1.6]. Header row ~2.4 from its edge, speaker pads ~3.1 from the opposite edge, 3.5 pitch (photo). Pull-up marked 105 = 1 MΩ, as assumed |
-| A5 | E-M1 on the received board: VIN powered, 10 k from SD to GND, voltage on SD (< 0.1 V expected, shutdown below 0.16 V)? | **36 mV** at Vin 4 V (2026-10-31): pass, R18 stays; 39.6 mV from 1 MΩ / 10 kΩ alone, 36.0 mV with the chip's internal pull-down (~100 kΩ, from memory of the datasheet, to confirm) |
-| S6 | Rectangular speaker from stock, **4 Ω, 25.27 × 13.80 × 7.15** (2026-10-29): fits? | **yes**, face against the lower black panel, long axis vertical: 13.8 wide (≤ ~22.6 between the rails), 25.3 tall (panel 33.5), 7.2 deep (26 free). Bare oval driver too wide (28.6 vs 27.2 inside). 4 Ω: peaks ~1 A on VSYS at full volume (~0.5 A with 8 Ω); cap the volume in firmware, keep GAIN at its default, power rating still to read (S7) |
-| S7 | Power rating (W) printed on the 4 Ω speaker? | **2 W** (2026-10-29): the MAX98357A on VSYS (3.7–4.2 V) gives at most ~1.7–2.2 W into 4 Ω, so the speaker is safe at any volume; the firmware volume cap is only for the VSYS current peaks (~1 A at full volume) |
+None on this branch. Blocking the merge: [E-M6](open_questions.md) (SW1 rating, PLAT-POWER-SWITCH-001) and
+[AU1](open_questions.md) (volume cap, PERF-AUDIO-PEAK-001).
 
 ## Next
-- Review finding 1 and the rest of the list in *State*.
 - Bench: volume cap (PERF-AUDIO-PEAK-001), FUNC-AUDIO-SPEAK-001 SPL check, sound step of PLAT-AUDIO-AMP-001.
 - Cleanup (own change): `lid_mid_left` is now identical to `lid_mid` (remove the part: build4.sh, Orca mapping,
   CONTRIBUTING.md).
