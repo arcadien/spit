@@ -10,7 +10,7 @@ Requirement: [PLAT-POWER-SLEEP-001](../../requirements/platform.md#plat-power-sl
 1. Boards unpowered, before wiring.
 
 ## Steps
-1. Look at each board: ZS-042, TPS63020 module, GY-291, microSD breakout: the power / status LED is removed (empty pads).
+1. Look at each board: ZS-042, TPS63020 module, GY-291, microSD breakout, BME280 (if it had one): the power / status LED is removed (empty pads).
 2. S3 Mini: the RGB LED (GPIO47) is removed.
 3. TP4056: its two charge LEDs are still there (USB-fed only).
 4. Take one photo per board for the record.
