@@ -69,7 +69,7 @@ links were found on 2026-10-21, price and stock not guaranteed.
 ## Reminder: already in stock or ordered (don't buy again)
 
 LOLIN S3 Mini, 2 × 1.3" screens, 2 × 18650, protected TP4056, micro-USB breakout, switch, DS3231, ADXL345, INMP441,
-BME280, AM312, MAX98357A, 25.3 × 13.8 × 7.2 4 Ω 2 W speaker, TPS63020, AO3401A, 1N5822, microSD reader, contact plates, 8/7 brass
+BME280, AM312, 3 × MAX98357A clone breakout (purple, 17.7 × 18.8, SD / GAIN pins: 1 fitted, 2 spare), 25.3 × 13.8 × 7.2 4 Ω 2 W speaker, TPS63020, AO3401A, 1N5822, microSD reader, contact plates, 8/7 brass
 tubes, M2.5 screws, feet, 26 AWG wire, 2 × XF160 polyfuses (F1, F2). To check in the 2026-10-20 order: TVS, resistors.
 
 ## Sources
