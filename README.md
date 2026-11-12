@@ -11,7 +11,7 @@ cells in the legs. Model: OpenSCAD `mechanical/scad/spit.scad`, fully parametric
 | Size (W × D × H) | **124 × 31 × 248 mm** (1 : 4 : 8) |
 | Brain | 1 × LOLIN S3 Mini (ESP32-S3, 2 MB PSRAM, Wi-Fi, BLE, USB-C) |
 | Screens | 2 × 1.3" IPS 240×240 ST7789 with CS (square) |
-| Sound | MAX98357A I2S amplifier + speaker behind the lower black panel; INMP441 microphone |
+| Sound | MAX98357A I2S amplifier + 4 Ω 2 W 25.3 × 13.8 × 7.2 speaker behind the lower black panel; INMP441 microphone |
 | Sensors | ADXL345 accelerometer, AM312 motion sensor, BME280 weather sensor, DS3231 clock, microSD |
 | Power | 2 × 18650 in parallel, one protected TP4056 (0.5 A), power path for mains use, TPS63020 3.3 V buck-boost |
 | Joints | brass tubes 8 / 7 mm at the top of each joint, wires inside, a detent click every 15° |

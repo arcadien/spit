@@ -19,7 +19,7 @@ and the harness guide [spit_harness.html](spit_harness.html). Requirements: `req
 | Q1 | AO3401A, logic-level P-MOSFET | power path: cells → VSYS, off on mains (gate on VUSB) |
 | D1 | 1N5822, 3 A Schottky, through-hole | VUSB → VPATH on mains; band on the VPATH side, before the switch |
 | R1 | 4.7 k | Q1 gate → GND: fast switch-over when unplugged (~50 ms); a warm D1 leaking 50 µA leaves the gate < 0.25 V |
-| SW1 | slide switch, ≥ 1 A | after the merge point; rating to check (often only 0.3–0.5 A) |
+| SW1 | slide switch, ≥ 2 A | after the merge point; rating to check (often only 0.3–0.5 A) |
 | U9 | TPS63020 module, 3.3 V | buck-boost in the left leg, 3.3 V to the S3 3V3 pin; EN to VIN, PS/SYNC to GND (solder bridge, never high). Its own VSYS / GND pair from the star; the logic GND to P1 leaves from its GND pad, along its 3V3 wire |
 | C1 | 220 µF 10 V polymer tantalum 7343 (Panasonic 10TPE220ML, ESR 25 mΩ), band = + | mandatory: 3V3 → GND as close as possible to the S3 3V pin, flat on the carrier under the S3, ~35 cm of wire from the TPS63020 |
 | R15, R16 | 68 k + 100 k | on the power-path board: VUSB → USB_DET (GPIO21), ~3 V with the charger plugged in, 30 µA on USB only; switch off with the charger in, ~60 µA flow from this ~40 k divider into the unpowered 3V3 through GPIO21's protection diode (harmless, well below the pin's injection limit) |
@@ -42,7 +42,7 @@ and the harness guide [spit_harness.html](spit_harness.html). Requirements: `req
 | C10, C11 | 10 µF 16 V tantalum (+ to 3V3) + 0.1 µF ceramic | on P2, between the 3V3 and GND strips |
 | U10 | AM312 PIR | top of the right middle column, dome flush in a Ø11.5 front hole (cap glued from the inside), 1.25 mm right of the axis to clear the middle tube; 2.7–12 V, ~15 µA, push-pull output held ~2 s, active high |
 | U11 | BME280 (GY-BME280, 3.3 V) | right leg, the coolest spot, sensor against the wall facing a Ø1.5 vent; I2C 0x76 / 0x77; SDA / SCL / 3V3 / GND from P2 through the right tube |
-| LS1 | speaker, 4–8 Ω | on OUT+ / OUT− (no ground); size not settled (branch `mech-audio`) |
+| LS1 | speaker, 4 Ω 2 W, 25.3 × 13.8 × 7.2 | on OUT+ / OUT− (no ground) |
 | P1, P2 | stripboards 24 × 32 | distribution: P1 left middle under screen 1, P2 right middle under screen 2 |
 | U2 socket | 2 female 2 × 8 headers on the 25.6 × 34.4 carrier (P3) | the S3 plugs in; all its wires are soldered on the back of the carrier |
 | X1–X16 | keyed Dupont (X1–X9, X15), JST-XH (X10, X12, X13, X14, X16) | one connector between each module and the harness, nothing to re-solder to test or swap a module; list and keying in the wiring plan |
@@ -256,14 +256,16 @@ SPIT talks **through its lower black panel** (right middle column, `speaker_col 
 
 ![spit, front right: speaker grille](../renders/spit_sound_three_quarter.png)
 
-- **Speaker** 39 × 22 × 10 mm facing the front behind the lower panel (z 30–69): held at the front by two stops
-  (bottom) and the splint's front plate (top), guided by side rails, pressed forward by two tabs on the right middle lid
-  (`lid_mid`; the left one, `lid_mid_left`, has none: they would sit in the S3's wire loop). Insert it after gluing the
-  halves (it crosses the seam).
+- **Speaker** 4 Ω 2 W, 25.3 × 13.8 × 7.2 mm, membrane forward, long axis vertical, just under the splint (z 30–55,
+  bottom half only). Its membrane is flush with its face and its long edges have no rim: it bears only on two 1.5 mm
+  pads under its short-end tabs (the membrane keeps ~1 mm in front of it), sits between side rails on a stop notched for
+  its lower nub, and is **glued**: hot glue on both tabs and a bead along the long sides (it also seals the front from
+  the back; the closed column is the enclosure). Never cyanoacrylate near the membrane. Nothing on the lid touches it
+  (`lid_mid` and `lid_mid_left` are now the same). To replace it, release the hot glue with a drop of isopropyl alcohol.
 - **Grille**: horizontal slots (1.2 mm every 3 mm) in that column's black plug → `mechanical/stl/spit_inserts_speaker.stl`.
-- **Amplifier** MAX98357A (~19.4 × 18) in a slot on the inner front wall just above the splint (z 76.7–94.7). I2S0
+- **Amplifier** MAX98357A clone breakout (17.7 along its 7-pin header × 18.8, measured) in a slot on the inner front wall just above the splint (z 76.7–95.5). I2S0
   BCLK / LRC / DIN, VIN / GND on their own pair, C7 470 µF (Ø8 × 12) soldered on VIN / GND and lying across behind the
-  board, between X6 and X5 (`c7`). GAIN default (9 dB); SD on AMP_SD (see *Signals*).
+  board, below X5 (`c7`); the speaker pair is soldered on OUT+ / OUT− (no screw terminal, no X6). GAIN default (9 dB); SD on AMP_SD (see *Signals*).
 - **Microphone** INMP441 (10 × 10, castellated) in the left middle column between the upper screw posts, just under
   P1, far from the speaker: top-port MEMS, **chip side against the wall**, the sound hole facing a Ø1 hole in the
   vertical decor groove (invisible). Seal with a ring of foam tape, never glue on it. Own I2S1 (GPIO 14, 38, 15, local
@@ -523,7 +525,6 @@ drawn is ~17 mm long (`xh_male_back`, `xh_female`) inside the 22 mm checked box 
 | X3 | INMP441 | pigtail + inline Dupont 1 × 6 (SCK WS SD VDD GND + 1 empty; L/R bridged to GND on the board) · empty position plugged on the female side · VDD / GND female contacts carry **two wires** (from P1 + on to X2), so unplugging the mic keeps the ADXL345 powered | left middle, parked against the lid, 103–131 |
 | X4 | screen 2 | as X1 | right middle, 205–223 |
 | X5 | MAX98357A | **two housings**: 1 × 4 (LRC BCLK DIN GAIN) with the **GAIN pin pulled**, cavity plugged, + 1 × 3 (SD GND VIN) · the 3-way reversed only swaps SD and VIN through R10 1 k (harmless); mark the 4-way's side | right middle, top edge of the amp, ~93 |
-| X6 | speaker | Dupont 1 × 2 on a 2-pin header in place of the screw terminal · no key (reversed = polarity swap, harmless) | right middle, bottom edge of the amp, ~78 |
 | X7 | AM312 | pigtail + inline Dupont 1 × 4 (VIN OUT GND + 1 empty) · empty position plugged | right middle, parked against the lid beside the screen, 191–225 |
 | X8 | DS3231 (ZS-042) | Dupont 1 × 6 on its right-angle header (32K SQW SCL SDA VCC GND; 4 wires) · **32K pin pulled**, cavity plugged | right leg, above the board, 145–166 |
 | X9 | BME280 | Dupont 1 × 4 (VCC GND SCL SDA) · no key: reversed, the I2C bus just hangs (no supply short) · all 4 contacts carry **two wires** (from P2 + on to X8) | right leg, top edge, ~204 |

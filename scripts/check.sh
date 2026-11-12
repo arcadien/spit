@@ -34,7 +34,7 @@ STAGES=${*:-model stl erc renders docs}
 # the console binary (openscad.exe is a GUI program: its messages, WARNINGs included, are lost)
 if command -v cygpath >/dev/null; then
     if ! command -v openscad.com >/dev/null; then
-        for d in "/c/Program Files/OpenSCAD (Nightly)" "/c/Program Files/OpenSCAD"; do
+        for d in "/c/Program Files/OpenSCAD" "/c/Program Files/OpenSCAD (Nightly)"; do  # pinned RC0 first
             [ -x "$d/openscad.com" ] && [ -d "$d/color-schemes" ] && { PATH="$d:$PATH"; break; }
         done
     fi

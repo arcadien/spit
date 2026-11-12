@@ -24,7 +24,6 @@ order in `tests/bench/bring-up.md`, currents in `hardware/power_budget.md`).
 | `pir_pcb_dn` | AM312 board mid-plane offset from the detector axis | — |
 | SC1 | Screen active area checked lit (`active_dz`, `active_dx`) | — |
 | ST1 | Solder tails on the wall side (ADXL345, MAX98357A, micro-USB), ≤ 1 mm | — |
-| E-M1 | SD pull-up of the amplifier (R18) | measured on branch `mech-audio` (36 mV, pass): closes with it |
 | E-M2 | Screens' BLK current and pull-up | — |
 | E-M3 | D1 leakage when warm | — |
 | E-M4 | AM312 high level | — |

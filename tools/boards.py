@@ -42,7 +42,7 @@ POWER = {'VUSB', 'VPATH', 'VSYS', 'OUT+', 'B+'}
 GPIO = {'USB_DET', 'VBAT/2', 'SD_EN'}
 # Connectors X1–X16 (harness side), pins from pin 1: (name, net); net 'key' = module pin pulled and cavity plugged,
 # None = contact left empty (pin tied on the module), '|' = gap between two housings. A wire's 7th field lists the
-# contacts it is crimped into ('X1.CS'); its net must be the contact's. X6 (speaker), X12 / X16 (cells) meet no board.
+# contacts it is crimped into ('X1.CS'); its net must be the contact's. X12 / X16 (cells) meet no board.
 CONNS = {
     'X1': ('screen 1 · Dupont 1 × 8 on a right-angle header', [('GND', 'GND'), ('VCC', '3V3'), ('SCL', 'SCK1'), ('SDA', 'MOSI'), ('RES', 'RST'), ('DC', 'DC'), ('CS', 'CS1'), ('BLK', 'BL_EN')]),
     'X2': ('ADXL345 · Dupont 1 × 8, 5 wires', [('GND', 'GND'), ('VCC', '3V3'), ('CS', None), ('INT1', 'INT1'), ('INT2', 'key'), ('SDO', None), ('SDA', 'SDA'), ('SCL', 'SCL')]),
@@ -56,7 +56,6 @@ CONNS = {
     'X13': ('power block outputs · inline JST-XH 4', [('VSYS', 'VSYS'), ('GND amp', 'GND'), ('3V3', '3V3'), ('GND log', 'GND')]),
     'X14': ('measurements · inline JST-XH 4', [('VBAT/2', 'VBAT/2'), ('USB_DET', 'USB_DET'), ('SD_EN', 'SD_EN'), ('VSENSE_B', 'VSENSE_B')]),
     'X15': ('microSD · pigtail + inline Dupont 1 × 6', [('CLK', 'SD_CLK'), ('CMD', 'SD_CMD'), ('D0', 'SD_D0'), ('3V3', 'SD_3V3'), ('GND', 'GND'), ('—', 'key')]),
-    'X6': ('speaker · Dupont 1 × 2 on a header', [('+', 'SPK+'), ('−', 'SPK−')]),
     'X12': ('left cell · inline JST-XH 2', [('B+', 'B+'), ('B−', 'B−')]),
     'X16': ('right cell · inline JST-XH 2', [('B+', 'B+'), ('B−', 'B−')]),
 }
@@ -67,7 +66,7 @@ BNAME = {'s3': 'P3', 'p1': 'P1', 'p2': 'P2', 'power': 'P4'}   # P = hand-wired b
 PAIRS = [('s3', 'A4', 'p1', 'B9'), ('s3', 'J5', 'p1', 'B10'), ('s3', 'A7', 'p1', 'A7'), ('s3', 'C10', 'p1', 'A5'),
          ('s3', 'B7', 'p1', 'A8'), ('s3', 'B6', 'p1', 'A6'), ('s3', 'A9', 'p2', 'A11'), ('s3', 'B10', 'p2', 'A2'),
          ('p1', 'C11', 'p2', 'A10'), ('p1', 'F9', 'p2', 'A9')]
-CCOL = {'X1': 1, 'X2': 1, 'X3': 1, 'X4': 2, 'X5': 2, 'X6': 2, 'X7': 2, 'X8': 3, 'X9': 3, 'X10': 0, 'X12': 0, 'X13': 0,
+CCOL = {'X1': 1, 'X2': 1, 'X3': 1, 'X4': 2, 'X5': 2, 'X7': 2, 'X8': 3, 'X9': 3, 'X10': 0, 'X12': 0, 'X13': 0,
         'X14': 0, 'X15': 0, 'X16': 0}  # SPIT column of each connector (0 = left leg … 3 = right leg)
 
 

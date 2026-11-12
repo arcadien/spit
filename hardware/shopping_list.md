@@ -15,7 +15,7 @@ links were found on 2026-10-21, price and stock not guaranteed.
 | Insulated **30 AWG** wire-wrap wire (Kynar), small reel | 1 | Q1 / Q5 legs on the power-path board (instead of bare strands), signal jumpers (power jumpers in 26 AWG offcuts) | [Amazon (search)](https://www.amazon.fr/s?k=fil+wrapping+30+AWG+kynar) |
 | Bare tinned copper wire 0.5–0.6 mm | ~0.5 m | GND bus (carrier column E, power-path board row 1); resistor lead offcuts are enough | [Amazon (search)](https://www.amazon.fr/s?k=fil+cuivre+etame+0.6mm) |
 | Cyanoacrylate or 5 min epoxy glue | — | female headers glued on the single-sided S3 carrier | probably already in stock |
-| Male header 1 × 40 (breakable), straight + **right-angle** | 1 + 1 | X6 (amplifier speaker output); 1 × 8 right-angle headers on the back of both screens (X1, X4); pins for modules shipped without | [Amazon (search)](https://www.amazon.fr/s?k=barrette+male+secable+2.54+droite+coudee) |
+| Male header 1 × 40 (breakable), straight + **right-angle** | 1 + 1 | 1 × 8 right-angle headers on the back of both screens (X1, X4); pins for modules shipped without | [Amazon (search)](https://www.amazon.fr/s?k=barrette+male+secable+2.54+droite+coudee) |
 | Heat-shrink 1.5 / 2 / 3 mm, **colour assortment** (at least black, white, yellow, orange, purple) | 1 assortment | under the contacts' insulation wings (30 AWG too thin), solder joints, tube exits; black rings of the signal buses (1 / 2 / 3); **coloured bands of the power rails** on red / black, Ø2–3 mm (white OUT+, yellow VPATH, orange VSYS, purple VUSB: ~40 bands of 10 mm) | [Amazon (search)](https://www.amazon.fr/s?k=gaine+thermoretractable+assortiment+1.5mm) |
 
 ## 2. Wire
@@ -35,6 +35,7 @@ links were found on 2026-10-21, price and stock not guaranteed.
 | **AO3401A** P-MOSFET (SOT-23) | 1 more | Q5, cuts the microSD 3V3 in sleep (already ordered for Q1: check one is left) |
 | **C12** capacitor: **10 µF 16 V** tantalum (+ at F6) instead of the 47 µF | 1 | AM312 filter on P2: **in stock** (the 47 µF in stock is 12 mm, too tall; the tantalum still cuts the 20 kHz backlight PWM by ~40 dB) | — |
 | **BC547B** NPN + **1 MΩ** + **330 kΩ** 1/4 W | 1 + 2 | VSYS sense into GPIO37 (PLAT-POWER-VSENSE-001): Q4 and R24 on the carrier, R23 in line in the harness | in stock (drawer) |
+| Slide switch **TRU COMPONENTS TC-R13-603C-05**, 1P2T on/on, **3 A** 125 V AC (1.5 A 250 V AC), flange 19.5 × 8, 2 holes Ø2.6 at 14.3 | 1 | SW1 (PLAT-POWER-SWITCH-001 ≥ 2 A, E-M6): replaces the mini slide switch in stock, whose rating is unknown. **Exception to the stock-only rule** (2026-11-12). Measure lever travel, hole Ø and spacing on receipt before the model change | Conrad 6351072 |
 
 ## 4. Capacitors
 
@@ -49,7 +50,6 @@ links were found on 2026-10-21, price and stock not guaranteed.
 
 | Item | Qty | For | Links |
 |---|---|---|---|
-| 2.2 kΩ resistor | 1 | R18 if the amplifier has a 100 k pull-up on SD (E-M1) | in the assortment |
 | 4.7 kΩ resistor | 1 | R1 (power path, MOSFET gate pull-down) | in the assortment |
 | USB charger **5 V ≥ 2 A** + micro-USB cable | 1 | running on mains while charging (if you don't have one already) | [Amazon (search)](https://www.amazon.fr/s?k=chargeur+usb+5V+2A) |
 
@@ -69,8 +69,8 @@ links were found on 2026-10-21, price and stock not guaranteed.
 
 ## Reminder: already in stock or ordered (don't buy again)
 
-LOLIN S3 Mini, 2 × 1.3" screens, 2 × 18650, protected TP4056, micro-USB breakout, switch, DS3231, ADXL345, INMP441,
-BME280, AM312, MAX98357A, 39 × 22 × 10 speaker, TPS63020, AO3401A, 1N5822, microSD reader, contact plates, 8/7 brass
+LOLIN S3 Mini, 2 × 1.3" screens, 2 × 18650, protected TP4056, micro-USB breakout, switch (mini slide, rating unknown: replaced by the TC-R13-603C-05, section 3), DS3231, ADXL345, INMP441,
+BME280, AM312, 3 × MAX98357A clone breakout (purple, 17.7 × 18.8, SD / GAIN pins: 1 fitted, 2 spare), 25.3 × 13.8 × 7.2 4 Ω 2 W speaker, TPS63020, AO3401A, 1N5822, microSD reader, contact plates, 8/7 brass
 tubes, M2.5 screws, feet, 26 AWG wire, 2 × XF160 polyfuses (F1, F2). To check in the 2026-10-20 order: TVS, resistors.
 
 ## Sources

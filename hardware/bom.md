@@ -13,7 +13,7 @@ Why each part is there and where it sits: [design_notes.md](design_notes.md). Wh
 | Battery contact plates 13 × 18 × 1.2: spring (Ø5, 10.7 high) + button (+, 1.8 overall) | 2 pairs | one pair per leg, wires soldered on the tabs |
 | U1 TP4056 charger breakout, **protected (DW01)**, 28.7 × 17.15 × 0.9 (26.3 once its micro-USB is desoldered and the nubs filed) | 1 | left leg, flat above the TPS63020; fed by J1 on its IN pads; **R_PROG swapped for 2.4 k** (0.5 A) |
 | J1 micro-USB breakout | 1 | charge port in the left foot, plug from behind at the heel |
-| SW1 mini slide switch, 3 pins (1P2T), body 12.95 × 6.9, lever 5.15 | 1 | left leg floor; **check its current rating** (≥ 1 A) |
+| SW1 mini slide switch, 3 pins (1P2T), body 12.95 × 6.9, lever 5.15 | 1 | left leg floor; **check its current rating** (≥ 2 A: the 4 Ω speaker's peaks) |
 | U9 **TPS63020** buck-boost module, 3.3 V, EN + PS/SYNC, 26.7 × 17.7 (measured) | 1 | left leg, flat above the microSD; EN to VIN, PS/SYNC to GND |
 | U7 DS3231 RTC board (ZS-042) + CR2032 | 1 | right leg, I2C; SQW not wired |
 | U8 ADXL345 accelerometer board (GY-291) | 1 | left middle, I2C |
@@ -22,7 +22,7 @@ Why each part is there and where it sits: [design_notes.md](design_notes.md). Wh
 | U10 **AM312** mini PIR motion sensor | 1 | top of the right middle column, z ≈ 233, 1.25 mm right of the axis |
 | J2 microSD breakout, 3.3 V, **no regulator**, 18.2 × 18.2 × 1.5 (21 with the socket) | 1 | left leg |
 | U5 MAX98357A I2S amplifier breakout | 1 | right middle; VIN / GND on their own twisted pair from the power board |
-| LS1 speaker 39 × 22 × 10 mm, 8 Ω | 1 | behind the lower black panel of the right middle column |
+| LS1 speaker 25.3 × 13.8 × 7.2 mm, 4 Ω 2 W | 1 | behind the lower black panel of the right middle column |
 | Q1 P-MOSFET **AO3401A** (or DMG2305UX / SI2301), SOT-23 | 1 | power path, battery side; glued upside down on the perfboard |
 | Q5 P-MOSFET **AO3401A** + R22 **100 kΩ** | 1 + 1 | switch the microSD's 3V3 (SD_EN, GPIO36), on the power-path board |
 | D1 Schottky **1N5822** (through-hole, 3 A) | 1 | power path, USB side, band towards VPATH (before the switch; 1N5818 also does) |
@@ -49,7 +49,6 @@ Why each part is there and where it sits: [design_notes.md](design_notes.md). Wh
 | **Single-sided** perfboard (FR4) with separate pads, cut to **25.6 × 34.4** (10 × 13 holes) | 1 | the S3's carrier, `../renders/spit_board_s3.svg` |
 | Female headers **2 × 8**, 2.54, 8.5 mm high | 2 | the S3's socket (`s3_sock_h` MEASURE) |
 | **Right-angle** male header 1 × 8 | 2 | X1 / X4, on the screens' backs, pins down |
-| Male header 1 × 2 | 1 | X6, in place of the amp's screw terminal |
 | **Dupont 2.54 crimp kit**: housings 1 × 2 … 1 × 8, female contacts (**~100**, ~55 used), male contacts (~20) | 1 kit | X1–X9, X15; ratchet crimper SN-28B / PA-09; spare male pins to plug the keyed cavities |
 | **JST-XH** (2.50 pitch) inline pairs to crimp: housings 2- and 4-pin, male + female, with their contacts | 2 + 3 | X12, X16; X10, X13, X14 (SN-28B crimper; 30 AWG folded like in the Dupont contacts) |
 | Silicone wire **30 AWG**, tinned copper (not CCA), **10-colour kit** (needs purple and blue) | ~20.3 m | cut lengths from the 3D model in `hardware/spit_harness.pdf` (estimate + 3 cm each, service loops and pigtails included); ≤ 3.6 m per colour (yellow); 9 colours used (grey for the analog sense wires), no black |
