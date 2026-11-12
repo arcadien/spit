@@ -35,6 +35,7 @@ links were found on 2026-10-21, price and stock not guaranteed.
 | **AO3401A** P-MOSFET (SOT-23) | 1 more | Q5, cuts the microSD 3V3 in sleep (already ordered for Q1: check one is left) |
 | **C12** capacitor: **10 µF 16 V** tantalum (+ at F6) instead of the 47 µF | 1 | AM312 filter on P2: **in stock** (the 47 µF in stock is 12 mm, too tall; the tantalum still cuts the 20 kHz backlight PWM by ~40 dB) | — |
 | **BC547B** NPN + **1 MΩ** + **330 kΩ** 1/4 W | 1 + 2 | VSYS sense into GPIO37 (PLAT-POWER-VSENSE-001): Q4 and R24 on the carrier, R23 in line in the harness | in stock (drawer) |
+| Slide switch **TRU COMPONENTS TC-R13-603C-05**, 1P2T on/on, **3 A** 250 V AC, flange 19.5 × 8 with 2 screw holes | 1 | SW1 (PLAT-POWER-SWITCH-001 ≥ 2 A, E-M6): replaces the mini slide switch in stock, whose rating is unknown. **Exception to the stock-only rule** (2026-11-12). Measure lever travel, hole Ø and spacing on receipt before the model change | Conrad 6351072 |
 
 ## 4. Capacitors
 
@@ -68,7 +69,7 @@ links were found on 2026-10-21, price and stock not guaranteed.
 
 ## Reminder: already in stock or ordered (don't buy again)
 
-LOLIN S3 Mini, 2 × 1.3" screens, 2 × 18650, protected TP4056, micro-USB breakout, switch, DS3231, ADXL345, INMP441,
+LOLIN S3 Mini, 2 × 1.3" screens, 2 × 18650, protected TP4056, micro-USB breakout, switch (mini slide, rating unknown: replaced by the TC-R13-603C-05, section 3), DS3231, ADXL345, INMP441,
 BME280, AM312, 3 × MAX98357A clone breakout (purple, 17.7 × 18.8, SD / GAIN pins: 1 fitted, 2 spare), 25.3 × 13.8 × 7.2 4 Ω 2 W speaker, TPS63020, AO3401A, 1N5822, microSD reader, contact plates, 8/7 brass
 tubes, M2.5 screws, feet, 26 AWG wire, 2 × XF160 polyfuses (F1, F2). To check in the 2026-10-20 order: TVS, resistors.
 
