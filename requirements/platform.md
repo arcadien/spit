@@ -205,7 +205,7 @@ derives_from: [FUNC-POWER-GATE-001](functional.md#func-power-gate-001)
 
 derives_from: [TECH-POWER-SLEEP-001](technical.md#tech-power-sleep-001)
 
-**Description:** The power or status LEDs are removed from the ZS-042, the TPS63020 module, the GY-291, the microSD breakout and the BME280 board (if it has one), and the S3 Mini's RGB LED (GPIO47) is removed too. The TP4056 charge LEDs stay (they run on USB power only). Acceptance: bench visual checklist, signed off in the bring-up notes, plus a deep-sleep current measurement ([PERF-POWER-SLEEP-001](performance.md#perf-power-sleep-001)).
+**Description:** The power or status LEDs are removed from the ZS-042, the TPS63020 module, the GY-291, and the microSD breakout (the BME280 board has none), and the S3 Mini's RGB LED (GPIO47) is removed too. The TP4056 charge LEDs stay (they run on USB power only). Acceptance: bench visual checklist, signed off in the bring-up notes, plus a deep-sleep current measurement ([PERF-POWER-SLEEP-001](performance.md#perf-power-sleep-001)).
 
 ### PLAT-POWER-SLEEP-002
 
