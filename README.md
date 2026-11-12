@@ -507,7 +507,7 @@ shrunk 2–3 cm from each end, the same on the + wire and on its GND; slide it o
 B+ / B− of the cells, **white** = OUT+ / OUT− of the TP4056 (protected side: never swap it with B−), **yellow** =
 VPATH, **orange** = VSYS (star, TPS63020 input, amp pair), **purple** = VUSB. The white / blue 3V3 pairs need no band.
 Every combination is unique inside each tube: the two red / black 26 AWG pairs of the left and middle tubes are the
-right cell's B+ / B− (no band) and the amp's VSYS / GND (orange band). Label both ends anyway (27 wires meet at the
+right cell's B+ / B− (no band) and the amp's VSYS / GND (orange band). Label both ends anyway (28 wires meet at the
 S3's carrier). Coloured mini cable ties can replace the ring count at the ends, but **no tie within 25–30 mm of a tube end**
 and only loose ones on the 30 AWG.
 
