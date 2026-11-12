@@ -596,16 +596,16 @@ doc = f"""(kicad_sch
 	(embedded_fonts no)
 )
 """
-open(OUT, "w", encoding="utf-8").write(doc)
+open(OUT, "w", encoding="utf-8", newline="\n").write(doc)
 # project library with the module symbols (names without the "tars:" prefix), project file and library table
 mods = [v.replace(f'(symbol "{k}"', f'(symbol "{k.split(":")[1]}"', 1) for k, v in LIBS.items() if k.startswith("tars:")]
-open(os.path.join(ROOT, "hardware", "kicad", "tars.kicad_sym"), "w", encoding="utf-8").write(
+open(os.path.join(ROOT, "hardware", "kicad", "tars.kicad_sym"), "w", encoding="utf-8", newline="\n").write(
     '(kicad_symbol_lib (version 20251024) (generator "kicad_symbol_editor") (generator_version "10.0")\n' + "\n".join(mods) + "\n)\n")
-open(os.path.join(ROOT, "hardware", "kicad", "sym-lib-table"), "w", encoding="utf-8").write(
+open(os.path.join(ROOT, "hardware", "kicad", "sym-lib-table"), "w", encoding="utf-8", newline="\n").write(
     '(sym_lib_table (version 7) (lib (name "tars") (type "KiCad") (uri "${KIPRJMOD}/tars.kicad_sym") (options "") (descr "TARS4 modules")))\n')
 pro = os.path.join(ROOT, "hardware", "kicad", "tars4.kicad_pro")
 if not os.path.exists(pro):
-    open(pro, "w", encoding="utf-8").write('{\n  "meta": {\n    "filename": "tars4.kicad_pro",\n    "version": 3\n  }\n}\n')
+    open(pro, "w", encoding="utf-8", newline="\n").write('{\n  "meta": {\n    "filename": "tars4.kicad_pro",\n    "version": 3\n  }\n}\n')
 print(f"{OUT}: {len(items)} items, {len(SEGS)} wires, {len(set(NETS.values()) - {'NC'})} nets")
 
 # ---------------- native format + netlist comparison ----------------
