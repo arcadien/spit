@@ -46,7 +46,7 @@ A change in `hardware/` also requires, in the same change:
   typed soldered / Dupont / JST-XH, lengths), `hardware/spit_wiring.html` + SVG, `hardware/design_notes.md`;
 - colour code and resistor-at-the-board rules respected;
 - `hardware/power_budget.md` (a row per module: estimate now, measurement later), `hardware/shopping_list.md`
-  (stock parts only), README (BOM, signals), `tests/bench/` (bring-up order, a bench test sheet per bench-only requirement), `open_questions.md`;
+  (stock parts only), `hardware/bom.md`, `hardware/design_notes.md` (placement, signals, wiring), `tests/bench/` (bring-up order, a bench test sheet per bench-only requirement), `open_questions.md`;
 - the mechanical checks above when the change needs room in the model (new module, connector, board).
 
 ## Language
@@ -69,7 +69,7 @@ A change in `hardware/` also requires, in the same change:
 - Check that the PDF/HTML output has no blank pages and that diagrams are readable at print size.
 - Strip EXIF/GPS from every image: `python3 ~/.claude/skills/hardware-change/scripts/strip_exif.py <paths>`.
 
-### Colour code (README, *Colour code*)
+### Colour code (`hardware/design_notes.md`, *Colour code*)
 The harness follows the pair rule since 2026-10-27 (sources: `tools/boards.py` wire lists, `tools/harness.py` EXTRA).
 26 AWG power: red / black pairs for the battery / 5 V rails, white 3V3 / blue logic GND (TPS63020 → P1 → S3), grey speaker.
 Power rails sharing the red / black pair carry one coloured heat-shrink band at both ends, on the + wire and on its GND

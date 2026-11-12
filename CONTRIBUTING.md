@@ -34,8 +34,31 @@ until the measurement is done and folded into the model or the requirement: the 
 
 A change in `mechanical/` or `hardware/` brings extra checks and updates in the same commit; the lists are in
 `CLAUDE.md`, *Change workflow*. In short: `make check` clean, renders and
-harness guide regenerated, schematic + ERC + board plans + wiring pages for electrical changes, and the README,
+harness guide regenerated, schematic + ERC + board plans + wiring pages for electrical changes, and the README, `hardware/design_notes.md`, `hardware/bom.md`,
 `hardware/power_budget.md`, `hardware/shopping_list.md`, `hardware/measurements.md`, `open_questions.md` kept in step.
+
+## Validation stages
+
+**Validation** (`make check`: every stage but meshes, overhang and orca). The git hooks, installed by `make hook`,
+split it: **pre-commit** runs the fast stages (model, erc, docs), **pre-push** the slow ones (stl, renders, meshes); CI
+(`check` job: model, stl, erc, docs, then a diff of the regenerated SVG / HTML) gates merges to main. **Incremental**:
+each stage runs only when its input files changed since its last pass (a geometry change: ~9 min; a wire colour change:
+the docs stage only, ~40 s; nothing changed: instant). `make check-all` forces every stage, `make check-<stage>` one
+stage. Logs in `build/check/`.
+
+| Stage | Runs when | What fails it |
+|---|---|---|
+| model | the `.scad` files change | `spit.scad` evaluated without export (seconds): any OpenSCAD `WARNING` / `ERROR`, the model's own geometry checks included |
+| stl | the `.scad` files, `build4.sh`, `stl2_3mf.py` change, or the STLs on disk are not the last ones it exported (they are not in git) | any print part (Ender 3 halves, CR-10 one-piece, the `tube_test3` trial print) with an OpenSCAD `WARNING` / `ERROR`; a raw plate (written to `build/plates/`) off its bed (Ender 3 220 × 220, CR-10 300 × 300) |
+| meshes | **pre-push** (`make check-meshes`, not part of `make check`), when the STLs or the Orca projects change | `tools/update_orca_project.py` on `mechanical/3mf/spit.3mf` and `spit_cr10.3mf`: meshes swapped for the current STLs, layout kept, backup in `backups/`; an up-to-date project is not rewritten; an object without its STL fails. The pre-push hook then refuses the push until the rewritten projects are committed |
+| overhang | **only on request** (`make check-overhang`, not part of `make check`: overhangs are checked in Orca) | `scripts/overhang.py` (uv + trimesh): a region over 2 cm² facing down more than 50° from vertical, unless it is a ceiling narrower than 3 mm (bridge) or listed with its reason in `scripts/overhang_allow.json` (`--limit 45` for a stricter pass) |
+| orca | **only on request** (`make check-orca`, not part of `make check`: needs the OrcaSlicer AppImage, Linux only) | `scripts/orca_check.py` refreshes the meshes of `mechanical/3mf/spit.3mf` (Ender 3) and `mechanical/3mf/spit_cr10.3mf` (CR-10) in place (layout kept, backup in `backups/`; same as `update_orca_project.py`), then the OrcaSlicer CLI (AppImage, no GUI) slices every plate: a part that grew off its plate or into its neighbour fails |
+| erc | the KiCad files, `kicad_sch_gen.py`, the requirements, tests, test sheets or firmware sources change | `tools/kicad_sch_gen.py` regenerates the schematic and its PDF (fails when its netlist differs from the generator's nets); KiCad ERC through `kicad-cli`: any error (warnings are listed); the requirement acceptance tests (`uvx pytest tests`) |
+| renders | `mechanical/scad/spit.scad`, `build4.sh`, the libraries change | `tools/build4.sh renders`: a PNG missing, not rewritten or blank |
+| docs | `boards.py`, `harness.py`, `hardware/spit_wiring.html`, `wiring_svg.js` or `mechanical/scad/spit.scad` (wire lengths) change | `boards.py` (net checks), `wiring_svg.js`, `harness.py`: an output missing or not rewritten, a blank page in `hardware/spit_harness.pdf` |
+
+The hooks also refuse a commit / push when the check rewrote tracked files (schematic, 3MF meshes, renders, guides):
+add them and commit again (`git commit --no-verify` skips it).
 
 ## Mechanical
 
