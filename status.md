@@ -28,17 +28,10 @@ MECH requirements for them before any model change.
   Audit 2026-10-29 has nothing left on this branch. Still blocking the merge: E-M6 (SW1 marking) and AU1 (volume cap).
 
 ## Findings
-- **Speaker**: the 30 mm is the width of the box itself (the ears are at the ends, inside the 66): it fits neither
-  way in 27.2 × 26, nor turned at an angle. Options: (1) take the bare oval driver out of its box (irreversible) and use
-  the column as the enclosure, as the model intended; (2) a smaller speaker from stock (≤ 27 wide, ideally ~22 × 39 × 10);
-  (3) wider columns (D 31 → 34): ruled out (proportions, whole model).
-- **Amplifier**: generic "I2S DAC AMP" module, SOIC-8 chip, so probably **not a MAX98357A** (often an NS4168).
-  - Header G / V / BCLK / LRCLK / DIN: **no shutdown pin**, so AMP_SD (GPIO4) cannot turn it off and its idle current
-    (a few mA) would stay on VSYS in deep sleep (budget assumes < 1 µA). Fix with stock parts: NS4168 CTRL pin (cut
-    its trace, wire it to GPIO4 through a divider for the channel level), or a P-MOSFET high-side switch on its supply.
-  - "Power" LED: remove (LED requirement).
-  - JST-PH 2.0 connectors (only XH in stock): desolder, solder the wires; remove the speaker screw terminal too.
-  - 22.4 wide fits (26 with rails); 38.4 long: move to the free zone z 100–136 or lay it flat.
+- **Speaker**: the first one (66 × 30 × 17 box, bare driver 28.6 wide) does not fit the 27.2 interior; replaced by
+  the 4 Ω 2 W speaker from stock (S6, S7).
+- **Amplifier**: the generic "I2S DAC AMP" module has no shutdown pin; replaced by the purple MAX98357A clone (A3,
+  3 in stock), SD on GPIO4 as designed.
 - Requirements touched later: [PLAT-POWER-DIST-001](requirements/platform.md#plat-power-dist-001) (MAX98357A on its own
   VSYS pair, C7), [TECH-POWER-BACKFEED-001](requirements/technical.md#tech-power-backfeed-001) (amplifier enable low at start-up),
   `hardware/power_budget.md` amplifier row.
