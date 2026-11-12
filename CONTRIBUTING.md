@@ -7,12 +7,12 @@ the tools are installed.
 
 | Tool | Used for | Notes |
 |---|---|---|
-| OpenSCAD **2026.10.27** nightly (`openscad`), pinned | the model, STL export, renders | GUI for previewing, CLI for the scripts; the same version as CI (`.github/workflows/check.yml`): another version may export different geometry; on Windows `make check` finds it in `C:\Program Files\OpenSCAD (Nightly)` (or `OpenSCAD`) without any PATH change, and runs `openscad.com`, the console binary |
+| OpenSCAD **2026.11-RC0** release candidate (`openscad`), pinned: [Linux AppImage](https://files.openscad.org/rc/OpenSCAD-2026.11-RC0-x86_64.AppImage), [Windows installer](https://files.openscad.org/rc/OpenSCAD-2026.11-RC0-x86-64-Installer.exe) | the model, STL export, renders | GUI for previewing, CLI for the scripts; the same version as CI (`.github/workflows/check.yml`): another version may export different geometry; on Windows `make check` finds it in `C:\Program Files\OpenSCAD (Nightly)` (or `OpenSCAD`) without any PATH change, and runs `openscad.com`, the console binary |
 | Python 3 | `tools/*.py`, `scripts/*.py` | standard library only, except the two `uv` scripts below |
 | `uv` | `scripts/check_renders.py` (Pillow), `scripts/overhang.py` (trimesh), the requirement tests `tests/` (`uvx pytest`, in the ERC stage) | downloads packages on the first run: run `make check` once **while online** to fill the cache, then work offline with `UV_OFFLINE=1` |
 | Node.js (`node`) | `tools/wiring_svg.js` | static SVG of the wiring sketch |
-| Firefox + Ghostscript (`gs`, or `gswin64c` on Windows) + `pdfunite` | printable wiring guide `hardware/tars4_harness.pdf` | without Firefox the HTML guide is still written, not the PDF |
-| KiCad 10: AppImage in `~/bin`, or `kicad-cli` on the PATH | schematic ERC (`make check`) | only needed when `hardware/kicad/` changes; `KICAD=/path/to/kicad.AppImage` overrides; on Windows found in `C:\Program Files\KiCad\*in` |
+| Firefox + Ghostscript (`gs`, or `gswin64c` on Windows) | printable wiring guide `hardware/tars4_harness.pdf` | without Firefox the HTML guide is still written, not the PDF |
+| KiCad 10: AppImage in `~/bin`, or `kicad-cli` on the PATH | schematic generation, ERC and the requirement tests (`erc` stage, every commit) | needed for every commit (pre-commit runs the `erc` stage); `KICAD=/path/to/kicad.AppImage` overrides; on Windows found in `C:\Program Files\KiCad\*in` |
 | OrcaSlicer | slicing `mechanical/3mf/tars4.3mf` | by hand, at the end |
 
 ## Workflow (RBD)
@@ -44,7 +44,6 @@ Everything that gets printed lives in `mechanical/`:
 | Path | What | Who writes it |
 |---|---|---|
 | `mechanical/scad/tars4.scad` | the model: every dimension is a named parameter at the top of the file | **you** |
-| `mechanical/scad/column_sections.scad` | helper for the column section drawing | rarely edited |
 | `mechanical/stl/` | one STL per part, in print orientation; **not in git**: `make check-stl` before a print | `tools/build4.sh stl` |
 | `mechanical/3mf/tars4.3mf` | **the Orca project** (plates arranged by hand, Ender 3) | Orca, then `tools/update_orca_project.py` |
 | `mechanical/3mf/tars4_cr10.3mf` | the CR-10 Orca project (one-piece parts) | Orca, then `tools/update_orca_project.py` |
@@ -65,7 +64,7 @@ The shortest path is the incremental check, which redoes only what changed:
 
 ```sh
 cd ~/git/Tars
-UV_OFFLINE=1 make check        # stl → renders → docs (and the ERC if hardware/kicad/ changed)
+UV_OFFLINE=1 make check        # model → stl → erc → renders → docs (each only when its inputs changed)
 ```
 
 It takes 5–10 min after a model change (STL export ~5 min, renders ~4 min). Logs: `build/check/<stage>.log`. To run
@@ -78,8 +77,6 @@ one step by hand instead:
 | `tools/build4.sh tests` | trial print `tube_test3` (finished trials `pir_test`, `tube_test`, `tube_test2` stay in the model, export them one-off) |
 | `openscad -D 'part="print_<part>"' -o <part>.stl mechanical/scad/tars4.scad` | any other part, one-off (e.g. `test_level`, `test_screen`: kept in the model, no longer exported) |
 | `tools/build4.sh renders` | `renders/*.png` (README pictures, connector details) |
-| `python3 -I tools/column_sections.py` | `renders/tars4_column_sections.svg` |
-| `python3 -I tools/tube_section.py` | `renders/tars4_tube_sections.svg` |
 | `python3 -I tools/harness.py` | `hardware/tars4_harness.html` + `.pdf` (wire lengths are read from the model) |
 | `tools/build4.sh 3mf` | raw plates in `mechanical/3mf/tars4_plate*.3mf` (**not** the Orca projects) |
 
@@ -103,12 +100,12 @@ A **new** part has no object in the Orca project yet: import its STL in Orca by 
 
 ```sh
 git add -A
-git commit -m "feat(MECH-…-001): …"   # validated requirement ID (commit-msg hook); pre-commit runs `make check`
+git commit -m "feat(MECH-…-001): …"   # validated requirement ID (commit-msg hook); pre-commit runs model, erc, docs
 ```
 
-- The hook refuses the commit if the check fails, or if it rewrote tracked files (STL, renders, guide): `git add`
+- The hook refuses the commit if the check fails, or if it rewrote tracked files (schematic, guide, board drawings; renders and Orca meshes at pre-push): `git add`
   them and commit again.
-- STL files are re-exported byte-different even when the geometry is the same: committing them is expected.
+- STL files are not in git: `make check-stl` exports them before a print.
 - Allowed commit prefixes (checked when pushing): `req`, `test`, `feat`, `tech`, `perf`, `ui`, `conf`, `arch`, `plan`,
   `chore`, `fix`, `docs`, `style`, `refactor`; `feat(ID):`-style prefixes need an existing requirement ID in
   `requirements/`.

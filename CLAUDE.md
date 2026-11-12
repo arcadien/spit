@@ -8,7 +8,7 @@ TARS robot, `tars4` variant. `README.md` is the project documentation; `mechanic
   `open_questions.md`. `CONTRIBUTING.md` is the manual workflow (no network, no assistant): keep it in step with the tools.
 - `make check` (incremental) must pass; commit the files it rewrites. The pre-commit hook runs the fast stages (model,
   erc, docs), the pre-push hook the slow ones (stl, renders, Orca meshes), CI (`check` job) gates merges to main. STLs and raw
-  plates are not in git (TECH-BUILD-ARTIFACTS-001): `make check-stl` before a print. OpenSCAD pinned to 2026.10.27.
+  plates are not in git (TECH-BUILD-ARTIFACTS-001): `make check-stl` before a print. OpenSCAD pinned to 2026.11-RC0.
 - Commit prefixes (RBD pre-push hook): req, test, feat, tech, perf, ui, conf, arch, plan, chore, fix, docs, style,
   refactor; `feat(ID):`-style ones need a validated requirement. Granular commits, push after each.
 - Branches: each work branch keeps its state in `status.md` at the repo root (goal, state, findings, open questions with
@@ -84,7 +84,8 @@ VPATH, orange = VSYS (star, TPS63020 input, amp pair), purple = VUSB. A new rail
 | purple | select / frame (CS, LRC, WS, SD_CMD) |
 | red | status (DC, INT1, PIR) |
 | orange | RST, USB_DET |
-| brown | enables / analog (BL_EN, VBAT/2, AMP_SD, SD_EN) |
+| brown | enables (BL_EN, AMP_SD, SD_EN) |
+| grey | analog sense (VBAT/2, VSENSE_B) |
 
 ## Modeling
 
