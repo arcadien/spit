@@ -26,7 +26,7 @@ Conventions:
 | DS3231 (ZS-042) | 3V3 | ~0.1–0.2 mA, to check | | same (always on); 32 kHz output disabled | README *Deep sleep*; charging resistor removed | | |
 | ZS-042 power LED | 3V3 | 1–3 mA | | 1–3 mA → **removed** | README (drains the cells otherwise) | | |
 | ZS-042 EEPROM (AT24C32) | 3V3 | µA range idle | | µA range, to check | | | |
-| microSD card + reader | 3V3 (Q5) | 20–100 mA reading / writing, card dependent | ~100 mA+ at insertion / writes | 0 (cut by Q5) | D10, E-M7 | | |
+| microSD card + reader | 3V3 (Q5) | 20–100 mA reading / writing, card dependent | ~100 mA+ at insertion / writes | 0 (cut by Q5) | [FUNC-POWER-GATE-001](../requirements/functional.md#func-power-gate-001), E-M7 | | |
 | TPS63020 buck-boost (U9) | VSYS | efficiency ~85–90 % on the 3V3 load | | ~25–50 µA idle (PS/SYNC to GND) | README *TPS63020* | | |
 | TP4056 + DW01 module | B+ | charging: 0.5 A in (R_PROG 2.4k) | | < 10 µA from the cells, USB out | checklist 3.1 | | |
 | D1 1N5822 (power path) | B+ | | | reverse leakage up to tens of µA, warm | E-M3 | | |

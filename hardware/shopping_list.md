@@ -22,7 +22,7 @@ links were found on 2026-10-21, price and stock not guaranteed.
 
 | Item | Qty | Criteria | Links |
 |---|---|---|---|
-| **30 AWG** silicone wire, **tinned** copper (not CCA), multicolour | ~20.3 m in total (cut lengths from the wiring guide), ≤ 3.6 m per colour | **10-colour kit** (× 7.6 m): **purple** is needed (selects CS / LRC / WS / CMD) and **blue** (GND of screens and sensors); black and grey unused in 30 AWG | [BNTECHGO 10 colours × 25 ft (maker)](https://bntechgo.com/bntechgo-30-gauge-silicone-wire-kit-ultra-flexible-10-colors-each-25-feet-high-temp-200-c-600v-30-awg-silicone-wire-11-strands-of-tinned-copper-wire-stranded-wire-for-model-battery/) · [Amazon (search)](https://www.amazon.fr/s?k=fil+silicone+30+AWG+kit+couleurs+cuivre+etame) |
+| **30 AWG** silicone wire, **tinned** copper (not CCA), multicolour | ~20.3 m in total (cut lengths from the wiring guide), ≤ 3.6 m per colour | **10-colour kit** (× 7.6 m): **purple** is needed (selects CS / LRC / WS / CMD) and **blue** (GND of screens and sensors); black unused in 30 AWG, grey for the analog sense wires (VBAT/2, VSENSE_B) | [BNTECHGO 10 colours × 25 ft (maker)](https://bntechgo.com/bntechgo-30-gauge-silicone-wire-kit-ultra-flexible-10-colors-each-25-feet-high-temp-200-c-600v-30-awg-silicone-wire-11-strands-of-tinned-copper-wire-stranded-wire-for-model-battery/) · [Amazon (search)](https://www.amazon.fr/s?k=fil+silicone+30+AWG+kit+couleurs+cuivre+etame) |
 | 26 AWG silicone wire | ~7.7 m (red 3.3 m, black 2.5 m, blue 0.8 m, white 0.8 m, grey 0.3 m) | already in stock (10-colour kit): **check there are 3.3 m of red and 2.5 m of black** (pair rule: red / black for battery, VUSB, VSYS) | — |
 
 ## 3. Parts added by the review
