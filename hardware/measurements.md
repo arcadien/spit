@@ -56,6 +56,7 @@ re-centred in its band (asymmetric extents), `active_dz` −1.1. Tube bores merg
 | Power-path perfboard | tallest part (D1 lying) | `pp_parts` 6 | D1 lying **5.2** → keep 6 (leads / solder above it) | |
 | Stripboard P1 / P2 | thickness | `hub_b[2]` 1.6 | **1.61** → keep 1.6 | cut to 24 × 32 |
 | TP4056 | R_PROG (PLAT-POWER-CHARGE-002) | 2.4 kΩ "242" (0.5 A) | pending (E-M8) | fallback 3.6 kΩ "362" (0.33 A) if the leg wall goes > 45 °C during charge (E-M8 in open_questions.md) |
+| SW1 TC-R13-603C-05 (E-M6) | flange, body depth, pins, lever (section, height), travel, holes | `sw_body` [12.95, 6.9], `sw_lever_h` 5.15, `sw_travel` 6 (old mini switch) | datasheet: flange **19.5 × 8**, body **5.8** below it, pins 3.2, lever **3 × 3**, **3.4** above the flange, travel **6**, holes **Ø3.5** at **14.3** centres; 3 A 250 V AC | to measure on receipt: body footprint, flange thickness, and confirm travel / holes (PLAT-MECH-SWITCH-001) |
 
 ## Sensors, screens, connectors
 
