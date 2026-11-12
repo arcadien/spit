@@ -1,11 +1,11 @@
-"""Wiring guide of TARS4: every wire with both ends, in build order.
+"""Wiring guide of SPIT: every wire with both ends, in build order.
 
-usage: python3 -I tools/harness.py [--no-pdf]   (writes hardware/tars4_harness.html and, with Firefox, hardware/tars4_harness.pdf)
+usage: python3 -I tools/harness.py [--no-pdf]   (writes hardware/spit_harness.html and, with Firefox, hardware/spit_harness.pdf)
 
 The board wires come from tools/boards.py (hole, net, colour, connector contacts); the wires that touch no board
 (power block leads, module pigtails, cells, charge port, switch, speaker, contact-to-contact jumpers) are listed
 below. Every wire gets a number W1… in build order and its two ends are typed with the code of the board drawings:
-soldered (grey dot), Dupont (blue D) or JST-XH (orange XH), female F / male M. Each build step gets a diagram (TARS
+soldered (grey dot), Dupont (blue D) or JST-XH (orange XH), female F / male M. Each build step gets a diagram (SPIT
 columns from left to right, tubes between them), its wire table and its bench test.
 """
 import glob
@@ -16,28 +16,23 @@ import subprocess
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from boards import BOARDS, CONNS, KIT, NAME, XH, CCOL, P, gender, pin_no, rings_text  # noqa: E402
+from boards import BOARDS, BNAME, CONNS, KIT, NAME, PAIRS, SPI_NAME, XH, CCOL, P, gender, pin_no, rings_text  # noqa: E402
 import json  # noqa: E402
 import tempfile  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 GEO_CACHE = os.path.join(ROOT, 'tools', 'harness_geometry.json')
-HTML = os.path.join(ROOT, 'hardware', 'tars4_harness.html')
-PDF = os.path.join(ROOT, 'hardware', 'tars4_harness.pdf')
+HTML = os.path.join(ROOT, 'hardware', 'spit_harness.html')
+PDF = os.path.join(ROOT, 'hardware', 'spit_harness.pdf')
 PIGTAIL = 6      # module pigtails (INMP441, AM312, microSD reader), cm
 TOL = 3         # cut length = estimate + TOL, cm
 
 BCOL = {'s3': 1, 'p1': 1, 'p2': 2, 'power': 0}
-BNAME = {'s3': 'P3', 'p1': 'P1', 'p2': 'P2', 'power': 'P4'}   # P = hand-wired board, X = connector, else a module
 BSUB = {'s3': 'S3 carrier', 'p1': 'left middle distribution', 'p2': 'right middle distribution', 'power': 'power path'}
 FRAME = {'P': ('#2f8f5b', 'board'), 'M': ('#8e44c4', 'module'), 'D': ('#2a62d6', 'Dupont'), 'XH': ('#f07800', 'JST-XH')}
 BSTEP = {'power': 1, 's3': 3, 'p1': 4, 'p2': 6}
 TUBE = {0: 'left tube', 1: 'middle tube', 2: 'right tube'}
 COLNAME = ['left leg', 'left middle', 'right middle', 'right leg']
-# board-to-board wires: listed on both drawings, one wire
-PAIRS = [('s3', 'A4', 'p1', 'B9'), ('s3', 'J5', 'p1', 'B10'), ('s3', 'A7', 'p1', 'A7'), ('s3', 'C10', 'p1', 'A5'),
-         ('s3', 'B7', 'p1', 'A8'), ('s3', 'B6', 'p1', 'A6'), ('s3', 'A9', 'p2', 'A11'), ('s3', 'B10', 'p2', 'A4'),
-         ('p1', 'C11', 'p2', 'A10'), ('p1', 'F9', 'p2', 'A9')]
 
 
 def S(block, port, col, step, sub='', frame='M'):
@@ -99,7 +94,7 @@ EXTRA = [
 
 STEPS = [
     (1, 'Power block, on the bench', 'left leg: TP4056, power-path board, TPS63020 soldered together',
-     ['Power-path board: parts, bridges and GND bus per renders/tars4_board_power.svg (Q1 / Q5 with wire-wrap wire).',
+     ['Power-path board: parts, bridges and GND bus per renders/spit_board_power.svg (Q1 / Q5 with wire-wrap wire).',
       'TP4056: R_PROG replaced by 2.4 k, then tested alone: 3.7 V bench supply on B+ / B−, current < 10 µA. Polarities: C9 + on IN+, D3 band (cathode) on IN+ (reversed, it shorts the 5 V). TPS63020: EN tied to VIN, PS/SYNC to GND.',
       'Crowded pads (joints ≥ 0.65 mm from the board end): splice 1 cm before the pad the two VUSB wires of IN+ (to X10 and to the power-path board), the two B+ (to X12 and X16, with the B+ sense wire to the power-path board) and the two B−: a single conductor per pad, next to C9 / D3.',
       'Solder the wires below (4–5 cm loops between the three boards), then crimp the XH contacts and slide them into X10, X12, X13 and X14.',
@@ -109,16 +104,16 @@ STEPS = [
       '5 V on X10 cavities 1–2: charge LED, USB_DET ≈ 3 V on X14 cavity 2, Q1 off.']),
     (2, 'Charge port, switch, cells', 'the foot and cell cables up to X10, X12 and X16',
      ['Solder F1 on the left + plate (F2 on the right one at step 7). Never solder on a cell.',
-      'Right cell wires: long enough to cross the three tubes (length from the table, already + 3 cm, offered up on TARS before cutting). Crimp X16 (female) now; the right cell end stays bare.'],
+      'Right cell wires: long enough to cross the three tubes (length from the table, already + 3 cm, offered up on SPIT before cutting). Crimp X16 (female) now; the right cell end stays bare.'],
      ['Left cell alone: X12 plugged in, switch on, VSYS ≈ B+.',
       'Charger on J1: charge LED; unplugged: VUSB < 0.5 V within ~1 s.']),
-    (3, 'S3 carrier', 'the 27 controller wires, soldered on the carrier side',
-     ['Plan renders/tars4_board_s3.svg: 2 × 8 headers (V contact removed, headers glued), standing parts, bridges, GND bus, jumpers.',
-      'Solder the 27 wires on the carrier side only, long enough (6–8 cm service loop + route). The other end stays bare: it is finished at the step shown.'],
+    (3, 'S3 carrier', 'the 28 controller wires, soldered on the carrier side',
+     ['Plan renders/spit_board_s3.svg: 2 × 8 headers (V contact removed, headers glued), standing parts, bridges, GND bus, jumpers.',
+      'Solder the 28 wires on the carrier side only, long enough (6–8 cm service loop + route). The other end stays bare: it is finished at the step shown.'],
      ['Before any power-up: every still-free end capped with closed heat-shrink (shrunk, end pinched while hot).', 'S3 removed: each wire ↔ its pin with the ohmmeter, GND isolated from 3V3 and the signals.',
       'S3 plugged in, PC USB: test program flashed, the S3 boots.']),
     (4, 'P1 and the left middle', 'screen 1, mic, accelerometer',
-     ['Plan renders/tars4_board_p1.svg. 1 × 8 right-angle header on the back of screen 1 (X1). ADXL345: straight header, INT2 removed and its cavity plugged (X2).',
+     ['Plan renders/spit_board_p1.svg. 1 × 8 right-angle header on the back of screen 1 (X1). ADXL345: straight header, INT2 removed and its cavity plugged (X2).',
       'INMP441: 5-wire pigtail (male contacts, X3); L/R bridged to GND on its board.',
       'X2 SDA and SCL: double contact, crimp together (without folding back) the S3 wire and the one leaving for P2 (bare end, soldered at step 6).'],
      ['Before any power-up: every still-free end capped with closed heat-shrink (shrunk, end pinched while hot).', 'S3 on USB, switch off: screen 1 displays, the mic gives I2S samples, the ADXL345 answers at 0x53 and INT1 toggles.']),
@@ -128,11 +123,11 @@ STEPS = [
      ['Before any power-up: every still-free end capped with closed heat-shrink (shrunk, end pinched while hot).', 'Without USB, switch on: the S3 boots from the cells (3.3 V on the carrier).',
       'VBAT/2 and USB_DET read by the S3; the microSD is read; SD_EN high cuts its 3.3 V.']),
     (6, 'Middle tube and right middle', 'screen 2, amplifier, speaker, AM312, P2',
-     ['Plan renders/tars4_board_p2.svg. Right-angle header on the back of screen 2 (X4). Amplifier: 1 × 4 (GAIN removed) + 1 × 3 headers (X5), screw terminal not fitted: the speaker pair is soldered on OUT+ / OUT−, C7 + on VIN, band (−) to GND.',
+     ['Plan renders/spit_board_p2.svg. Right-angle header on the back of screen 2 (X4). Amplifier: 1 × 4 (GAIN removed) + 1 × 3 headers (X5), screw terminal not fitted: the speaker pair is soldered on OUT+ / OUT−, C7 + on VIN, band (−) to GND.',
       'AM312: 3-wire pigtail (male contacts, X7), breakout pins trimmed flush, breakout slipped into a heat-shrink sock (it passes 5 mm from the middle tube exit). Thread the middle tube before crimping.'],
      ['Before any power-up: every still-free end capped with closed heat-shrink (shrunk, end pinched while hot).', 'Screen 2 displays; sound in the speaker; AMP_SD low cuts the amplifier; PIR rises when a hand passes.']),
     (7, 'Right tube and right leg', 'DS3231, BME280, right cell',
-     ['DS3231: right-angle header, 32K removed, coin-cell charging resistor removed. BME280: 1 × 4 header, LED removed.',
+     ['DS3231: right-angle header, 32K removed, coin-cell charging resistor removed. BME280: 1 × 4 header (no LED on this board).',
       'Thread the right tube. F2 on the right + plate, then solder the two right cell wires (step 2).',
       'X9: each contact takes two wires (P2 + the continuation to X8), crimped together without folding back.',
       'Right tube: twist SDA with GND and SCL with 3V3 (long I2C bus, next to SCK / BCLK).'],
@@ -142,14 +137,14 @@ STEPS = [
 
 
 def geometry():
-    """positions read from tars4.scad (openscad echo), cached in tools/harness_geometry.json for machines without it"""
+    """positions read from spit.scad (openscad echo), cached in tools/harness_geometry.json for machines without it"""
     keys = ('col_w D H wall gap lid_y d1_x d1_z0 carrier_back_y hub_y hub_z0 pp_z0 charger_z0 bk_z0 bk_y1 usbb_z0 shelf_z '
             'fuse_z0 sw_y usbb_y0 spk_z0 spk_front_y amp_z0 charger bk spk').split()
     q = '\\"'                       # an escaped quote inside the SCAD string
     items = [(k, k) for k in keys] + [('pivot_z', 'pivot_z[0]'), ('conn_names', '[for (c = CONN) c[1]]'),
                                       ('conn_box', '[for (c = CONN) [c[0], c[3], c[4]]]')]
     body = ', '.join(f'"{"," if n else ""}{q}{k}{q}:", {v}' for n, (k, v) in enumerate(items))
-    scad = f'include <{os.path.join(ROOT, "mechanical", "scad", "tars4.scad")}>\necho(str("GEOJSON{{", {body}, "}}"));\n'
+    scad = f'include <{os.path.join(ROOT, "mechanical", "scad", "spit.scad")}>\necho(str("GEOJSON{{", {body}, "}}"));\n'
     if shutil.which('openscad'):
         with tempfile.TemporaryDirectory() as d:
             with open(os.path.join(d, 'g.scad'), 'w') as fh:
@@ -163,10 +158,10 @@ def geometry():
             json.dump(geo, fh, indent=1)
         return geo
     # without openscad, the cache is only trusted if no model file changed after it was written (else: old wire lengths)
-    scad = os.path.join(ROOT, 'mechanical', 'scad', 'tars4.scad')
+    scad = os.path.join(ROOT, 'mechanical', 'scad', 'spit.scad')
     if not os.path.exists(GEO_CACHE) or os.path.getmtime(GEO_CACHE) < os.path.getmtime(scad):
         sys.exit(f'harness.py: openscad not found and {os.path.relpath(GEO_CACHE, ROOT)} is missing or older than '
-                 'tars4.scad: put openscad on the PATH')
+                 'spit.scad: put openscad on the PATH')
     print(f'harness.py: openscad not found, positions from {os.path.relpath(GEO_CACHE, ROOT)}')
     return json.load(open(GEO_CACHE))
 
@@ -355,7 +350,7 @@ def diagrams(step, wires):
 
 
 def diagram(step, done, started):
-    """blocks in TARS's columns (left leg on the left), one row per wire end, wires drawn between them"""
+    """blocks in SPIT's columns (left leg on the left), one row per wire end, wires drawn between them"""
     blocks = {}   # name -> dict(col, ports: [(port label, end, wire, side)])
     for w in done:
         for e, o in ((w['A'], w['B']), (w['B'], w['A'])):
@@ -364,7 +359,7 @@ def diagram(step, done, started):
         e = w['A'] if w['A']['step'] == step else w['B']
         o = w['B'] if e is w['A'] else w['A']
         blocks.setdefault(e['block'], dict(col=e['col'], ports=[], sub=e['sub'], frame=e['frame']))['ports'].append((e, o, w, True))
-    # two lanes per TARS column: what gets soldered (boards, modules), then the connector sides
+    # two lanes per SPIT column: what gets soldered (boards, modules), then the connector sides
     def lane_of(col, kind):
         return col * 2 + (0 if kind == 'S' else 1)
     for name, b in blocks.items():
@@ -494,7 +489,7 @@ def page(wires):
     for ref in sorted(CONNS, key=lambda r: int(r[1:])):
         title, pins = CONNS[ref]
         cells = ''.join('<span class="gap"></span>' if p == '|' else
-                        f'<span class="cell{" key" if net == "key" else ""}"><b>{esc(p)}</b><small>{"plugged" if net == "key" else esc(net or "empty")}</small></span>'
+                        f'<span class="cell{" key" if net == "key" else ""}"><b>{esc(p)}{esc(" · " + SPI_NAME[ref][p] if p in SPI_NAME.get(ref, {}) else "")}</b><small>{"plugged" if net == "key" else esc(net or "empty")}</small></span>'
                         for p, net in pins)
         kind = 'x' if ref in XH else 'd'
         conn_cards.append(f'<div class="card"><p><span class="e {kind}">{ref}</span> {esc(title)}</p><div class="pins">{cells}</div></div>')
@@ -511,7 +506,7 @@ def page(wires):
     totals = (f'<div class="tbl"><table><tr><th>colour</th><th>gauge</th><th>wires</th><th>to cut</th></tr>{rows}'
               f'<tr><td><b>total 30 AWG</b></td><td></td><td></td><td class="n">{t30:.2f} m</td></tr>'
               f'<tr><td><b>total 26 AWG</b></td><td></td><td></td><td class="n">{t26:.2f} m</td></tr></table></div>')
-    return f'''<title>TARS4 wiring guide</title>
+    return f'''<title>SPIT wiring guide</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Sans+Condensed:wght@600&display=swap">
@@ -613,10 +608,10 @@ svg .ps {{ font: 600 11px var(--f-mono); fill: #c0392b; }}
 </style>
 <div class="wrap">
   <header>
-    <h1>TARS4 — wiring guide</h1>
-    <p class="lead">The {len(wires)} TARS wires ({n26} in 26 AWG, the rest in 30 AWG), in build order. Each step is tested
-    on the bench before the next; everything is done outside TARS, fitting comes at the end. The board plans
-    (renders/tars4_board_*.svg) give hole by hole, this guide gives both ends of every wire.</p>
+    <h1>SPIT — wiring guide</h1>
+    <p class="lead">The {len(wires)} SPIT wires ({n26} in 26 AWG, the rest in 30 AWG), in build order. Each step is tested
+    on the bench before the next; everything is done outside SPIT, fitting comes at the end. The board plans
+    (renders/spit_board_*.svg) give hole by hole, this guide gives both ends of every wire.</p>
   </header>
   <section>
     <h3>Wire end code (the same on the board plans)</h3>
@@ -633,17 +628,17 @@ svg .ps {{ font: 600 11px var(--f-mono); fill: #c0392b; }}
   <section>
     <h3>Diagram blocks (frame colour)</h3>
     <div class="legend frames">
-      <div><span class="fr" style="border-color:#2f8f5b">P</span><span><b>Hand-wired board</b>: P1, P2 (stripboards), P3 S3 carrier, P4 power path (pad perfboards); plans renders/tars4_board_*.svg.</span></div>
+      <div><span class="fr" style="border-color:#2f8f5b">P</span><span><b>Hand-wired board</b>: P1, P2 (stripboards), P3 S3 carrier, P4 power path (pad perfboards); plans renders/spit_board_*.svg.</span></div>
       <div><span class="fr" style="border-color:#8e44c4">M</span><span><b>Module or part</b> under its name: TP4056, TPS63020, INMP441, AM312, microSD reader, switch, cells, speaker…</span></div>
       <div><span class="fr" style="border-color:#2a62d6">X</span><span><b>Dupont connector</b>, one side (female or male); cavities are numbered from pin 1.</span></div>
       <div><span class="fr" style="border-color:#f07800">X</span><span><b>JST-XH connector</b>, one side (female or male).</span></div>
     </div>
   </section>
   <nav><h3>Steps</h3><ol>{"".join(f'<li><a href="#e{n}">{n}. {esc(t)}</a></li>' for n, t, *_ in STEPS)}<li><a href="#long">Lengths</a></li><li><a href="#tous">Full list</a></li><li><a href="#conn">Connectors</a></li></ol></nav>
-  <p class="small">In the diagrams, TARS is seen from the front (left leg on the left), one column per TARS column, the tubes between them. A block = a board, a module or one side of a connector; each line = one wire end. A wire started at one step and finished later leaves the block with an arrow "→ st. n".</p>
+  <p class="small">In the diagrams, SPIT is seen from the front (left leg on the left), one column per SPIT column, the tubes between them. A block = a board, a module or one side of a connector; each line = one wire end. A wire started at one step and finished later leaves the block with an arrow "→ st. n".</p>
   {"".join(steps)}
   <section class="step" id="long"><h2>Wire lengths</h2>
-    <p class="sub">Taken from the 3D model (tars4.scad): route from one end to the other along the column, through the pivot (z {geo_pz:.0f}) when the wire changes column, +10 % for bends, + service loop at each end (7 cm at the P3 carrier, 4 cm at connectors, 2–3 cm at boards and modules), + 3 cm per tube (leg rotation). Length to cut = estimated + {TOL} cm; module pigtails are {PIGTAIL} cm. Cut at assembly time, after offering the wire up in TARS if possible.</p>
+    <p class="sub">Taken from the 3D model (spit.scad): route from one end to the other along the column, through the pivot (z {geo_pz:.0f}) when the wire changes column, +10 % for bends, + service loop at each end (7 cm at the P3 carrier, 4 cm at connectors, 2–3 cm at boards and modules), + 3 cm per tube (leg rotation). Length to cut = estimated + {TOL} cm; module pigtails are {PIGTAIL} cm. Cut at assembly time, after offering the wire up in SPIT if possible.</p>
     {totals}
   </section>
   <section class="step" id="tous"><h2>Full wire list</h2><p class="sub">step where it is started → finished</p>{table(wires, True)}</section>
@@ -666,12 +661,12 @@ def main():
         sys.exit(1)
     with open(HTML, 'w', encoding='utf-8') as fh:
         fh.write(page(wires))
-    print(f'tars4_harness.html: {len(wires)} wires, {len(STEPS)} steps, '
+    print(f'spit_harness.html: {len(wires)} wires, {len(STEPS)} steps, '
           f'{sum(1 for v in seen.values() if len(v) == 2)} double contacts')
     if '--no-pdf' in sys.argv:
         return
     if not shutil.which('firefox'):
-        print('WARNING: firefox not found, tars4_harness.pdf left as it was')
+        print('WARNING: firefox not found, spit_harness.pdf left as it was')
         return
     make_pdf()
 
@@ -705,7 +700,7 @@ def make_pdf():
                 print('WARNING: Ghostscript (gs / gswin64c) not found: the portrait diagrams stay on landscape pages')
             shutil.copy(os.path.join(d, 'main.pdf'), PDF)
             pin_dates(PDF)
-            print('wrote tars4_harness.pdf (landscape only)')
+            print('wrote spit_harness.pdf (landscape only)')
             return
         subprocess.run([gs, '-q', '-dNOPAUSE', '-dBATCH', '-sDEVICE=pdfwrite', f'-sOutputFile={d}/p%03d.pdf',
                         os.path.join(d, 'main.pdf')], check=True)
@@ -725,7 +720,7 @@ def make_pdf():
         subprocess.run([gs, '-q', '-dNOPAUSE', '-dBATCH', '-sDEVICE=pdfwrite', '-dOmitXMP', '-dOmitID', '-dOmitInfoDate',   # same bytes every run
                         f'-sOutputFile={PDF}', *pages], check=True)
     pin_dates(PDF)
-    print(f'wrote tars4_harness.pdf ({len(sheets)} diagram(s) in portrait)')
+    print(f'wrote spit_harness.pdf ({len(sheets)} diagram(s) in portrait)')
 
 
 if __name__ == '__main__':

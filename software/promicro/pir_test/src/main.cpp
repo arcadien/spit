@@ -1,5 +1,5 @@
 /*
- * TARS - AM312 motion sensor bench test on the pir_test plate (tars4.scad).
+ * SPIT - AM312 motion sensor bench test on the pir_test plate (spit.scad).
  *
  * Compares the four mounting positions of the plate:
  *   e  : cap inserted from the outside, dome protrudes 5.7 mm
@@ -226,7 +226,7 @@ void setup() {
   uint32_t t0 = millis();
   while (!Serial && millis() - t0 < SERIAL_WAIT_MS) {}
 
-  Serial.println(F("# TARS AM312 test - pir_test plate"));
+  Serial.println(F("# SPIT AM312 test - pir_test plate"));
   print_help();
 
   attachInterrupt(digitalPinToInterrupt(PIN_PIR), on_pir_change, CHANGE);

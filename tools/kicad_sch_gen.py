@@ -1,14 +1,14 @@
-"""Generate the TARS4 KiCad schematic (hardware/kicad/tars4.kicad_sch) from the netlist below.
+"""Generate the SPIT KiCad schematic (hardware/kicad/spit.kicad_sch) from the netlist below.
 
 usage: python3 -I tools/kicad_sch_gen.py
 
 Standard symbols are copied from hardware/kicad/lib_src/<Lib>__<Name>.kicad_sym (taken from the KiCad 10 libraries) and embedded
-in the schematic; every breakout module gets its own rectangular symbol (lib "tars"). Every signal is drawn
+in the schematic; every breakout module gets its own rectangular symbol (lib "spit"). Every signal is drawn
 with real wires (A2 sheet): the power section is wired locally and the buses run in two channels on each side of the
 S3, one vertical track per net; GND and +3V3 use power symbols. Every pin gets a net in the `nets` dict of its part;
 the wires only decide how it is drawn (a pin left undrawn gets a net label, reported as a warning). After writing, the file is upgraded to the native KiCad 10 format with
 kicad-cli and its exported netlist is compared with the `nets` dicts (any accidental wire short is reported).
-Check it with: kicad-cli sch erc hardware/kicad/tars4.kicad_sch (the netlist check and the PDF export are done here)
+Check it with: kicad-cli sch erc hardware/kicad/spit.kicad_sch (the netlist check and the PDF export are done here)
 """
 import glob
 import os
@@ -23,7 +23,7 @@ from collections import Counter, defaultdict
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 LIBSRC = os.path.join(ROOT, "hardware", "kicad", "lib_src")
-OUT = os.path.join(ROOT, "hardware", "kicad", "tars4.kicad_sch")
+OUT = os.path.join(ROOT, "hardware", "kicad", "spit.kicad_sch")
 # kicad-cli: the AppImage named by $KICAD (or the newest ~/bin/kicad-*.AppImage), else kicad-cli on the PATH, else the
 # newest Windows install
 _bin = os.path.expanduser("~/bin")
@@ -32,13 +32,13 @@ KICAD = os.environ.get("KICAD") or (os.path.expanduser(f"~/bin/{_appimages[-1]}"
 _win = sorted(glob.glob("C:/Program Files/KiCad/*/bin/kicad-cli.exe"))
 _cli = shutil.which("kicad-cli") or (_win[-1] if _win else "")
 KICAD_CLI = [KICAD, "kicad-cli"] if KICAD else ([_cli] if _cli else [])
-ROOT_UUID = str(uuid.uuid5(uuid.NAMESPACE_URL, "tars4-root"))
+ROOT_UUID = str(uuid.uuid5(uuid.NAMESPACE_URL, "spit-root"))
 _n = [0]
 
 
 def U():
     _n[0] += 1
-    return str(uuid.uuid5(uuid.NAMESPACE_URL, f"tars4-{_n[0]}"))
+    return str(uuid.uuid5(uuid.NAMESPACE_URL, f"spit-{_n[0]}"))
 
 
 def font(size=1.27):
@@ -77,7 +77,7 @@ def load_std(lib_id):
 
 def module(name, left, right=(), width=17.78):
     """Rectangular symbol: left / right = lists of (pin name, pin number)."""
-    lib_id = f"tars:{name}"
+    lib_id = f"spit:{name}"
     n, pitch, plen = max(len(left), len(right)), 5.08, 5.08
     top = round((n - 1) * pitch / 2 / 2.54) * 2.54
     h2 = top + 2.54
@@ -146,7 +146,7 @@ def sym(lib_id, ref, value, X, Y, rot=0, mirror=None, hidden_ref=False, txt="ud"
                  f' (property "Value" "{value}" (at {r2(vx)} {r2(vy)} {fa}) (effects (font (size 1.27 1.27)){vj}))'
                  f' (property "Footprint" "" (at {X} {Y} 0) (hide yes) {font()})'
                  f' (property "Datasheet" "" (at {X} {Y} 0) (hide yes) {font()})'
-                 f' {pins} (instances (project "tars4" (path "/{ROOT_UUID}" (reference "{ref}") (unit 1)))))')
+                 f' {pins} (instances (project "spit" (path "/{ROOT_UUID}" (reference "{ref}") (unit 1)))))')
     for n in PINS[lib_id]:
         POINTS.append(pin_point(lib_id, n, X, Y, rot, mirror)[:2])
 
@@ -529,17 +529,17 @@ place("Device:C_Polarized", "C10", "10µ tant. (P2)", 116.84, 190.5, {"1": "+3V3
 place("Device:C", "C11", "0.1µ (P2)", 142.24, 190.5, {"1": "+3V3", "2": "GND"})
 rail(["C1.1", "C2.1", "C3.1", "C10.1", "C11.1"], 2.54, "+3V3", left=None)
 rail(["C1.2", "C2.2", "C3.2", "C10.2", "C11.2"], 2.54, "GND", left=None)
-note("C1 (SMD 7343 tantalum lying under the S3) on its carrier, C2 / C3 on the P1 3V3 strip, C10 / C11 on P2; plans renders/tars4_board_*.svg.", 30.48, 203.2, 1.27)
+note("C1 (SMD 7343 tantalum lying under the S3) on its carrier, C2 / C3 on the P1 3V3 strip, C10 / C11 on P2; plans renders/spit_board_*.svg.", 30.48, 203.2, 1.27)
 
 NY = 365.76
 for i, t in enumerate([
-        "Q1 + D1 + R1: power path (mains / battery). R2 / R3 (1M, on B+: the real cell voltage, even on mains) on the power-path board; C6 (GPIO1) and C8 (GPIO21) at the S3 pins. Q5 + R22 on the power-path board: microSD cut in sleep (GPIO36 low = on).",
+        "Q1 + D1 + R1: power path (mains / battery). R2 / R3 (1M, on B+: the real cell voltage, even on mains): R2 in line in the harness at the TP4056 B+ pad, R3 on the power-path board; C6 (GPIO1) and C8 (GPIO21) at the S3 pins. Q5 + R22 on the power-path board: microSD cut in sleep (GPIO36 low = on).",
         "U9: EN tied to VIN, PS/SYNC to GND (never drive it high). Its VSYS/GND pair leaves from the star; the logic GND to P1 leaves from its GND pad.",
         "S3: V (VBUS) = the S3 USB-C only. EN = S3 reset (≠ BL_EN). 33 Ω series at the S3 (R20 on MOSI); SCK split on the carrier: R12 → screen 1, R19 → screen 2 (direct wire in the tube), 47 Ω (up to 100 if the image jitters).",
         "BL_EN (GPIO7): backlight of both screens only (PWM possible). AMP_SD (GPIO4): R10 1k + R18 10k on P2 → amplifier SD (off at boot and in sleep). P1 / P2: stripboards under the screens. I2C chain: S3 → ADXL345 → middle tube → P2 → right tube → DS3231 + BME280 (right leg); sensor supply P1 → mic → ADXL345, P2 → right leg.",
         "LEDs: remove every status LED fed by the battery (ZS-042, TPS63020, GY-291, microSD reader…); keep the TP4056 charge LEDs.",
         "Silicone wire: power in 26 AWG (B+/B−, amplifier pair, 3V3 and GND to P1), signals and screen / sensor supply in 30 AWG. Tubes: 14 / 19 / 6 wires.",
-        "Connectors X1–X15 (keyed Dupont / JST) between each module and the harness, S3 plugged into a carrier: not drawn, see tars4_wiring.html. D3: unidirectional TVS (Zener symbol). A crossing without a dot is not a connection. Generated by tools/kicad_sch_gen.py (netlist checked at every generation)."]):
+        "Connectors X1–X16 (keyed Dupont / JST) between each module and the harness, S3 plugged into a carrier: not drawn, see spit_wiring.html. D3: unidirectional TVS (Zener symbol). A crossing without a dot is not a connection. Generated by tools/kicad_sch_gen.py (netlist checked at every generation)."]):
     note(t, 15.24, NY + 5.08 * i, 1.5 if i < 6 else 1.27)
 
 finish()
@@ -587,7 +587,7 @@ doc = f"""(kicad_sch
 	(generator_version "10.0")
 	(uuid "{ROOT_UUID}")
 	(paper "A2")
-	(title_block (title "TARS4 — electronics") (date "2026-10-21") (rev "3") (comment 1 "LOLIN S3 Mini, TPS63020, 2 × 18650"))
+	(title_block (title "SPIT — electronics") (date "2026-10-21") (rev "3") (comment 1 "LOLIN S3 Mini, TPS63020, 2 × 18650"))
 	(lib_symbols
 {lib_symbols}
 	)
@@ -597,15 +597,15 @@ doc = f"""(kicad_sch
 )
 """
 open(OUT, "w", encoding="utf-8", newline="\n").write(doc)
-# project library with the module symbols (names without the "tars:" prefix), project file and library table
-mods = [v.replace(f'(symbol "{k}"', f'(symbol "{k.split(":")[1]}"', 1) for k, v in LIBS.items() if k.startswith("tars:")]
-open(os.path.join(ROOT, "hardware", "kicad", "tars.kicad_sym"), "w", encoding="utf-8", newline="\n").write(
+# project library with the module symbols (names without the "spit:" prefix), project file and library table
+mods = [v.replace(f'(symbol "{k}"', f'(symbol "{k.split(":")[1]}"', 1) for k, v in LIBS.items() if k.startswith("spit:")]
+open(os.path.join(ROOT, "hardware", "kicad", "spit.kicad_sym"), "w", encoding="utf-8", newline="\n").write(
     '(kicad_symbol_lib (version 20251024) (generator "kicad_symbol_editor") (generator_version "10.0")\n' + "\n".join(mods) + "\n)\n")
 open(os.path.join(ROOT, "hardware", "kicad", "sym-lib-table"), "w", encoding="utf-8", newline="\n").write(
-    '(sym_lib_table (version 7) (lib (name "tars") (type "KiCad") (uri "${KIPRJMOD}/tars.kicad_sym") (options "") (descr "TARS4 modules")))\n')
-pro = os.path.join(ROOT, "hardware", "kicad", "tars4.kicad_pro")
+    '(sym_lib_table (version 7) (lib (name "spit") (type "KiCad") (uri "${KIPRJMOD}/spit.kicad_sym") (options "") (descr "SPIT modules")))\n')
+pro = os.path.join(ROOT, "hardware", "kicad", "spit.kicad_pro")
 if not os.path.exists(pro):
-    open(pro, "w", encoding="utf-8", newline="\n").write('{\n  "meta": {\n    "filename": "tars4.kicad_pro",\n    "version": 3\n  }\n}\n')
+    open(pro, "w", encoding="utf-8", newline="\n").write('{\n  "meta": {\n    "filename": "spit.kicad_pro",\n    "version": 3\n  }\n}\n')
 print(f"{OUT}: {len(items)} items, {len(SEGS)} wires, {len(set(NETS.values()) - {'NC'})} nets")
 
 # ---------------- native format + netlist comparison ----------------
@@ -636,7 +636,7 @@ else:
             print("WARNING: unexpected net:", sorted(s))
         sys.exit("ERROR: the schematic's netlist differs from the nets dicts")
     # printable copy, creation date pinned: an unchanged schematic gives the same bytes
-    pdf = os.path.join(ROOT, "hardware", "kicad", "tars4_schematic.pdf")
+    pdf = os.path.join(ROOT, "hardware", "kicad", "spit_schematic.pdf")
     subprocess.run([*KICAD_CLI, "sch", "export", "pdf", "-o", pdf, OUT], check=True, capture_output=True)
     b = re.sub(rb"/CreationDate \(D:[^)]*\)", b"/CreationDate (D:2000:01:01:00:00:00)", open(pdf, "rb").read())
     open(pdf, "wb").write(b)

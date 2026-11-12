@@ -4,7 +4,7 @@
 # ///
 """Flag unsupported overhangs in print-oriented STLs.
 
-usage: uv run scripts/overhang.py [--limit DEG] [--allow scripts/overhang_allow.json] [--report] stl/tars4_x.stl ...
+usage: uv run scripts/overhang.py [--limit DEG] [--allow scripts/overhang_allow.json] [--report] stl/spit_x.stl ...
 
 A face overhangs when it faces down more than LIMIT degrees from vertical (a vertical wall is 0, a ceiling is 90).
 Faces lying on the bed (z = 0) are ignored. Adjacent overhanging faces are merged into regions. A flat (ceiling)

@@ -1,10 +1,10 @@
-# tars4 — measurements to take
+# spit — measurements to take
 
-Parts all received (2026-10-27). Fill the **Measured** column as you go; everything is merged into `mechanical/scad/tars4.scad` in one
+Parts all received (2026-10-27). Fill the **Measured** column as you go; everything is merged into `mechanical/scad/spit.scad` in one
 pass at the end, then STL / 3MF are regenerated once. Electrical bench checks stay in the README checklist
 (*to do when the parts arrive*), they don't change the model.
 
-**Merged into `mechanical/scad/tars4.scad` on 2026-10-27 (23:50)**; every print part renders
+**Merged into `mechanical/scad/spit.scad` on 2026-10-27 (23:50)**; every print part renders
 with no WARNING. Side effects: polyfuse holders on the front walls, TPS63020 slot cut 0.15 into the walls (`bk_clr`),
 TP4056 grooves gone, screen connector box 8 deep (bundle corridor moved back to y 13.5–25), BME280 0.3 lower, AM312
 re-centred in its band (asymmetric extents), `active_dz` −1.1. Tube bores merged 2026-10-28 (test3, PLAT-MECH-PIVOT-001).

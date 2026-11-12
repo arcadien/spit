@@ -11,7 +11,7 @@
 
 **Dependencies:** none
 
-**Description:** The battery is two 18650 lithium-ion cells in parallel (1S2P), connected to one charger and one protection circuit. Two chargers or two protection circuits in parallel are not allowed. Acceptance (pytest on kicad/tars4.kicad_sch): exactly one charger/protection module; both cell branches end on the same BAT+ net and the same B− net.
+**Description:** The battery is two 18650 lithium-ion cells in parallel (1S2P), connected to one charger and one protection circuit. Two chargers or two protection circuits in parallel are not allowed. Acceptance (pytest on kicad/spit.kicad_sch): exactly one charger/protection module; both cell branches end on the same BAT+ net and the same B− net.
 
 ### TECH-POWER-CELL-002
 
@@ -133,6 +133,26 @@
 
 **Description:** No status LED or free-running clock output that draws current permanently is fed from the battery or from rails fed by the battery. LEDs fed only from the external supply (charger status) are allowed. Acceptance: visual inspection against the bring-up checklist (the resulting deep-sleep current is [PERF-POWER-SLEEP-001](performance.md#perf-power-sleep-001)'s).
 
+### TECH-BUILD-DOCS-001
+
+**Title:** Each fact is written once, in the document that owns it
+
+**Status:** validated
+
+**Dependencies:** none
+
+**Description:** Values and limits live in the requirements; why each part is there, where it sits and how it is wired live in [design_notes.md](../hardware/design_notes.md) (parts, power and ground, signals and GPIO map, sleep, placement, wiring, colour code, boards, connectors); the bill of materials in [bom.md](../hardware/bom.md); currents in [power_budget.md](../hardware/power_budget.md); measured values in [measurements.md](../hardware/measurements.md); the build workflow and validation stages in [CONTRIBUTING.md](../CONTRIBUTING.md). The README is the entry point: overview, where to find what, printing, assembly, rebuild; other documents link to the owner instead of repeating a value. Documentation commits that only move, merge or correct text under these rules carry this ID. Acceptance (pytest): every relative link of the README resolves to a versioned file; the README has no bill of materials, GPIO table, colour code or connector table; `hardware/bom.md` and `hardware/design_notes.md` hold them.
+
+### TECH-BUILD-NAME-001
+
+**Title:** The project is named SPIT
+
+**Status:** validated
+
+**Dependencies:** none
+
+**Description:** The robot and the project are named **SPIT** ("SPit Is not TARS"): the model is `mechanical/scad/spit.scad`, every generated or versioned file carries the `spit` prefix (`spit_*`), the KiCad symbol library is `spit`, and the documentation calls the robot SPIT; the left middle column is engraved "SPIT" in letters and in braille. TARS from *Interstellar* is named only as the inspiration (README introduction, reference images). Archived reviews and audits keep their original wording. Acceptance (pytest): no versioned path outside `references/`, `reviews/` and `audits/` contains "tars"; the model engraves "SPIT" and its braille cells spell S P I T.
+
 ### TECH-BUILD-ARTIFACTS-001
 
 **Title:** Print files are generated from the model, not versioned
@@ -141,7 +161,7 @@
 
 **Dependencies:** none
 
-**Description:** The STL parts (`mechanical/stl/`) and the raw plates (`mechanical/3mf/tars4_plate*.3mf`) are build outputs of `mechanical/scad/tars4.scad`: git ignores them, and they are regenerated on demand before a print (`make check-stl`, `tools/build4.sh 3mf`). The hand-arranged Orca projects (`mechanical/3mf/tars4.3mf`, `tars4_cr10.3mf`), the renders and the wiring / harness / schematic documents stay versioned. The OpenSCAD version used for the exports is pinned, in [CONTRIBUTING.md](../CONTRIBUTING.md) and in CI. Acceptance: `git ls-files mechanical/stl 'mechanical/3mf/tars4_plate*'` is empty and both paths are in `.gitignore`; on a fresh clone, `make check-stl` produces every part listed in `tools/build4.sh` with no OpenSCAD WARNING and every plate on its bed.
+**Description:** The STL parts (`mechanical/stl/`) and the raw plates (`mechanical/3mf/spit_plate*.3mf`) are build outputs of `mechanical/scad/spit.scad`: git ignores them, and they are regenerated on demand before a print (`make check-stl`, `tools/build4.sh 3mf`). The hand-arranged Orca projects (`mechanical/3mf/spit.3mf`, `spit_cr10.3mf`), the renders and the wiring / harness / schematic documents stay versioned. The OpenSCAD version used for the exports is pinned, in [CONTRIBUTING.md](../CONTRIBUTING.md) and in CI. Acceptance: `git ls-files mechanical/stl 'mechanical/3mf/spit_plate*'` is empty and both paths are in `.gitignore`; on a fresh clone, `make check-stl` produces every part listed in `tools/build4.sh` with no OpenSCAD WARNING and every plate on its bed.
 
 ### TECH-BUILD-CHECKS-001
 
@@ -151,7 +171,7 @@
 
 **Dependencies:** [TECH-BUILD-ARTIFACTS-001](technical.md#tech-build-artifacts-001)
 
-**Description:** The pre-commit hook runs only checks lasting seconds: model evaluation without export (every model WARNING), board / wiring / harness documents, ERC when the schematic changed. The pre-push hook runs the slow checks: STL export with bed fit (Ender 3 halves, CR-10 one-piece) and renders; it also refreshes the meshes of the Orca projects (`mechanical/3mf/tars4.3mf`, `tars4_cr10.3mf`) from the STLs when they changed, keeping plates, positions and settings; it refuses the push when a check fails or rewrites a tracked file. A CI job on every push and pull request to main runs the model, STL, ERC and docs checks with the pinned OpenSCAD, and main's branch protection requires it. `make hook` installs the pre-commit, commit-msg and pre-push hooks. Acceptance: pre-commit takes ≤ 30 s when `tars4.scad` changed; a model WARNING blocks the commit; a part off its bed blocks the push and fails CI; a push whose STLs differ from the meshes of an Orca project is refused, with the project rewritten to match; a push with up-to-date meshes leaves the projects byte-identical; a pull request with a failing CI job cannot be merged.
+**Description:** The pre-commit hook runs only checks lasting seconds: model evaluation without export (every model WARNING), board / wiring / harness documents, ERC when the schematic changed. The pre-push hook runs the slow checks: STL export with bed fit (Ender 3 halves, CR-10 one-piece) and renders; it also refreshes the meshes of the Orca projects (`mechanical/3mf/spit.3mf`, `spit_cr10.3mf`) from the STLs when they changed, keeping plates, positions and settings; it refuses the push when a check fails or rewrites a tracked file. A CI job on every push and pull request to main runs the model, STL, ERC and docs checks with the pinned OpenSCAD, and main's branch protection requires it. `make hook` installs the pre-commit, commit-msg and pre-push hooks. Acceptance: pre-commit takes ≤ 30 s when `spit.scad` changed; a model WARNING blocks the commit; a part off its bed blocks the push and fails CI; a push whose STLs differ from the meshes of an Orca project is refused, with the project rewritten to match; a push with up-to-date meshes leaves the projects byte-identical; a pull request with a failing CI job cannot be merged.
 
 ### TECH-AUDIO-SHUTDOWN-001
 
@@ -162,3 +182,13 @@
 **Dependencies:** [TECH-POWER-BACKFEED-001](technical.md#tech-power-backfeed-001)
 
 **Description:** The audio amplifier has a hardware shutdown input driven by the controller. The firmware keeps it shut down from reset, in deep sleep and whenever no sound has played for 2 s; it is enabled only to play. Acceptance: pytest on the schematic (AMP_SD from GPIO4 to the amplifier SD through R10, pulled down by R18); on-target Unity test (AMP_SD low at boot, in sleep, 2 s after the last sample); bench: amplifier supply current ≤ 10 µA with AMP_SD low (~4 µA of it is the breakout's 1 MΩ SD pull-up flowing into R18) ([power_budget.md](../hardware/power_budget.md), amplifier row).
+
+### TECH-HARNESS-BOARDS-001
+
+**Title:** Hand-wired boards laid out for the fewest assembly operations
+
+**Status:** validated
+
+**Dependencies:** none
+
+**Description:** Each hand-wired board described in `tools/boards.py` (P1, P2, the S3 carrier P3, the power-path board P4) is laid out to minimise its assembly effort, counted by `tools/boards.py` as a score: 1 per solder bridge between two neighbouring holes, 1 per strip cut, 2 per insulated jumper, 2 per bare bus or bare link. The board may be enlarged up to the room the model leaves for it (`hub_b`, `pp_b` within their columns; the carrier stays the size of the S3); the parts, nets, harness wires and their colours do not change, and every existing check of `tools/boards.py` keeps passing (net connectivity, no shared hole, power-net isolation on the pad boards, schematic cross-check, keep-out holes). Acceptance (pytest): each board passes its checks, and no single move of one part or one wire end to a free hole, on a board of the same size, lowers its score; the score of each board is no higher than before this requirement.

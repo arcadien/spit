@@ -424,5 +424,5 @@
 <text x="84" y="175" font-size="1.8" text-anchor="middle" class="t" dominant-baseline="middle" transform="rotate(-90 84 175)">I2C ×2</text>
 <text x="96.5" y="40" font-size="1.8" text-anchor="middle" class="t" dominant-baseline="middle" transform="rotate(-90 96.5 40)">B+ B− · amplifier pair</text>
 <text x="27.799999999999997" y="35" font-size="1.6" text-anchor="middle" class="t" dominant-baseline="middle" transform="rotate(-90 27.799999999999997 35)">B+ B− · I2C · 3V3 · GND</text>
-<text x="62" y="268.5" font-size="2" text-anchor="middle" class="t m" dominant-baseline="middle">← TARS right · back view · TARS left →</text>
+<text x="62" y="268.5" font-size="2" text-anchor="middle" class="t m" dominant-baseline="middle">← SPIT right · back view · SPIT left →</text>
 </svg>

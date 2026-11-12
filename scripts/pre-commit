@@ -8,7 +8,7 @@ cd "$(git rev-parse --show-toplevel)"
 # the check reads the working tree, the commit takes the index: unstaged changes in the check's inputs would be tested
 # but not committed (stash them with `git stash push --keep-index`, or add them)
 dirty=$(git diff --name-only -- mechanical/scad tools scripts tests requirements software hardware/kicad \
-        hardware/tars4_wiring.html audits/exclusions.yml .gitignore)
+        hardware/spit_wiring.html audits/exclusions.yml .gitignore)
 if [ -n "$dirty" ]; then
     echo "pre-commit: unstaged changes in the check's inputs, add or stash them, then commit again:"
     echo "$dirty" | sed 's/^/   /'

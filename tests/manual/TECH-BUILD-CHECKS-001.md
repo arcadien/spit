@@ -12,10 +12,10 @@ change; add a line to *Results* every time it is run.
 1. Create a throw-away branch: `git switch -c check-pipeline-test`.
 
 ## Steps
-1. Change a comment in `mechanical/scad/tars4.scad`, `git add` it and time `git commit -m "plan: test"` (the
+1. Change a comment in `mechanical/scad/spit.scad`, `git add` it and time `git commit -m "plan: test"` (the
    pre-commit hook runs).
-2. Add the line `echo("WARNING: pipeline test");` at the end of `tars4.scad`, `git add` it and try to commit.
-3. Remove that line. Set `D = 60;` in `tars4.scad` (parts grow off their bed), commit with `--no-verify`, then
+2. Add the line `echo("WARNING: pipeline test");` at the end of `spit.scad`, `git add` it and try to commit.
+3. Remove that line. Set `D = 60;` in `spit.scad` (parts grow off their bed), commit with `--no-verify`, then
    `git push -u origin check-pipeline-test`.
 4. Push it with `git push --no-verify`, open a pull request to main and wait for the `check` job.
 5. Try to merge the pull request.

@@ -1,4 +1,4 @@
-// TARS (Interstellar), 4-column variant: four independent hollow columns joined by hollow pivots.
+// SPIT ("SPit Is not TARS", after TARS from Interstellar), 4-column variant: four independent hollow columns joined by hollow pivots.
 // Each middle column holds a screen; the left one also holds the controller (LOLIN S3 Mini, D1 mini footprint), a
 // spare breakout slot, the accelerometer and the microphone, the right one the speaker, the amplifier and the AM312 motion
 // sensor; each has its distribution board below the screen. The legs hold the two cells; the power leg also the charge
@@ -8,7 +8,7 @@
 //
 // Axes: x = width (left->right seen from the front), y = depth (0 = front face), z = height.
 // Columns are numbered 0..3 from the left: 0 = left leg, 1 = left middle, 2 = right middle, 3 = right leg.
-// Render one part: openscad -D 'part="col1"' -o col1.stl tars4.scad
+// Render one part: openscad -D 'part="col1"' -o col1.stl spit.scad
 // Display only: the JST-XH pairs use XH() from connectors.scad (next to this file); prints do not need it.
 use <connectors.scad>
 
@@ -41,7 +41,7 @@ ledge_lip = 0.3;              // ledge overlap into the hole at the wall face, g
                               // (no support when printed front face down; the plug, 0.15 smaller, still rests on it)
 mid_lines = [bottom_panel_z[0], H * 0.51];                    // horizontal lines on the middle columns (+ top of the screen panel)
 leg_lines = [0.12, 0.20, 0.28, 0.64, 0.73, 0.82, 0.90] * H;   // plate joints on the legs
-tars_text = true;             // vertical "TARS" + braille on column 1
+spit_text = true;             // vertical "SPIT" + braille on column 1
 text_font = "DejaVu Sans:style=Book";
 text_len = 0.174 * H;
 text_h = 0.3 * col_w;
@@ -148,7 +148,7 @@ d1_end = 2.5;                 // height of the ribs / lid tabs, in the two pad-f
 d1_rib = 0.8;                 // how far the ribs and tabs reach over the board faces (pad edges ~1.4 from the board edge)
 d1_standoff = 6;              // gap between lid and board back (carrier back when socketed): wires soldered on it
 s3_socket = true;             // S3 on female headers on a carrier board (false: wires soldered on the S3 itself)
-s3_carrier_t = 1.5;           // carrier perfboard thickness (measured) (pads only, no strips: the S3's pins sit in two double rows); layout renders/tars4_board_s3.svg
+s3_carrier_t = 1.5;           // carrier perfboard thickness (measured) (pads only, no strips: the S3's pins sit in two double rows); layout renders/spit_board_s3.svg
 s3_sock_h = 8.4;              // female header body height (2 x 8, measured)
 s3_pin_base = 2.4;            // plastic spacer of the male headers soldered on the S3 (measured; pins 3.1 / 5.6)
 s3_sock = [5.08, 20.32];      // each 2 x 8 female header: width (x, from the board edge), length (z): two rows on each side
@@ -291,7 +291,7 @@ bme_hole_d = 1.5;             // vent hole through the front wall
 // flat in the power leg just above the splint (same groove mount as the microSD reader), parts up, against the lid
 // side: the wires run up and down in front of it. Short runs to the TP4056 / buck-boost below and the left tube above.
 pp = true;
-pp_b = [26.6, 20, 1.5];       // board width (x), depth (y), thickness (1.5 measured): 10 x 8 holes (renders/tars4_board_power.svg)
+pp_b = [26.6, 20, 1.5];       // board width (x), depth (y), thickness (1.5 measured): 10 x 8 holes (renders/spit_board_power.svg)
 pp_parts = 6;                 // tallest part above the board (1N5822 lying flat, ~5.3): MEASURE
 pp_lip = 0.6;                 // grooves reach over the board's side edges (pads start ~1 mm in; R2 lies along column J)
 
@@ -304,7 +304,7 @@ pp_lip = 0.6;                 // grooves reach over the board's side edges (pads
 // holds both. Slid in from the back with the wires soldered: front stops on the side walls (45 deg slopes, no
 // support), centring strips, two tabs on the lid behind it.
 hub = true;
-hub_b = [24, 32, 1.6];        // board width (x), height (z), thickness: 9 x 12 holes, strips across (renders/tars4_board_p1.svg, _p2.svg), MEASURE (keep ~1.5 mm free of holes at the side edges)
+hub_b = [24, 32, 1.6];        // board width (x), height (z), thickness: 9 x 12 holes, strips across (renders/spit_board_p1.svg, _p2.svg), MEASURE (keep ~1.5 mm free of holes at the side edges)
 hub_y = 12;                   // front face of the board (depth from the front face): wires in front, solder side and connectors towards the lid
 hub_lip = 1.5;                // front stops / lid tabs reach over the board's side edges
 hub_tab = 3;                  // lid tab height (z)
@@ -312,7 +312,7 @@ hub_tab = 3;                  // lid tab height (z)
 /* [microSD reader (power leg)] */
 // 3.3 V-only microSD breakout (no regulator, no level shifter) lying flat in the power leg, above the top cell shelf,
 // socket mouth facing the lid: the card goes in through a slot in the leg lid (push-push, fingernail or pen tip), no
-// need to open TARS. The board slides in from the back into two side grooves; their front ends stop it (the socket
+// need to open SPIT. The board slides in from the back into two side grooves; their front ends stop it (the socket
 // pushes it forward on insertion), the lid stops it backwards. SDMMC 1-bit (CLK, CMD, D0) + 3V3 + GND through the left tube.
 sd_reader = true;
 sd_col = power_col;
@@ -327,12 +327,12 @@ sd_slot = [12.5, 2.2];        // card slot through the lid (x, z): microSD is 11
 sd_dz = 10;                   // underside of the board above the lid screw posts over the top cell shelf
 
 /* [Sound] */
-// Speaker facing the front right behind the lower black panel of one middle column, just under the splint: TARS talks
+// Speaker facing the front right behind the lower black panel of one middle column, just under the splint: SPIT talks
 // through slots in that panel's black plug. Its membrane is flush with its face and its long edges have no rim: it bears
 // on two pads under its short-end tabs, sits between side rails on a stop notched for its middle nub, and is glued
 // (hot glue, PLAT-MECH-SPEAKER-001). MAX98357A I2S amplifier in a slot on the inner front wall above the splint.
 sound = true;
-speaker_col = 2;              // right middle column (column 1 carries "TARS")
+speaker_col = 2;              // right middle column (column 1 carries "SPIT")
 spk = [13.8, 7.15, 25.27];    // 4 ohm 2 W speaker: width (x), thickness (y), height (z), measured 2026-10-29
 spk_pad = 1.5;                // pads under the short-end tabs (z): the membrane starts beyond them (2 mm rim)
 spk_nub = [3.3, 2];           // notch for the nub in the middle of the short edges (2.9 wide): width (x), depth (z)
@@ -345,7 +345,7 @@ amp_z0 = seam_z[1] + splint_h / 2 + 0.5;                           // just above
 
 /* [Switch and feet] */
 // Slide switch in the power leg floor (next to the charge port), lever pointing down into a floor slot and recessed:
-// nothing sticks out under TARS, it is flipped with a pen tip. Body glued in a low frame on a raised pad.
+// nothing sticks out under SPIT, it is flipped with a pen tip. Body glued in a low frame on a raised pad.
 switch_on = true;
 sw_body = [12.95, 6.9];       // mini slide switch body (x, y), measured
 sw_lever_h = 5.15;            // lever height out of the body, measured
@@ -604,14 +604,14 @@ module low_panel_ledge() {
     }
 }
 
-braille_tars = [[2, 3, 4, 5], [1], [1, 2, 3, 5], [2, 3, 4]]; // T A R S
-module tars_marking() {
-    if (tars_text) front_engrave(engrave_d)
+braille_spit = [[2, 3, 4], [1, 2, 3, 4], [2, 4], [2, 3, 4, 5]]; // S P I T
+module spit_marking() {
+    if (spit_text) front_engrave(engrave_d)
         translate([col_w / 4 + text_h / 2, text_z0]) rotate(90)
-            resize([text_len, text_h]) text("TARS", font = text_font, valign = "baseline");
+            resize([text_len, text_h]) text("SPIT", font = text_font, valign = "baseline");
     if (braille) front_engrave(engrave_d)
         translate([3 * col_w / 4 - braille_pitch, text_z0 + braille_dot]) rotate(90)
-            for (c = [0:3], n = braille_tars[c]) let(col = n > 3 ? 1 : 0, row = (n - 1) % 3)
+            for (c = [0:3], n = braille_spit[c]) let(col = n > 3 ? 1 : 0, row = (n - 1) % 3)
                 translate([c * braille_cell + col * braille_pitch, -row * braille_pitch]) circle(d = braille_dot);
 }
 
@@ -633,7 +633,7 @@ module leg_lines_cut() { // front and both sides (the back is the lid)
 }
 
 // ---------- bed levelling test (print orientation, Ender 3 bed centred on the origin) ----------
-// five single-layer 25 mm squares (corners + centre) and a slice of column 1's front, face down: groove, "TARS",
+// five single-layer 25 mm squares (corners + centre) and a slice of column 1's front, face down: groove, "SPIT",
 // braille and the column edges, to judge the first layer on the real facade (squish, elephant foot, engraving)
 module test_level(sq = 25, layer = 0.2, reach = 85) {
     for (p = [[-reach, -reach], [reach, -reach], [-reach, reach], [reach, reach], [0, 0]])
@@ -725,7 +725,7 @@ module column(i) {
             mid_lines_cut();
             mid_panels();
             if (scr_open) scr_opening(); else scr_window(extra = 0.3);
-            if (i == 1) tars_marking();
+            if (i == 1) spit_marking();
             if (sensors && i == sensor_col) translate([col_w / 2, -eps, mic_z0 + mic[1] / 2 + mic_port_dz]) rotate([-90, 0, 0])
                 cylinder(d = mic_hole_d, h = wall + 2 * eps, $fn = 16);
             if (pir && i == pir_col) translate([pir_x, -eps, pir_zc]) rotate([-90, 0, 0]) // motion sensor dome
@@ -1488,7 +1488,7 @@ for (k = ["leg", "mid", "leg_sd", "mid_left"], h = ["bottom", "top"]) {
 }
 
 // ---------- checks ----------
-echo(str("TARS4 ", 4 * D, " x ", D, " x ", H, " mm ; column ", col_w, " ; interior ", col_w - 2 * wall, " ; screen ", screen, ": ", kv(SCR, "desc")));
+echo(str("SPIT ", 4 * D, " x ", D, " x ", H, " mm ; column ", col_w, " ; interior ", col_w - 2 * wall, " ; screen ", screen, ": ", kv(SCR, "desc")));
 let(pd = (scr_pcb[0] + 2 * scr_clr - (col_w - 2 * wall)) / 2) if (pd > wall - 0.8)
     echo(str("WARNING: screen module ", scr_pcb[0], " mm needs ", pd, " mm wall pockets in a ", col_w - 2 * wall, " mm interior (raise D)"));
 else if (pd > 0) echo(str("note: screen sits in ", pd, " mm pockets cut into the side walls"));

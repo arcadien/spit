@@ -21,19 +21,19 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))   # python3 -I le
 from stl2_3mf import bbox, read_stl  # noqa: E402
 
 NAME_TO_STL = {
-    "leg_left_bottom": "tars4_col0_bottom", "leg_left_top": "tars4_col0_top",
-    "mid_left_bottom": "tars4_col1_bottom", "mid_left_top": "tars4_col1_top",
-    "mid_right_bottom": "tars4_col2_bottom", "mid_right_top": "tars4_col2_top",
-    "leg_right_bottom": "tars4_col3_bottom", "leg_right_top": "tars4_col3_top",
-    "lid_leg_left_bottom": "tars4_lid_leg_sd_bottom", "lid_leg_right_bottom": "tars4_lid_leg_bottom",
-    "lid_leg_left_top": "tars4_lid_leg_top", "lid_leg_right_top": "tars4_lid_leg_top",
-    "lid_mid_left_bottom": "tars4_lid_mid_left_bottom", "lid_mid_right_bottom": "tars4_lid_mid_bottom",
-    "lid_mid_left_top": "tars4_lid_mid_left_top", "lid_mid_right_top": "tars4_lid_mid_top",
-    "splints": "tars4_splint", "tube_collars": "tars4_collar", "black_inserts": "tars4_inserts", "black_inserts_speaker": "tars4_inserts_speaker",
-    # CR-10 project (tars4_cr10.3mf, one-piece parts)
-    "cr10_leg_left": "tars4_cr10_col0", "cr10_mid_left": "tars4_cr10_col1", "cr10_mid_right": "tars4_cr10_col2",
-    "cr10_leg_right": "tars4_cr10_col3", "cr10_lid_leg_left": "tars4_cr10_lid_leg_sd", "cr10_lid_mid_left": "tars4_cr10_lid_mid_left",
-    "cr10_lid_mid_right": "tars4_cr10_lid_mid", "cr10_lid_leg_right": "tars4_cr10_lid_leg",
+    "leg_left_bottom": "spit_col0_bottom", "leg_left_top": "spit_col0_top",
+    "mid_left_bottom": "spit_col1_bottom", "mid_left_top": "spit_col1_top",
+    "mid_right_bottom": "spit_col2_bottom", "mid_right_top": "spit_col2_top",
+    "leg_right_bottom": "spit_col3_bottom", "leg_right_top": "spit_col3_top",
+    "lid_leg_left_bottom": "spit_lid_leg_sd_bottom", "lid_leg_right_bottom": "spit_lid_leg_bottom",
+    "lid_leg_left_top": "spit_lid_leg_top", "lid_leg_right_top": "spit_lid_leg_top",
+    "lid_mid_left_bottom": "spit_lid_mid_left_bottom", "lid_mid_right_bottom": "spit_lid_mid_bottom",
+    "lid_mid_left_top": "spit_lid_mid_left_top", "lid_mid_right_top": "spit_lid_mid_top",
+    "splints": "spit_splint", "tube_collars": "spit_collar", "black_inserts": "spit_inserts", "black_inserts_speaker": "spit_inserts_speaker",
+    # CR-10 project (spit_cr10.3mf, one-piece parts)
+    "cr10_leg_left": "spit_cr10_col0", "cr10_mid_left": "spit_cr10_col1", "cr10_mid_right": "spit_cr10_col2",
+    "cr10_leg_right": "spit_cr10_col3", "cr10_lid_leg_left": "spit_cr10_lid_leg_sd", "cr10_lid_mid_left": "spit_cr10_lid_mid_left",
+    "cr10_lid_mid_right": "spit_cr10_lid_mid", "cr10_lid_leg_right": "spit_cr10_lid_leg",
 }
 
 

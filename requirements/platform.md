@@ -169,7 +169,7 @@ derives_from: [FUNC-POWER-DETECT-001](functional.md#func-power-detect-001)
 
 derives_from: [FUNC-POWER-VSENSE-001](functional.md#func-power-vsense-001)
 
-**Description:** BC547: base from VSYS through 1 MΩ, 330 kΩ base to GND, emitter to GND, collector to GPIO37 with the internal pull-up enabled only while reading. Rail present = GPIO37 low, from a VSYS threshold above the amplifier's minimum supply and below the minimum of the rail on battery; no voltage above 3V3 reaches the pin. The wire through the tube carries VSYS only behind 1 MΩ. Fitted: BC547B (Q4). Placement, threshold spread and standing current: [design_notes.md](../hardware/design_notes.md) (*Parts*) and [power_budget.md](../hardware/power_budget.md). Acceptance: pytest on the schematic; bench: GPIO37 low at VSYS 3.0 and 5.0 V, high at 0 V. Standing current ~3–4 µA: [power_budget.md](../hardware/power_budget.md).
+**Description:** BC547: base from VSYS through 1 MΩ, 330 kΩ base to GND, emitter to GND, collector to GPIO37 with the internal pull-up enabled only while reading. Rail present = GPIO37 low, from a VSYS threshold inside the 2.3–3.0 V window of [FUNC-POWER-VSENSE-001](functional.md#func-power-vsense-001) (below the minimum of the rail on battery); no voltage above 3V3 reaches the pin. The wire through the tube carries VSYS only behind 1 MΩ. Fitted: BC547B (Q4). Placement, threshold spread and standing current: [design_notes.md](../hardware/design_notes.md) (*Parts*) and [power_budget.md](../hardware/power_budget.md). Acceptance: pytest on the schematic; bench: GPIO37 low at VSYS 3.0 and 5.0 V, high at 0 V. Standing current ~3–4 µA: [power_budget.md](../hardware/power_budget.md).
 
 ### PLAT-POWER-VBUS-001
 
@@ -205,7 +205,7 @@ derives_from: [FUNC-POWER-GATE-001](functional.md#func-power-gate-001)
 
 derives_from: [TECH-POWER-SLEEP-001](technical.md#tech-power-sleep-001)
 
-**Description:** The power or status LEDs are removed from the ZS-042, the TPS63020 module, the GY-291 and the microSD breakout, and the S3 Mini's RGB LED (GPIO47) is removed too. The TP4056 charge LEDs stay (they run on USB power only). Acceptance: bench visual checklist, signed off in the bring-up notes, plus a deep-sleep current measurement ([PERF-POWER-SLEEP-001](performance.md#perf-power-sleep-001)).
+**Description:** The power or status LEDs are removed from the ZS-042, the TPS63020 module, the GY-291, and the microSD breakout (the BME280 board has none), and the S3 Mini's RGB LED (GPIO47) is removed too. The TP4056 charge LEDs stay (they run on USB power only). Acceptance: bench visual checklist, signed off in the bring-up notes, plus a deep-sleep current measurement ([PERF-POWER-SLEEP-001](performance.md#perf-power-sleep-001)).
 
 ### PLAT-POWER-SLEEP-002
 
@@ -229,7 +229,7 @@ derives_from: [TECH-POWER-SLEEP-001](technical.md#tech-power-sleep-001)
 
 derives_from: [FUNC-POWER-CHARGE-001](functional.md#func-power-charge-001)
 
-**Description:** The micro-USB breakout stands against the outer side wall of the left foot, its receptacle axis horizontal along y. The receptacle mouth is at most 1 mm inside the back face, and its centre is ≥ 6 mm above the floor, so a plug overmold up to 11.6 × 8 mm clears both the table and the leg edges. The breakout is held so that the plug's insertion force (≤ 35 N, micro-USB spec) does not move it, and the lid can still be removed without unsoldering anything. The floor opening of the former port is closed. Acceptance: `make check` clean (geometry asserts in `tars4.scad` for the axis, mouth depth, height and clearances); print: a plug inserted and removed 10 times, with the breakout staying in place.
+**Description:** The micro-USB breakout stands against the outer side wall of the left foot, its receptacle axis horizontal along y. The receptacle mouth is at most 1 mm inside the back face, and its centre is ≥ 6 mm above the floor, so a plug overmold up to 11.6 × 8 mm clears both the table and the leg edges. The breakout is held so that the plug's insertion force (≤ 35 N, micro-USB spec) does not move it, and the lid can still be removed without unsoldering anything. The floor opening of the former port is closed. Acceptance: `make check` clean (geometry asserts in `spit.scad` for the axis, mouth depth, height and clearances); print: a plug inserted and removed 10 times, with the breakout staying in place.
 
 ### PLAT-MECH-PIVOT-001
 

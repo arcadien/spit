@@ -1,4 +1,4 @@
-<title>TARS4 wiring</title>
+<title>SPIT wiring</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Sans+Condensed:wght@600&display=swap">
@@ -66,11 +66,11 @@ td.n { font: 600 14px var(--f-mono); white-space: nowrap; }
 
 <div class="wrap">
   <header>
-    <h1>TARS4 — wiring, back view</h1>
-    <p>TARS lying on its belly, lids removed. Seen from the back, the left leg is on the right of the drawing. Dimensions in mm, to scale; wires are schematic (they run behind the boards, on the lid side).</p>
+    <h1>SPIT — wiring, back view</h1>
+    <p>SPIT lying on its belly, lids removed. Seen from the back, the left leg is on the right of the drawing. Dimensions in mm, to scale; wires are schematic (they run behind the boards, on the lid side).</p>
   </header>
   <div class="grid">
-    <div class="sheet"><svg id="d" viewBox="-30 -20 184 292" role="img" aria-label="Back view of TARS4 with cells, charger, LOLIN S3 Mini, screens, speaker, amplifier, microSD reader and wires"></svg></div>
+    <div class="sheet"><svg id="d" viewBox="-30 -20 184 292" role="img" aria-label="Back view of SPIT with cells, charger, LOLIN S3 Mini, screens, speaker, amplifier, microSD reader and wires"></svg></div>
     <aside>
       <section>
         <h2>Wires: actual kit colours</h2>
@@ -148,13 +148,13 @@ td.n { font: 600 14px var(--f-mono); white-space: nowrap; }
           <tr><td class="n">X14</td><td>power block ↔ tubes (VBAT/2, USB_DET, SD_EN, VSENSE_B)</td><td>inline JST-XH 4</td><td>left leg, above the TP4056, its own row in front of X10, 144–166</td></tr>
           <tr><td class="n">X15</td><td>microSD reader</td><td>pigtail + inline Dupont 1 × 6 (5 wires) · empty cavity plugged</td><td>left leg, front corridor, 107–141</td></tr>
         </table>
-        <p class="note">The harness is soldered once (P1, P2, S3 carrier, power-path board, cell plates, tube wires); every module plugs into it. TP4056 + power path + TPS63020 make a power block soldered and tested on the bench, linked by X10–X14, parked in the free cavity above the TP4056 (visible from the back, lid open); the boards slide in one by one with a 4–5 cm loop. Female side of the inline pairs = powered harness side. Plug / unplug only with the switch off, charger and S3 USB-C unplugged. 3 to 5 cm loop at each module to pull it out from the back before unplugging it. Volumes checked in the model and drawn in orange in the sections (renders/tars4_column_sections.svg).</p>
+        <p class="note">The harness is soldered once (P1, P2, S3 carrier, power-path board, cell plates, tube wires); every module plugs into it. TP4056 + power path + TPS63020 make a power block soldered and tested on the bench, linked by X10–X14, parked in the free cavity above the TP4056 (visible from the back, lid open); the boards slide in one by one with a 4–5 cm loop. Female side of the inline pairs = powered harness side. Plug / unplug only with the switch off, charger and S3 USB-C unplugged. 3 to 5 cm loop at each module to pull it out from the back before unplugging it. Volumes checked in the model and drawn in orange in the sections (renders/spit_column_sections.svg).</p>
       </section>
       <section class="notes"><h2>Notes</h2>
       <p class="note">Power: TPS63020 (buck-boost, 3.3 V, EN to VIN, PS/SYNC to GND) in the left leg, 3.3 V straight to the S3 3V3 pin. Software cut-off at 3.3 V on B+ (VBAT/2 on GPIO1). The S3 internal regulator is only used on USB. Firmware: ignore the cut-off if B+ &lt; 2.5 V or if USB_DET is high (S3 powered from the PC USB, switch off), and keep BL_EN and AMP_SD low until the supply is validated.</p>
       <p class="note">Resettable fuses F1, F2 (PPTC 30 V, 1.6 A) on the + of each cell, flat on the upper shelf of each leg (z 100.5–103.7); D3 (TVS) and C9 (22 µF) on the TP4056 IN pads, R_PROG 2.4 k (0.5 A charge); twisted pairs B+/B−, amplifier VSYS/GND and microSD CLK/GND; tubes deburred, heat-shrink at the tube exits.</p>
       <p class="note">BL_EN (GPIO7) only drives the backlight (BLK) of both screens: PWM possible. R4 10 k holds it low at boot; PWM at ~20 kHz. The AM312 has its own filter on P2 (R21 100 Ω + C12 10 µF tantalum), and P2 its decoupling (C10 10 µF + C11 100 nF). AMP_SD (GPIO4) has its own wire: R10 1 k in series and R18 10 k to GND on P2, the amplifier stays off at boot and in sleep; high → left channel: send the same sample on both channels.</p>
-      <p class="note">Mains: a USB charger on the micro-USB socket of the left foot powers TARS (≈ 4.7 V on VSYS) while the cells charge on their own.</p>
+      <p class="note">Mains: a USB charger on the micro-USB socket of the left foot powers SPIT (≈ 4.7 V on VSYS) while the cells charge on their own.</p>
       <p class="note">Before joining the two cells: same model, same age, voltages equal within 0.05 V.</p>
       <p class="note">The S3 VBUS pin only gets its own USB-C: the PC 5 V never goes back to the cells, flash with the switch on or off.</p>
       <p class="note">ADXL345 and mic in the controller column, wired locally; DS3231 and BME280 in the right leg, through the right tube (I2C ×2, 3V3, GND from P2). Every module plugs in through a connector (see the table above).</p>
@@ -170,7 +170,7 @@ td.n { font: 600 14px var(--f-mono); white-space: nowrap; }
 </div>
 
 <script>
-// Geometry from tars4.scad (D = 31). Front coordinates: x from the left seen from the FRONT, z from the floor.
+// Geometry from spit.scad (D = 31). Front coordinates: x from the left seen from the FRONT, z from the floor.
 const cw = 30.4, wall = 1.6, H = 248, P = 238.4, cx = [0, 31.2, 62.4, 93.6], c = cw / 2;
 const X = x => 124 - x;            // back view: mirror left/right
 const Y = z => 250 - z;
@@ -413,5 +413,5 @@ text(27.5, 210, 'B+ B− · amplifier pair', 1.8, 't', 'middle', -90);
 text(96.2, 215, 'B+ B− · I2C · 3V3 · GND', 1.6, 't', 'middle', -90);
 
 // orientation note
-text(62, -18.5, '← TARS right · back view · TARS left →', 2, 't m');
+text(62, -18.5, '← SPIT right · back view · SPIT left →', 2, 't m');
 </script>
