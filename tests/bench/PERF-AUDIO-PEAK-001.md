@@ -7,7 +7,9 @@ value (MEASURE): write it in [measurements.md](../../hardware/measurements.md) a
 ## Equipment
 - The assembled robot, cells fitted, speaker soldered on the amplifier OUT+ / OUT−.
 - Bench firmware with: full-scale 400 Hz and 1 kHz sine tones and the loudest voice file, digital volume in 1 dB steps
-  (−12 dB to 0 dB), screens on and Wi-Fi connected while it plays, a boot counter printed on the serial port.
+  (−12 dB to 0 dB), screens at full backlight (PWM 100 %) and Wi-Fi connected while it plays, a boot counter printed
+  on the serial port. Until the screens are fitted: the 33 Ω resistor from 3V3 to GND (P1) in their place (≈ 100 mA,
+  their full-backlight estimate in power_budget.md); once they are fitted, rerun step 1 at the cap.
   The `bench-tests` S3 firmware has the amplifier, an MP3 and 3 coarse volumes only: add the tones, the 1 dB steps and
   the boot counter first.
 - A scope, or a multimeter with min-hold, on the amplifier VIN (X13 VSYS / GND amp contacts).
