@@ -344,8 +344,8 @@ TP4056 OUT+ (cells)   ──► AO3401A P-MOSFET Q1 (D → S) ──┘
   GPIO1 (ADC1), C6 100 nF from GPIO1 to GND at the S3.
 - **VSYS sense** (is the system rail up?): VSYS → R23 **1 M** soldered in line on the wire at the power-path board
   (a short in the tube stays behind 1 M) → X14 → left tube → carrier: R24 **330 k** to GND and Q4 **BC547B** (base),
-  collector on GPIO37 (internal pull-up on only while reading): low = VSYS present (threshold 2.3–2.7 V, above the
-  amplifier's 2.5 V minimum), ~3–4 µA.
+  collector on GPIO37 (internal pull-up on only while reading): low = VSYS present (threshold 2.3–2.7 V, inside
+  the 2.3–3.0 V window of FUNC-POWER-VSENSE-001), ~3–4 µA.
 - On the cells, not on VSYS: on mains VSYS is the USB rail (~4.7 V) and says nothing about the battery. B− needs no
   wire (it differs from GND only by the DW01 switches, < 50 mV). Always connected, hence 1 M / 1 M: ~2 µA standing; C6
   holds the high-impedance node for the ADC (**never a tantalum** there: its leakage shifts the reading).
