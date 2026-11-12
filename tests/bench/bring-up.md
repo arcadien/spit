@@ -89,6 +89,7 @@ cells until step 3.5; nothing goes on the 3V3 before step 3.6 is green)
 - [ ] Screen 1, then screen 2 (backlight off at boot unless BLK has a pull-up; PWM dimming works); total BLK current at
       GPIO7 < 10 mA (else Q2 / Q3).
 - [ ] MAX98357A ([PLAT-AUDIO-AMP-001](PLAT-AUDIO-AMP-001.md)): off at boot and with GPIO4 low (SD < 0.1 V), VIN = VSYS, C7 + to VIN; Wi-Fi + loud sound → [PERF-POWER-REG-002](PERF-POWER-REG-002.md)
+- [ ] Volume cap (AU1) → [PERF-AUDIO-PEAK-001](PERF-AUDIO-PEAK-001.md): pack at 3.30 V, VIN ≥ 3.0 V, no reset; ≤ 2.83 V RMS on the external supply
 - [ ] INMP441: I2S1 data present. DS3231: 0x68 through both tubes, CR2032 not charged. ADXL345: 0x53, INT1 toggles.
 - [ ] microSD: CMD / D0–D3 read 10 kΩ to SD_3V3, init at 10 MHz 1-bit, 3V3 dip at insertion < 0.1 V; GPIO36 high →
       SD_3V3 < 0.1 V (and held in reset → [FUNC-POWER-GATE-001](FUNC-POWER-GATE-001.md)); sleep current with and without the card.
