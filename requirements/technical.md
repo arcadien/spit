@@ -35,13 +35,13 @@
 
 ### TECH-POWER-PROTECT-001
 
-**Title:** Hardware protection of the pack against over-discharge, overcharge and overcurrent
+**Title:** Hardware protection of the pack against over-discharge and overcurrent
 
 **Status:** validated
 
 **Dependencies:** [TECH-POWER-CELL-001](technical.md#tech-power-cell-001)
 
-**Description:** A hardware circuit, independent of the firmware, disconnects the pack on over-discharge (2.4 V ± 0.1 V), overcharge and overcurrent. It is a last resort: the firmware cut-off ([FUNC-POWER-CUTOFF-001](functional.md#func-power-cutoff-001)) is at least 0.8 V higher. Acceptance (bench, bench supply in place of the cells): lowering the supply opens the pack output between 2.3 and 2.5 V.
+**Description:** A hardware circuit, independent of the firmware, disconnects the pack on over-discharge (2.4 V ± 0.1 V) and overcurrent. It is a last resort: the firmware cut-off ([FUNC-POWER-CUTOFF-001](functional.md#func-power-cutoff-001)) is at least 0.8 V higher. Overcharge is prevented by the charger's 4.20 V end of charge ([TECH-POWER-CHARGE-001](technical.md#tech-power-charge-001)); the protection's own overcharge cut is a backup that a bench supply in place of the cells cannot show. Acceptance (bench, bench supply in place of the cells): lowering the supply opens the pack output between 2.3 and 2.5 V; with the supply at 3.7 V (current limit 5 A), a 1 Ω load on OUT+ / OUT− (≈ 3.7 A) opens the output within 1 s.
 
 ### TECH-POWER-PROTECT-002
 
@@ -119,7 +119,7 @@
 
 **Status:** validated
 
-**Dependencies:** [TECH-POWER-REG-001](technical.md#tech-power-reg-001), [TECH-POWER-VBUS-001](technical.md#tech-power-vbus-001)
+**Dependencies:** [TECH-POWER-REG-001](technical.md#tech-power-reg-001)
 
 **Description:** When a host is plugged into the programming port, the controller's on-board LDO also drives the 3.3 V rail. The main regulator must then not sink current from the rail into the system rail. Acceptance (bench): switch on, on battery, host plugged in with the controller idle: the main regulator's input current stays ≥ 0, and the 3.3 V rail stays within [PERF-POWER-REG-001](performance.md#perf-power-reg-001).
 
@@ -129,9 +129,9 @@
 
 **Status:** validated
 
-**Dependencies:** [PERF-POWER-SLEEP-001](performance.md#perf-power-sleep-001)
+**Dependencies:** none
 
-**Description:** No status LED or free-running clock output that draws current permanently is fed from the battery or from rails fed by the battery. LEDs fed only from the external supply (charger status) are allowed. Acceptance: visual inspection against the bring-up checklist, plus the deep-sleep current of [PERF-POWER-SLEEP-001](performance.md#perf-power-sleep-001).
+**Description:** No status LED or free-running clock output that draws current permanently is fed from the battery or from rails fed by the battery. LEDs fed only from the external supply (charger status) are allowed. Acceptance: visual inspection against the bring-up checklist (the resulting deep-sleep current is [PERF-POWER-SLEEP-001](performance.md#perf-power-sleep-001)'s).
 
 ### TECH-BUILD-ARTIFACTS-001
 
