@@ -132,7 +132,7 @@ STEPS = [
       'AM312: 3-wire pigtail (male contacts, X7), breakout pins trimmed flush, breakout slipped into a heat-shrink sock (it passes 5 mm from the middle tube exit). Thread the middle tube before crimping.'],
      ['Before any power-up: every still-free end capped with closed heat-shrink (shrunk, end pinched while hot).', 'Screen 2 displays; sound in the speaker; AMP_SD low cuts the amplifier; PIR rises when a hand passes.']),
     (7, 'Right tube and right leg', 'DS3231, BME280, right cell',
-     ['DS3231: right-angle header, 32K removed, coin-cell charging resistor removed. BME280: 1 × 4 header, LED removed.',
+     ['DS3231: right-angle header, 32K removed, coin-cell charging resistor removed. BME280: 1 × 4 header (no LED on this board).',
       'Thread the right tube. F2 on the right + plate, then solder the two right cell wires (step 2).',
       'X9: each contact takes two wires (P2 + the continuation to X8), crimped together without folding back.',
       'Right tube: twist SDA with GND and SCL with 3V3 (long I2C bus, next to SCK / BCLK).'],

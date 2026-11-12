@@ -692,7 +692,7 @@ drawn is ~17 mm long (`xh_male_back`, `xh_female`) inside the 22 mm checked box 
 | U7 DS3231 RTC board (ZS-042) + CR2032 | 1 | right leg, I2C; SQW not wired |
 | U8 ADXL345 accelerometer board (GY-291) | 1 | left middle, I2C |
 | U6 INMP441 I2S microphone board, 10 × 10 | 1 | left middle, Ø1 hole in the decor groove |
-| U11 **BME280** board, purple GY-BME280, 3.3 V | 1 | right leg (z ≈ 190), Ø1.5 vent; remove its LED if it has one |
+| U11 **BME280** board, purple GY-BME280, 3.3 V | 1 | right leg (z ≈ 190), Ø1.5 vent; no LED on this board |
 | U10 **AM312** mini PIR motion sensor | 1 | top of the right middle column, z ≈ 233, 1.25 mm right of the axis |
 | J2 microSD breakout, 3.3 V, **no regulator**, 18.2 × 18.2 × 1.5 (21 with the socket) | 1 | left leg |
 | U5 MAX98357A I2S amplifier breakout | 1 | right middle; VIN / GND on their own twisted pair from the power board |
