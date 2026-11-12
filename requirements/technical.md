@@ -133,6 +133,16 @@
 
 **Description:** No status LED or free-running clock output that draws current permanently is fed from the battery or from rails fed by the battery. LEDs fed only from the external supply (charger status) are allowed. Acceptance: visual inspection against the bring-up checklist (the resulting deep-sleep current is [PERF-POWER-SLEEP-001](performance.md#perf-power-sleep-001)'s).
 
+### TECH-BUILD-NAME-001
+
+**Title:** The project is named SPIT
+
+**Status:** validated
+
+**Dependencies:** none
+
+**Description:** The robot and the project are named **SPIT** ("SPit Is not TARS"): the model is `mechanical/scad/spit.scad`, every generated or versioned file carries the `spit` prefix (`spit_*`), the KiCad symbol library is `spit`, and the documentation calls the robot SPIT; the left middle column is engraved "SPIT" in letters and in braille. TARS from *Interstellar* is named only as the inspiration (README introduction, reference images). Archived reviews and audits keep their original wording. Acceptance (pytest): no versioned path outside `references/`, `reviews/` and `audits/` contains "tars"; the model engraves "SPIT" and its braille cells spell S P I T.
+
 ### TECH-BUILD-ARTIFACTS-001
 
 **Title:** Print files are generated from the model, not versioned
