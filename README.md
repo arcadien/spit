@@ -573,17 +573,18 @@ the other contacts with their signal) and the tables of parts, links and wires (
 ![power-path board](renders/tars4_board_power.svg)
 
 - **S3 carrier**: the 2 × 8 female headers and every part (R11–R14, R19, R20, C6, C8 standing, C1 lying flat) on the component side
-  under the S3; on the solder side only the GND bus (column E), the bridges, three insulated jumpers and the 27 wires,
+  under the S3; on the solder side only the GND bus (column E), the bridges, four insulated jumpers and the 28 wires,
   each soldered on its pin's tail or pad and leaving inwards. Cut 1.2 mm below row 1 and 2.7 mm above row 13 (row 4,
   the first pin row, 8.8 mm above the S3's USB edge). The headers are glued to the board (only single-sided pads hold
   them); the V (VBUS) contact is pulled out. Rows 3 and 12 stay clear at the edges (lid tabs), rows 12–13 under the
   antenna stay empty.
-- **P1 / P2**: wires go in from the component side and are soldered on the copper side (towards the lid); P2 has two
-  strip cuts (C11, C4) for the series resistors R10 / R17 and an insulated jumper I10 → I5 on the copper side. Only
+- **P1 / P2**: wires go in from the component side and are soldered on the copper side (towards the lid); P2 has one
+  strip cut (C11) for the series resistor R10, R17 standing from strip 2 to strip 4, and an insulated jumper I10 → I5 on the copper side. Only
   30 AWG in columns A / I, bent inwards (the front stops cover 1.5 mm of each edge); parts ≤ 9 mm tall.
 - **Power-path board**: parts on top (all lying, D1 1N5822 axis 3.6 mm from the back edge, Q1 / Q5 glued upside down
   with insulated 30 AWG wire-wrap leads), the GND star bus along the front row and every wire on the underside,
-  leaving towards the front channel. OUT+ has its own pad (B4) with no neighbour; R2 (B+) lies J8 → J5, away from Q5.
+  leaving towards the front channel; three insulated jumpers in 26 AWG offcuts (VUSB F5 → F7 / G4, VPATH A5 → A7: the whole load on mains). OUT+ has its own
+  pad (B4) with no neighbour; R2 (B+) is soldered in line in the harness at the B+ pad end.
   Column J rows 3–6 stay flat: the tie anchor at z 179 is 4 mm above.
 
 ## Connectors (demountable wiring)
@@ -728,7 +729,7 @@ drawn is ~17 mm long (`xh_male_back`, `xh_female`) inside the 22 mm checked box 
 | **JST-XH** (2.50 pitch) inline pairs to crimp: housings 2- and 4-pin, male + female, with their contacts | 2 + 3 | X12, X16; X10, X13, X14 (SN-28B crimper; 30 AWG folded like in the Dupont contacts) |
 | Silicone wire **30 AWG**, tinned copper (not CCA), **10-colour kit** (needs purple and blue) | ~20.3 m | cut lengths from the 3D model in `hardware/tars4_harness.pdf` (estimate + 3 cm each, service loops and pigtails included); ≤ 3.6 m per colour (yellow); 8 colours used, no black / grey |
 | Silicone wire **26 AWG** | ~7.7 m: red 3.3, black 2.5, blue 0.8, white 0.8, grey 0.3 | power pairs: B+/B− of each cell, VSYS / VUSB / VPATH and their GND (red / black), 3V3 / logic GND to P1 (white / blue), amp pair, speaker (grey) (cut lengths in `hardware/tars4_harness.pdf`) |
-| **Wire-wrap wire 30 AWG** (Kynar insulated), 1 small spool | 1 | Q1 / Q5 leads on the power-path board, insulated jumpers |
+| **Wire-wrap wire 30 AWG** (Kynar insulated), 1 small spool | 1 | Q1 / Q5 leads on the power-path board (a few mm each), signal jumpers (power jumpers in 26 AWG) |
 | **Tinned copper wire** 0.5–0.6 mm (or cut resistor leads) | ~0.5 m | bare GND buses (carrier column E, power-board row 1) |
 | Cyanoacrylate or 5-minute epoxy | — | the S3's female headers on the single-sided carrier |
 | USB charger **5 V ≥ 2 A** + micro-USB cable | 1 | mains operation while charging |
