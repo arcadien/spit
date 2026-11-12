@@ -1208,7 +1208,7 @@
 <text x="84" y="2490.0" font-size="11.5" fill="#1d2226">antenna: nothing</text>
 <text x="84" y="2508.0" font-size="11.5" fill="#1d2226">Assemble in this order: female headers (component side, square: plug them onto the S3 to solder), parts,</text>
 <text x="84" y="2523.0" font-size="11.5" fill="#1d2226">bridges, GND bus (tinned wire along column E), insulated jumpers, then the wires. Everything is done on the</text>
-<text x="84" y="2538.0" font-size="11.5" fill="#1d2226">bench, carrier out of TARS.</text>
+<text x="84" y="2538.0" font-size="11.5" fill="#1d2226">bench, carrier out of SPIT.</text>
 <text x="84" y="2556.0" font-size="11.5" fill="#1d2226">Cut: 1.2 mm below row 1 and 2.7 mm above row 13, so the bottom edge is flush with the S3 USB edge (row 4 = first</text>
 <text x="84" y="2571.0" font-size="11.5" fill="#1d2226">pin row, 8.8 mm above that edge; check on the S3).</text>
 <text x="84" y="2589.0" font-size="11.5" fill="#1d2226">Single-sided board: only the solder-side pads hold the headers. Glue each header to the board (cyanoacrylate or</text>

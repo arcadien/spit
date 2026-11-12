@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-TARS robot, `tars4` variant. `README.md` is the project documentation; `mechanical/scad/tars4.scad` is the model.
+SPIT robot ("SPit Is not TARS", after TARS from *Interstellar*), 4-column variant. `README.md` is the project documentation; `mechanical/scad/spit.scad` is the model.
 
 ## Repository
 - Layout: `mechanical/` (scad, stl generated, 3mf), `hardware/` (kicad, schematic / wiring / harness pages, power budget,
@@ -41,9 +41,9 @@ A change in `mechanical/` also requires, in the same change:
 - README (parts table, sizes), `hardware/measurements.md` (MEASURE values), `open_questions.md` updated.
 
 A change in `hardware/` also requires, in the same change:
-- `tools/kicad_sch_gen.py` updated and run: netlist check OK, ERC clean, `hardware/kicad/tars4_schematic.pdf` exported;
+- `tools/kicad_sch_gen.py` updated and run: netlist check OK, ERC clean, `hardware/kicad/spit_schematic.pdf` exported;
 - `tools/boards.py` plans updated (its net check against the schematic passes), `tools/harness.py` wires (both ends
-  typed soldered / Dupont / JST-XH, lengths), `hardware/tars4_wiring.html` + SVG, `hardware/design_notes.md`;
+  typed soldered / Dupont / JST-XH, lengths), `hardware/spit_wiring.html` + SVG, `hardware/design_notes.md`;
 - colour code and resistor-at-the-board rules respected;
 - `hardware/power_budget.md` (a row per module: estimate now, measurement later), `hardware/shopping_list.md`
   (stock parts only), README (BOM, signals), `tests/bench/` (bring-up order, a bench test sheet per bench-only requirement), `open_questions.md`;
@@ -95,4 +95,4 @@ VPATH, orange = VSYS (star, TPS63020 input, amp pair), purple = VUSB. A new rail
 - Define all parameters at the top of the file, before any formula that uses them. Expose dimensions as named parameters.
 - After editing, render with `openscad -o` and check for errors before saying it's done.
 - Don't claim parts fit an Ender 3 (220x220) or CR-10 plate unless you've checked the bounding boxes. Flag any overhang over 45° that a design change introduces.
-- Don't regenerate or re-arrange the Orca projects (`mechanical/3mf/tars4.3mf`, `tars4_cr10.3mf`): I arrange the plates by hand in Orca. Their meshes are refreshed by the pre-push hook (`meshes` stage).
+- Don't regenerate or re-arrange the Orca projects (`mechanical/3mf/spit.3mf`, `spit_cr10.3mf`): I arrange the plates by hand in Orca. Their meshes are refreshed by the pre-push hook (`meshes` stage).

@@ -11,7 +11,6 @@ BRAILLE = {'S': [2, 3, 4], 'P': [1, 2, 3, 4], 'I': [2, 4], 'T': [2, 3, 4, 5]}
 
 
 @pytest.mark.req('TECH-BUILD-NAME-001')
-@pytest.mark.xfail(strict=True, reason='rename not done yet')
 def test_no_versioned_path_is_named_after_tars():
     # Given the versioned files
     paths = subprocess.run(['git', 'ls-files'], cwd=ROOT, capture_output=True, text=True, check=True).stdout.split()
@@ -22,7 +21,6 @@ def test_no_versioned_path_is_named_after_tars():
 
 
 @pytest.mark.req('TECH-BUILD-NAME-001')
-@pytest.mark.xfail(strict=True, reason='rename not done yet')
 def test_model_engraves_spit_in_letters_and_braille():
     # Given the model
     scad = (ROOT / 'mechanical/scad/spit.scad').read_text()

@@ -1,4 +1,4 @@
-# TARS: `make check` rebuilds and validates what changed since the last pass (see scripts/check.sh; `make check-all`
+# SPIT: `make check` rebuilds and validates what changed since the last pass (see scripts/check.sh; `make check-all`
 # runs every stage but meshes, overhang and orca); `make check-<stage>` runs one stage (model, stl, erc, renders, docs,
 # meshes, overhang, orca), even if unchanged: `make check-stl` exports the STLs before a print (they are not in git);
 # overhang and orca are never part of `make check` (done by hand in Orca);

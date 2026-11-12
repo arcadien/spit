@@ -1,6 +1,6 @@
 # Contributing
 
-How to change TARS by hand, without network access and without an AI assistant. Every step below runs offline once
+How to change SPIT by hand, without network access and without an AI assistant. Every step below runs offline once
 the tools are installed.
 
 ## Tools
@@ -11,9 +11,9 @@ the tools are installed.
 | Python 3 | `tools/*.py`, `scripts/*.py` | standard library only, except the two `uv` scripts below |
 | `uv` | `scripts/check_renders.py` (Pillow), `scripts/overhang.py` (trimesh), the requirement tests `tests/` (`uvx pytest`, in the ERC stage) | downloads packages on the first run: run `make check` once **while online** to fill the cache, then work offline with `UV_OFFLINE=1` |
 | Node.js (`node`) | `tools/wiring_svg.js` | static SVG of the wiring sketch |
-| Firefox + Ghostscript (`gs`, or `gswin64c` on Windows) | printable wiring guide `hardware/tars4_harness.pdf` | without Firefox the HTML guide is still written, not the PDF |
+| Firefox + Ghostscript (`gs`, or `gswin64c` on Windows) | printable wiring guide `hardware/spit_harness.pdf` | without Firefox the HTML guide is still written, not the PDF |
 | KiCad 10: AppImage in `~/bin`, or `kicad-cli` on the PATH | schematic generation, ERC and the requirement tests (`erc` stage, every commit) | needed for every commit (pre-commit runs the `erc` stage); `KICAD=/path/to/kicad.AppImage` overrides; on Windows found in `C:\Program Files\KiCad\*in` |
-| OrcaSlicer | slicing `mechanical/3mf/tars4.3mf` | by hand, at the end |
+| OrcaSlicer | slicing `mechanical/3mf/spit.3mf` | by hand, at the end |
 
 ## Workflow (RBD)
 
@@ -43,15 +43,15 @@ Everything that gets printed lives in `mechanical/`:
 
 | Path | What | Who writes it |
 |---|---|---|
-| `mechanical/scad/tars4.scad` | the model: every dimension is a named parameter at the top of the file | **you** |
+| `mechanical/scad/spit.scad` | the model: every dimension is a named parameter at the top of the file | **you** |
 | `mechanical/stl/` | one STL per part, in print orientation; **not in git**: `make check-stl` before a print | `tools/build4.sh stl` |
-| `mechanical/3mf/tars4.3mf` | **the Orca project** (plates arranged by hand, Ender 3) | Orca, then `tools/update_orca_project.py` |
-| `mechanical/3mf/tars4_cr10.3mf` | the CR-10 Orca project (one-piece parts) | Orca, then `tools/update_orca_project.py` |
-| `mechanical/3mf/tars4_plate*.3mf` | raw plates, starting point of a new Orca layout; **not in git** | `tools/build4.sh 3mf` |
+| `mechanical/3mf/spit.3mf` | **the Orca project** (plates arranged by hand, Ender 3) | Orca, then `tools/update_orca_project.py` |
+| `mechanical/3mf/spit_cr10.3mf` | the CR-10 Orca project (one-piece parts) | Orca, then `tools/update_orca_project.py` |
+| `mechanical/3mf/spit_plate*.3mf` | raw plates, starting point of a new Orca layout; **not in git** | `tools/build4.sh 3mf` |
 
 ### 1. Change the model
 
-1. Open `mechanical/scad/tars4.scad` in OpenSCAD. Change values in the parameter block at the top of the file, never
+1. Open `mechanical/scad/spit.scad` in OpenSCAD. Change values in the parameter block at the top of the file, never
    numbers buried in a module. Values still marked `MEASURE` wait for a measurement (`hardware/measurements.md`).
 2. Preview: set `part` (top of the file) to the part you are working on (`"col1"`, `"lid_mid"`, `"open"`…), F5. Set it
    back to its default before committing.
@@ -63,7 +63,7 @@ Everything that gets printed lives in `mechanical/`:
 The shortest path is the incremental check, which redoes only what changed:
 
 ```sh
-cd ~/git/Tars
+cd spit                        # your clone of the repository
 UV_OFFLINE=1 make check        # model → stl → erc → renders → docs (each only when its inputs changed)
 ```
 
@@ -72,23 +72,23 @@ one step by hand instead:
 
 | Command | Writes |
 |---|---|
-| `tools/build4.sh stl` | `mechanical/stl/tars4_*.stl` (Ender 3 halves) |
-| `tools/build4.sh cr10stl` | `mechanical/stl/tars4_cr10_*.stl` (one-piece parts) |
+| `tools/build4.sh stl` | `mechanical/stl/spit_*.stl` (Ender 3 halves) |
+| `tools/build4.sh cr10stl` | `mechanical/stl/spit_cr10_*.stl` (one-piece parts) |
 | `tools/build4.sh tests` | trial print `tube_test3` (finished trials `pir_test`, `tube_test`, `tube_test2` stay in the model, export them one-off) |
-| `openscad -D 'part="print_<part>"' -o <part>.stl mechanical/scad/tars4.scad` | any other part, one-off (e.g. `test_level`, `test_screen`: kept in the model, no longer exported) |
+| `openscad -D 'part="print_<part>"' -o <part>.stl mechanical/scad/spit.scad` | any other part, one-off (e.g. `test_level`, `test_screen`: kept in the model, no longer exported) |
 | `tools/build4.sh renders` | `renders/*.png` (README pictures, connector details) |
-| `python3 -I tools/harness.py` | `hardware/tars4_harness.html` + `.pdf` (wire lengths are read from the model) |
-| `tools/build4.sh 3mf` | raw plates in `mechanical/3mf/tars4_plate*.3mf` (**not** the Orca projects) |
+| `python3 -I tools/harness.py` | `hardware/spit_harness.html` + `.pdf` (wire lengths are read from the model) |
+| `tools/build4.sh 3mf` | raw plates in `mechanical/3mf/spit_plate*.3mf` (**not** the Orca projects) |
 
 ### 3. Update the Orca projects
 
-The plates in `mechanical/3mf/tars4.3mf` were arranged by hand: **never regenerate that file**, only swap its meshes.
+The plates in `mechanical/3mf/spit.3mf` were arranged by hand: **never regenerate that file**, only swap its meshes.
 
 1. Close the project in OrcaSlicer (if it stays open, saving from Orca later puts the old meshes back).
-2. `python3 -I tools/update_orca_project.py mechanical/3mf/tars4.3mf` — each object gets the STL of the same name,
+2. `python3 -I tools/update_orca_project.py mechanical/3mf/spit.3mf` — each object gets the STL of the same name,
    positions, rotations, plates and settings are kept; a copy of the old file goes to `backups/`. Add `--check` to
    only list what would change.
-3. Same for the CR-10: `python3 -I tools/update_orca_project.py mechanical/3mf/tars4_cr10.3mf`.
+3. Same for the CR-10: `python3 -I tools/update_orca_project.py mechanical/3mf/spit_cr10.3mf`.
 4. Reopen the project in Orca, check the plates (a part that grew may now overlap or leave the bed), slice.
 
 The `pre-push` hook does steps 2 and 3 itself when the STLs changed (`meshes` stage) and refuses the push until the

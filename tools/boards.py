@@ -1,6 +1,6 @@
 """Build drawings of the hand-wired boards: the S3's carrier, P1, P2 and the power-path board.
 
-usage: python3 -I tools/boards.py        (writes renders/tars4_board_*.svg)
+usage: python3 -I tools/boards.py        (writes renders/spit_board_*.svg)
 
 Each board is described hole by hole (column letter A.. from the left of the component side, row number 1.. from
 the bottom / front): parts, solder bridges, bare buses, insulated jumpers, strip cuts and the harness wires. The
@@ -22,7 +22,7 @@ import re
 import sys
 
 P = 2.54
-KIT = {  # wire colours of the kits (same values as tars4_wiring.html)
+KIT = {  # wire colours of the kits (same values as spit_wiring.html)
     'red': '#d7262b', 'black': '#1b1b1d', 'yellow': '#f5c400', 'green': '#23964a', 'blue': '#2a62d6',
     'white': '#fbfbf7', 'orange': '#f07800', 'brown': '#8a5326', 'purple': '#8e44c4', 'grey': '#9aa3a8'}
 NAME = {c: c for c in KIT}  # colour names shown in the docs
@@ -68,7 +68,7 @@ PAIRS = [('s3', 'A4', 'p1', 'B9'), ('s3', 'J5', 'p1', 'B10'), ('s3', 'A7', 'p1',
          ('s3', 'B7', 'p1', 'A8'), ('s3', 'B6', 'p1', 'A6'), ('s3', 'A9', 'p2', 'A11'), ('s3', 'B10', 'p2', 'A2'),
          ('p1', 'C11', 'p2', 'A10'), ('p1', 'F9', 'p2', 'A9')]
 CCOL = {'X1': 1, 'X2': 1, 'X3': 1, 'X4': 2, 'X5': 2, 'X6': 2, 'X7': 2, 'X8': 3, 'X9': 3, 'X10': 0, 'X12': 0, 'X13': 0,
-        'X14': 0, 'X15': 0, 'X16': 0}  # TARS column of each connector (0 = left leg … 3 = right leg)
+        'X14': 0, 'X15': 0, 'X16': 0}  # SPIT column of each connector (0 = left leg … 3 = right leg)
 
 
 def gender(ref, board_key=None, side=None):
@@ -125,7 +125,7 @@ CARRIER = dict(
     key='s3', title='P3 · LOLIN S3 Mini carrier', size=(25.6, 34.4), grid=(10, 13), strips=False, lpad=24, rowpad=24,
     my0=1.22,  # bottom margin: row 4 (first S3 pin row) 8.8 mm above the USB edge, as on the LOLIN drawing
     sub='single-sided pad perfboard (one pad per hole), 25.6 × 34.4 mm, 10 × 13 holes · left middle, z 8.1–42.5',
-    comp='component side: TARS front (towards the S3), the headers and the standing parts under the S3',
+    comp='component side: SPIT front (towards the S3), the headers and the standing parts under the S3',
     copper='solder side: towards the lid, all the wires and links',
     keep=[('A3', 'lid tab'), ('J3', 'lid tab'), ('A12', 'lid tab'),
           ('J12', 'lid tab'), ('J4', 'V (VBUS): contact pulled out of the header')]
@@ -178,7 +178,7 @@ CARRIER = dict(
         ('G9', 'VSENSE_B', 'grey', 30, 0, 'left tube → X14 (R23 at the power-path board end)', ['X14.VSENSE_B']),
     ],
     notes=[
-        'Assemble in this order: female headers (component side, square: plug them onto the S3 to solder), parts, bridges, GND bus (tinned wire along column E), insulated jumpers, then the wires. Everything is done on the bench, carrier out of TARS.',
+        'Assemble in this order: female headers (component side, square: plug them onto the S3 to solder), parts, bridges, GND bus (tinned wire along column E), insulated jumpers, then the wires. Everything is done on the bench, carrier out of SPIT.',
         'Cut: 1.2 mm below row 1 and 2.7 mm above row 13, so the bottom edge is flush with the S3 USB edge (row 4 = first pin row, 8.8 mm above that edge; check on the S3).',
         'Single-sided board: only the solder-side pads hold the headers. Glue each header to the board (cyanoacrylate or epoxy) once soldered, and hold the carrier to plug or pull the S3.',
         'Before soldering the right header, remove the V contact (J4, USB-C VBUS): pushed out of the plastic from below, or cut flush. The PC 5 V never reaches the carrier (J4 sits between GND J5 and MIC_SD I4).',
@@ -269,7 +269,7 @@ P2 = dict(
 POWER_BOARD = dict(
     key='power', title='P4 · power-path board', size=(26.6, 20), grid=(10, 8), strips=False,
     sub='single-sided pad perfboard, 26.6 × 20 mm, 10 × 8 holes · flat in the left leg, z 170.8, parts on top',
-    comp='top view, component side: TARS front at the bottom, TARS left on the left',
+    comp='top view, component side: SPIT front at the bottom, SPIT left on the left',
     copper='solder side (underneath): bridges, GND bus and all the wires, which leave towards the front',
     keep=[(x, 'harness tie') for x in ('J3', 'J4', 'J5', 'J6')], keep_allows={'lying', 'wire', 'link'},
     keep_note='column J, rows 3–6: the harness clip (z 179) passes 4 mm above: lying parts only',
@@ -1138,7 +1138,7 @@ def main():
     if bad:
         sys.exit(1)
     for b in BOARDS:
-        path = f'renders/tars4_board_{b["key"]}.svg'
+        path = f'renders/spit_board_{b["key"]}.svg'
         with open(path, 'w', encoding='utf-8') as fh:
             fh.write(render(b))
         print('wrote', path)

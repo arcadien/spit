@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# TARS validation harness: rebuild the generated files whose sources changed and fail on any problem.
+# SPIT validation harness: rebuild the generated files whose sources changed and fail on any problem.
 # usage: scripts/check.sh [model] [stl] [erc] [renders] [docs] [meshes] [overhang] [orca]   (no argument: the first five;
 #        overhang and orca only when asked, e.g. `make check-orca`: overhangs and the Orca projects are checked by hand
 #        in Orca). The pre-commit hook runs the fast stages (model erc docs), the pre-push hook the slow ones (stl renders meshes).
-#   model     tars4.scad evaluated without any export (seconds): fails on any OpenSCAD WARNING / ERROR (model checks)
+#   model     spit.scad evaluated without any export (seconds): fails on any OpenSCAD WARNING / ERROR (model checks)
 #   stl       every printable part to STL (Ender 3 halves, CR-10 one-piece parts, trial prints; mechanical/stl/, not in
 #             git) + the raw 3MF plates, Ender 3 and CR-10 (written to build/plates); fails on any OpenSCAD WARNING /
 #             ERROR (connector clashes, fit checks, ...) or a raw layout off its bed (Ender 3 220 x 220, CR-10 300 x 300)
@@ -11,15 +11,15 @@
 #             and settings kept (no OrcaSlicer needed); a project already up to date is not rewritten
 #   overhang  scripts/overhang.py (uv, trimesh): faces > 50 deg from vertical over 2 cm2, unless a narrow bridge or
 #             listed in scripts/overhang_allow.json with the reason it prints without support
-#   orca      scripts/orca_check.py: refreshes the meshes of the saved Orca projects (tars4.3mf on the Ender 3,
-#             tars4_cr10.3mf on the CR-10, layout kept) and slices every plate with the OrcaSlicer CLI: a part that
+#   orca      scripts/orca_check.py: refreshes the meshes of the saved Orca projects (spit.3mf on the Ender 3,
+#             spit_cr10.3mf on the CR-10, layout kept) and slices every plate with the OrcaSlicer CLI: a part that
 #             grew off its plate or into a neighbour fails
 #   erc       KiCad ERC through kicad-cli (no GUI): errors fail, warnings are listed; then the requirement acceptance
 #             tests (tests/, `uvx pytest`: schematic, model, wire lists, requirement coverage)
 #   renders   standard PNG views (tools/build4.sh renders); each PNG must be rewritten by this run and not blank
 #   docs      board drawings (boards.py, with its own net checks), wiring SVG, harness guide + PDF (no blank page)
 # Incremental: a stage runs only when its input files changed since its last pass (sha256 of their contents in
-# build/check/<stage>.sum, written after the stage passes). FORCE=1 runs everything. Geometry changes (tars4.scad)
+# build/check/<stage>.sum, written after the stage passes). FORCE=1 runs everything. Geometry changes (spit.scad)
 # trigger stl → renders → docs (wire lengths); a wire colour change only docs; the schematic only erc.
 # Logs go to build/check/<stage>.log. ORCA=/path/to/OrcaSlicer.AppImage and KICAD=/path/to/kicad.AppImage override
 # the tool lookup; otherwise KiCad is the newest ~/bin/kicad-*.AppImage, else `kicad-cli` on the PATH, and Ghostscript
@@ -80,17 +80,17 @@ fi
 inputs() {
     case $1 in
         model) echo mechanical/scad/*.scad ;;
-        stl) echo mechanical/scad/*.scad tools/build4.sh tools/stl2_3mf.py mechanical/stl/tars4_*.stl ;;   # its own outputs: STLs are not in git, so they may be another branch's or gone
-        meshes) echo mechanical/stl/tars4_*.stl mechanical/3mf/tars4.3mf mechanical/3mf/tars4_cr10.3mf tools/update_orca_project.py ;;
-        overhang) echo mechanical/stl/tars4_*.stl scripts/overhang.py scripts/overhang_allow.json ;;
-        orca) echo mechanical/stl/tars4_*.stl mechanical/3mf/tars4.3mf mechanical/3mf/tars4_cr10.3mf scripts/orca_check.py scripts/orca_profile.py \
+        stl) echo mechanical/scad/*.scad tools/build4.sh tools/stl2_3mf.py mechanical/stl/spit_*.stl ;;   # its own outputs: STLs are not in git, so they may be another branch's or gone
+        meshes) echo mechanical/stl/spit_*.stl mechanical/3mf/spit.3mf mechanical/3mf/spit_cr10.3mf tools/update_orca_project.py ;;
+        overhang) echo mechanical/stl/spit_*.stl scripts/overhang.py scripts/overhang_allow.json ;;
+        orca) echo mechanical/stl/spit_*.stl mechanical/3mf/spit.3mf mechanical/3mf/spit_cr10.3mf scripts/orca_check.py scripts/orca_profile.py \
                    tools/update_orca_project.py tools/stl2_3mf.py "$ORCA_PRESETS"/machine/*.json "$ORCA_PRESETS"/process/*.json ;;
         erc) echo tools/kicad_sch_gen.py hardware/kicad/lib_src/* hardware/kicad/*.kicad_sch hardware/kicad/*.kicad_sym hardware/kicad/*.kicad_pro hardware/kicad/sym-lib-table \
                   tests/*.py tests/bench/*.md tests/manual/*.md requirements/*.md audits/exclusions.yml \
                   mechanical/scad/*.scad tools/boards.py tools/harness.py .gitignore \
                   $(git ls-files -co --exclude-standard 'software/*.c' 'software/*.cpp' 'software/*.h') ;;   # Unity req tags
         renders) echo mechanical/scad/*.scad tools/build4.sh scripts/check_renders.py ;;
-        docs) echo mechanical/scad/*.scad tools/boards.py tools/kicad_sch_gen.py tools/harness.py tools/html2pdf.py tools/wiring_svg.js hardware/tars4_wiring.html ;;
+        docs) echo mechanical/scad/*.scad tools/boards.py tools/kicad_sch_gen.py tools/harness.py tools/html2pdf.py tools/wiring_svg.js hardware/spit_wiring.html ;;
     esac
 }
 
@@ -103,7 +103,7 @@ digest() { # sha256 of the stage's inputs (names + contents) and of the OpenSCAD
 }
 
 stage_model() {
-    openscad -D 'part="none"' -o "$LOG/model.echo" mechanical/scad/tars4.scad > "$LOG/model.out" 2>&1
+    openscad -D 'part="none"' -o "$LOG/model.echo" mechanical/scad/spit.scad > "$LOG/model.out" 2>&1
     cat "$LOG/model.echo" >> "$LOG/model.out"   # the model's own checks are echo("WARNING: ...") lines
     cat "$LOG/model.out"
     ! grep -qE "WARNING|ERROR" "$LOG/model.out"
@@ -117,12 +117,12 @@ stage_stl() {
 }
 
 stage_overhang() {
-    uv run -q scripts/overhang.py mechanical/stl/tars4_*.stl
+    uv run -q scripts/overhang.py mechanical/stl/spit_*.stl
 }
 
 stage_meshes() {
     local p out
-    for p in mechanical/3mf/tars4.3mf mechanical/3mf/tars4_cr10.3mf; do
+    for p in mechanical/3mf/spit.3mf mechanical/3mf/spit_cr10.3mf; do
         out=$(python3 -I tools/update_orca_project.py "$p") || return 1
         echo "$out"
         # an object left without its STL keeps a stale mesh: the updater only notes it
@@ -141,7 +141,7 @@ stage_erc() {
     # the schematic is generated: regenerate it (netlist checked against the generator, PDF exported); a commit that
     # changed the generator without its output sees the files rewritten
     KICAD=$KICAD python3 -I -X utf8 tools/kicad_sch_gen.py || return 1
-    "${cli[@]}" sch erc --severity-all --format json -o "$LOG/erc.json" hardware/kicad/tars4.kicad_sch || return 1
+    "${cli[@]}" sch erc --severity-all --format json -o "$LOG/erc.json" hardware/kicad/spit.kicad_sch || return 1
     python3 -I - "$LOG/erc.json" <<'EOF' || return 1
 import json, sys
 d = json.load(open(sys.argv[1]))
@@ -170,12 +170,12 @@ stage_docs() {
     python3 -I tools/boards.py || bad=1
     node tools/wiring_svg.js || bad=1
     python3 -I tools/harness.py || bad=1
-    for f in renders/tars4_board_*.svg renders/tars4_wiring.svg hardware/tars4_harness.html hardware/tars4_harness.pdf; do
+    for f in renders/spit_board_*.svg renders/spit_wiring.svg hardware/spit_harness.html hardware/spit_harness.pdf; do
         if [ ! -s "$f" ] || [ "$(stat -c %Y "$f")" -lt "$since" ]; then echo "RENDER $f: missing or not rewritten"; bad=1; fi
     done
     # harness PDF: no blank page (ghostscript ink coverage, every page must carry some ink)
-    if [ -s hardware/tars4_harness.pdf ]; then
-        "$GS" -q -o - -sDEVICE=inkcov hardware/tars4_harness.pdf | awk '{ n++; if ($1 + $2 + $3 + $4 < 0.0005) { print "RENDER hardware/tars4_harness.pdf: page " n " is blank"; b = 1 } }
+    if [ -s hardware/spit_harness.pdf ]; then
+        "$GS" -q -o - -sDEVICE=inkcov hardware/spit_harness.pdf | awk '{ n++; if ($1 + $2 + $3 + $4 < 0.0005) { print "RENDER hardware/spit_harness.pdf: page " n " is blank"; b = 1 } }
             END { print "harness pdf: " n " pages"; exit b }' || bad=1
     fi
     return $bad

@@ -1,1 +1,1 @@
-(sym_lib_table (version 7) (lib (name "tars") (type "KiCad") (uri "${KIPRJMOD}/tars.kicad_sym") (options "") (descr "TARS4 modules")))
+(sym_lib_table (version 7) (lib (name "spit") (type "KiCad") (uri "${KIPRJMOD}/spit.kicad_sym") (options "") (descr "SPIT modules")))

@@ -16,7 +16,7 @@ def s3_pin(sch, gpio):
 
 @pytest.mark.req('PLAT-POWER-CHARGE-001')
 def test_plat_power_charge_001_breakout_feeds_the_charger_in_pads(sch):
-    # Given the protected TP4056 module and the micro-USB charging socket J1 (usbb in tars4.scad)
+    # Given the protected TP4056 module and the micro-USB charging socket J1 (usbb in spit.scad)
     u, = sch.refs('TP4056_DW01')
     j, = sch.refs('usb_charging_socket')
     # Then the breakout's VBUS / GND are on the module's IN+ / IN- pads

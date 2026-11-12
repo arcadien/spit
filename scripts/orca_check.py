@@ -2,14 +2,14 @@
 
 usage: python3 -I scripts/orca_check.py [--orca path/to/OrcaSlicer.AppImage]
 
-  tars4.3mf       Ender 3 (220 x 220), the hand-arranged 5-plate project, user presets
+  spit.3mf       Ender 3 (220 x 220), the hand-arranged 5-plate project, user presets
                   "Creality Ender-3 0.4" + "0.20mm PETG @Ender3"
-  tars4_cr10.3mf  CR-10 V2 (300 x 300), the one-piece parts on one plate, user preset
+  spit_cr10.3mf  CR-10 V2 (300 x 300), the one-piece parts on one plate, user preset
                   "Creality CR-10 V2 0.4 nozzle - Default" + system "0.20mm Standard @Creality CR10V2"
 
 The layouts are the saved projects, never re-arranged: their meshes are refreshed in place from mechanical/stl/ by
 tools/update_orca_project.py (positions, rotations and plates kept, a backup of the old file goes to backups/).
-tars4_cr10.3mf is created once, from the stl2_3mf.py strip layout, if it does not exist yet; arrange it in Orca
+spit_cr10.3mf is created once, from the stl2_3mf.py strip layout, if it does not exist yet; arrange it in Orca
 and save, the layout then survives every regeneration. Orca's own auto-arrange is off (--arrange 0).
 Fails when a project lists an object on no plate, when Orca refuses a plate (part off the bed, G-code in an
 unprintable area, ...) or when a plate produces no G-code. Slicing output goes to build/orca/.
@@ -30,8 +30,8 @@ from update_orca_project import NAME_TO_STL  # noqa: E402  (the one part <-> STL
 # where the README prints PLA changes nothing here
 OUT = os.path.join(ROOT, "build", "orca")
 PROJECTS = [
-    {"file": "tars4.3mf", "printer": "Creality Ender-3 0.4", "process": "0.20mm PETG @Ender3", "filament": None},
-    {"file": "tars4_cr10.3mf", "printer": "Creality CR-10 V2 0.4 nozzle - Default",
+    {"file": "spit.3mf", "printer": "Creality Ender-3 0.4", "process": "0.20mm PETG @Ender3", "filament": None},
+    {"file": "spit_cr10.3mf", "printer": "Creality CR-10 V2 0.4 nozzle - Default",
      "process": "0.20mm Standard @Creality CR10V2", "filament": "Amazon Basics PETG Red",
      "seed": [f"{k}=mechanical/stl/{v}.stl" for k, v in NAME_TO_STL.items() if k.startswith("cr10_")]},
 ]
