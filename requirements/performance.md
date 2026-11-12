@@ -97,7 +97,7 @@
 
 **Title:** Runtime on a full charge
 
-**Status:** validated
+**Status:** draft
 
 **Dependencies:** [PERF-POWER-CHARGE-001](performance.md#perf-power-charge-001)
 
