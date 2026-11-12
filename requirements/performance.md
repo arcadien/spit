@@ -41,7 +41,7 @@
 
 **Dependencies:** [FUNC-POWER-CHARGE-001](functional.md#func-power-charge-001)
 
-**Description:** A full charge of the pack, from the 3.30 V cut-off to the end of charge, with the robot switched off, takes ≤ 12 h at the 0.5 A charge current, or ≤ 16 h if the 0.33 A fallback (R_PROG 3.6 kΩ) is used. The choice between them (and D13) is made after E-M8. Acceptance (bench): timed charge of the assembled pack from 3.30 V (rested) to end of charge, against the limit for the current fitted.
+**Description:** A full charge of the pack, from the 3.30 V cut-off to the end of charge, with the robot switched off, takes ≤ 12 h at the 0.5 A charge current, or ≤ 16 h if the 0.33 A fallback (R_PROG 3.6 kΩ) is used. The choice between them is made after E-M8 ([open_questions.md](../open_questions.md)). Acceptance (bench): timed charge of the assembled pack from 3.30 V (rested) to end of charge, against the limit for the current fitted.
 
 ### PERF-POWER-THERMAL-001
 

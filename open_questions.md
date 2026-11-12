@@ -1,77 +1,33 @@
-# TARS4 — open questions (updated 2026-10-31)
+# TARS4 — open questions
 
-Collects what is still open after the three review rounds (`reviews/2026-10-21-review.md`, `reviews/2026-10-21-review2.md`,
-`reviews/2026-10-22-review3-boards.md`).
-Blockers B1–B2, decisions D1–D12, improvements and doc fixes are **applied** (recommended options, D11: switch kept);
-the README describes the current state (no decision log any more: history in `reviews/` and in git).
+Only what is still open. A question leaves this file once answered: its answer goes into the document it changes
+(`hardware/measurements.md`, a requirement, the model, the README…); history stays in git and `reviews/`.
+A branch's own questions live in its `status.md`; a branch blocked by an item here names its ID.
 
-## 1. Blockers — settled
+## Questions
 
-| # | Problem | What was done |
+| # | Question | What the answer changes | Blocks |
+|---|---|---|---|
+| E-M8 | **TP4056 temperature** (PLA legs): leg wall after 15 and 30 min of charge | > 45 °C → R_PROG 3.6 kΩ (330 mA) or the lower left leg in PETG; still too hot: a switching charger (TP5100 1 A + separate DW01; IP2312 does not fit flat, 34.4 × 15). Copper RPi heatsink ≤ ~3 mm + 0.5–1 mm thermal pad between chip and heatsink, never between board and PLA. R_PROG row of `hardware/measurements.md` | PLAT-POWER-CHARGE-002 |
+| RF1 | **Rename `usbb` → `usb_charging_socket`** in `mechanical/scad/tars4.scad` (J1 in the schematic) | separate `refactor` commit: the `usbb*` parameters, the `usbb_z0` / `usbb_y0` geometry keys of `tools/harness.py`, `hardware/measurements.md` | — |
+| D-M9 | Actual position of the S3's first pin row (8.8 mm from the USB edge per the LOLIN drawing) | carrier cut margins (`my0` in `tools/boards.py`) | — |
+| AN1 | Wanted swing angle for the legs | free wire length at the twist | — |
+
+## Measurements
+
+Dimensions go into `hardware/measurements.md`, bench results into the bench sheet named by the requirement (bring-up
+order in `tests/bench/bring-up.md`, currents in `hardware/power_budget.md`).
+
+| # | Measurement | Blocks |
 |---|---|---|
-| B1 | Dupont housings without keying | useless pin removed + cavity plugged (X2 INT2, X8 32K, X5 GAIN with X5 as 4 + 3); one more cavity plugged on the female side of the inline pairs (X3, X7, X15); screens: right-angle header + rib glued on the housing; X14 as JST-XH 4 (polarised); X9 unkeyed (reversed, nothing breaks). Pin order in the README (*Connectors*) |
-| B2 | TP4056 against the lip of its groove | no upper lip any more (support underneath only) for the TP4056 and the TPS63020, a lid tab holds the back edge; since 2026-10-27 the TP4056 (trimmed to 26.3, micro-USB desoldered) sits on 0.5 ledges without grooves; C9 / D3 lying on the IN end (`charger_h` 5.5) |
-
-## 2. Decisions — taken
-
-D1 right-angle header · D2 continuous rib · D3 X10–X14 parked above the TP4056, boards one by one · D4 split SCK on
-the carrier (R12 / R19 47 Ω) · D5 15 printed clips · D6 vent slots · D7 R21 + C12 on the AM312, C10 + C11 on P2,
-PWM 20 kHz · D8 C1 SMD 7343 polymer tantalum (POSCAP 10TPE220ML) lying under the S3, on its carrier (2026-10-24) · D9
-lid `lid_mid_left` · D10 Q5 on the microSD 3V3 (GPIO36) · D11 switch kept · D12 5 V ≥ 2 A charger.
-
-T1 tube test3: measured (`tube_od` 7.93, teardrop bores glued 8.00 / turning 8.05), folded into the model
-([PLAT-MECH-PIVOT-001](requirements/platform.md#plat-mech-pivot-001)).
-
-## 3. Open now
-
-| # | Question | Status |
-|---|---|---|
-| D13 | **Switching charger instead of the TP4056** | TP4056 kept for now (500 mA, R_PROG 2.4k). If E-M8 runs too hot: R_PROG 3.6k (330 mA) or the lower left leg in PETG; alternative TP5100 1 A + separate DW01. IP2312: doesn't fit flat (34.4 × 15) |
-| E-M8 | **TP4056 temperature** (PLA legs) | measure the wall after 15 and 30 min of charge: > 45 °C → R_PROG 3.6k. Copper RPi heatsink ≤ ~3 mm + 0.5–1 mm thermal pad between chip and heatsink, never between board and PLA |
-| RF1 | **Rename `usbb` → `usb_charging_socket`** in `mechanical/scad/tars4.scad` (J1 in the schematic) | separate `refactor` commit: the `usbb*` parameters, the `usbb_z0` / `usbb_y0` geometry keys of `tools/harness.py`, `hardware/measurements.md` |
-| AU1 | **Audio** (PERF-AUDIO-PEAK-001, branch `mech-audio`) | not merged until measured: the firmware volume cap on the bench (VSYS ≥ 3.0 V at the amp with the pack at 3.30 V) |
-
-## 4. Remaining measurements
-
-**Dimensions** (`hardware/measurements.md`): `bk_h` (TPS63020 inductor height), `pir_pcb_dn`, screen active area checked lit,
-solder tails on the wall side (ADXL345, MAX98357A, micro-USB), 0.85" screen if used, D-M9 (S3 first pin row, `my0`
-margins).
-
-**Electrical**, on the bench (README list *to do when the parts arrive*; currents in `hardware/power_budget.md`): E-M2 screens' BLK, E-M3 D1 leakage when warm, E-M4 AM312 high level, E-M5 DW01
-wake-up, E-M6 SW1 rating, E-M7 sleep current with and without microSD.
-
-**Other**: wanted swing angle for the legs (free wire length at the twist).
-
-## 5. First review items and doc fixes — applied
-
-Nothing open apart from the measurements above.
-
-## 6. Board review no. 3 (2026-10-22) — applied
-
-All boards are **single-sided**. Applied: M1 OUT+ alone in B4 + anti-blob rule extended to every power / other net
-pair; M2 R2 lying J8 → J5 (J7 empty next to Q5); M3 Q1 / Q5 legs in insulated 30 AWG wire-wrap wire, gluing
-orientation drawn (seen from the top, flipped); M4 carrier wires leaving inwards; m1 carrier cut 1.2 mm below row 1
-(`s3_dummy` at 8.8); m2 `pp_lip` 0.6 + R2 as 1/8 W (upper left leg re-exported); m3 check values; m4 V contact removed
-from the header; m5 schematic names everywhere (AMP_SD_S3 / AMP_SD, PIR / PIR_OUT, SCK_S3, *_S3 on the S3 side) +
-automatic check of the boards against `kicad_sch_gen.py`; m6 P1 without 26 AWG in column A, P2 jumper on the copper
-side; m7 C12 ≤ 7 mm → 10 µF 16 V tantalum (2026-10-24); m8 double Dupont contacts documented; m9 wire-wrap wire, tinned
-wire, glue in the BOM; m10 doc fixes (C10 non-polarised in KiCad); remarks R1, R3, R4, R6, R7. D14 (30 AWG B+ sense
-wire, R2 on the perfboard): **kept as is** (decision of 2026-10-22).
-
-| # | Still open | Options |
-|---|---|---|
-| D-M9 | Actual position of the S3's first pin row (8.8 mm from the USB edge per the LOLIN drawing) | carrier cut margins (`my0` in `tools/boards.py`) |
-
-## 7. Wiring guide review (2026-10-24) — applied
-
-No blocking point. Applied: heat-shrink closed on every free end before any power-up (steps 3–6); microSD reader
-preparation at step 5 (C4 tantalum **lying**: ~6.6 mm up to the TPS63020, C5, R5–R9); polarities in the guide (C9 /
-D3 on IN+, C7 + on VIN); C2 / C10 drawn polarised (tantalum, + at G9 / F9) on the plans and in KiCad, C4 too; X12 / X16
-on the block side capped with an empty XH housing while unplugged; splices before the TP4056 IN+ / B+ / B− pads;
-< 10 µA test on the TP4056 alone; **R20 33 Ω in series on MOSI** (carrier C9–C10, jumper J4 from A6); I2C scan with
-0x57 / 0x77; EXT1 mask without the sources already high; double contacts of X2, twists in the right tube, "without
-folding back" for two wires per contact, lengths per colour from the README, h ≤ 9 rule on P1 / P2.
-Not applied: R2 on the B+ pad (D14, decision of 2026-10-22 kept).
-
-- D-M1 AM312 settled (2026-10-24): cap glued from the inside, Ø11.5 hole (flush dome, Pro Micro test); printed holes ~0.6 mm too small.
-- `sd_fwd` = 2 (2026-10-24): microSD card 3 mm out of the lid, 4.5 mm in front of the reader.
+| `bk_h` | TPS63020 inductor height | — |
+| `pir_pcb_dn` | AM312 board mid-plane offset from the detector axis | — |
+| SC1 | Screen active area checked lit (`active_dz`, `active_dx`) | — |
+| ST1 | Solder tails on the wall side (ADXL345, MAX98357A, micro-USB), ≤ 1 mm | — |
+| E-M2 | Screens' BLK current and pull-up | — |
+| E-M3 | D1 leakage when warm | — |
+| E-M4 | AM312 high level | — |
+| E-M5 | DW01 wake-up | — |
+| E-M6 | SW1 rating (marking, ≥ 2 A) | PLAT-POWER-SWITCH-001, branch `mech-audio` |
+| E-M7 | Sleep current with and without the microSD card | — |
+| AU1 | Firmware volume cap: VSYS ≥ 3.0 V at the amplifier with the pack at 3.30 V | PERF-AUDIO-PEAK-001, branch `mech-audio` |

@@ -758,7 +758,7 @@ Bring-up order, bench test sheets and their results: [tests/bench/bring-up.md](t
 
 ## Open questions
 
-Live list: `open_questions.md` (charger D13 / temperature E-M8, bench measurements).
+Live list: `open_questions.md` (open questions only: charger temperature E-M8, bench measurements).
 Also: replaceable PETG detent rings.
 
 ## Requirements

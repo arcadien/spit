@@ -28,7 +28,7 @@ Every change starts from a requirement in `requirements/` (see the README, *Requ
    the fast checks (model, ERC, docs: seconds), the `pre-push` hook the slow ones (STL export, renders, Orca project meshes). The CI job
    `check` (model, STL, ERC, docs) must pass before a pull request is merged into main.
 
-Work on a branch; its state (goal, findings, open questions, next step) lives in `status.md` at the repo root, read first
+Work on a branch; its state (goal, findings, its still-open questions, next step) lives in `status.md` at the repo root, read first
 when the branch is picked up again and removed before the merge (main has none). A branch whose change still waits for a measurement (`MEASURE` value, bench check) is not merged
 until the measurement is done and folded into the model or the requirement: the risk is still there.
 
@@ -115,5 +115,4 @@ git commit -m "feat(MECH-…-001): …"   # validated requirement ID (commit-msg
 
 - OpenSCAD 2021 writes one object per STL; the multi-object 3MF files come from `tools/stl2_3mf.py`.
 - Tangent faces (two solids just touching) make non-manifold STLs: overlap them by 0.01 mm.
-- Don't print the columns before the tube bore test (`open_questions.md`, T1) has set `tube_od`.
 - `make check` never runs the Orca slicing or overhang checks: check overhangs in Orca's preview before printing.
