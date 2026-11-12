@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 988 1721" width="988" height="1721" font-family="IBM Plex Sans, Segoe UI, sans-serif">
-<rect width="988" height="1721" fill="#fbfbf9"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 988 1736" width="988" height="1736" font-family="IBM Plex Sans, Segoe UI, sans-serif">
+<rect width="988" height="1736" fill="#fbfbf9"/>
 <text x="60" y="34" font-size="22" font-weight="600" fill="#1d2226" font-family="IBM Plex Sans Condensed, Arial Narrow, sans-serif">P4 · power-path board</text>
 <text x="60" y="56" font-size="12.5" fill="#5e676d">single-sided pad perfboard, 26.6 × 20 mm, 10 × 8 holes · flat in the left leg, z 170.8, parts on top</text>
 <text x="60" y="82" font-size="13" font-weight="600" fill="#1d2226">component side</text>
@@ -649,10 +649,11 @@
 <text x="60" y="1554" font-size="11.5" fill="#1d2226">orientation (seen from the top, flipped: G / S / D on the sketch), linked with insulated 30 AWG wire-wrap wire</text>
 <text x="60" y="1569" font-size="11.5" fill="#1d2226">(Kynar), stripped 2 mm at each end (one touch of the iron each); glue on top once tested.</text>
 <text x="60" y="1587" font-size="11.5" fill="#1d2226">The underside carries the GND bus (tinned wire along row 1, B1–I1: the ground star), the bridges, three</text>
-<text x="60" y="1602" font-size="11.5" fill="#1d2226">insulated jumpers (VUSB F5 → F7 and F5 → G4, VPATH A5 → A7) and all the wires, which leave towards the front</text>
-<text x="60" y="1617" font-size="11.5" fill="#1d2226">(row 1) then go up or down in the front corridor. Two wires share B1 (TP4056 OUT−, TPS63020 GND), I3 (VBAT/2),</text>
-<text x="60" y="1632" font-size="11.5" fill="#1d2226">C3 (VSYS); VUSB (E5) and VPATH (A5) sit on Q1's gate and source pads.</text>
-<text x="60" y="1650" font-size="11.5" fill="#1d2226">Holes left empty between the power nets and ground / the GPIOs: don't fill them with solder.</text>
-<text x="60" y="1668" font-size="11.5" fill="#1d2226">Check to GND, without the modules: VUSB ≈ 9.4 kΩ (R1 ∥ R15 + R16), USB_DET ≈ 44 kΩ, VBAT/2 ≈ 1 MΩ, B+ ≈ 2 MΩ,</text>
-<text x="60" y="1683" font-size="11.5" fill="#1d2226">VPATH / VSYS / OUT+ > 1 MΩ; OUT+ ↔ VSYS and OUT+ ↔ VPATH open.</text>
+<text x="60" y="1602" font-size="11.5" fill="#1d2226">insulated jumpers in 26 AWG offcuts, as they carry the whole load on mains (VUSB F5 → F7 and F5 → G4, VPATH A5 →</text>
+<text x="60" y="1617" font-size="11.5" fill="#1d2226">A7) and all the wires, which leave towards the front (row 1) then go up or down in the front corridor. Two wires</text>
+<text x="60" y="1632" font-size="11.5" fill="#1d2226">share B1 (TP4056 OUT−, TPS63020 GND), I3 (VBAT/2), C3 (VSYS); VUSB (E5) and VPATH (A5) sit on Q1's gate and</text>
+<text x="60" y="1647" font-size="11.5" fill="#1d2226">source pads.</text>
+<text x="60" y="1665" font-size="11.5" fill="#1d2226">Holes left empty between the power nets and ground / the GPIOs: don't fill them with solder.</text>
+<text x="60" y="1683" font-size="11.5" fill="#1d2226">Check to GND, without the modules: VUSB ≈ 4.6 kΩ (R1 ∥ R15 + R16), USB_DET ≈ 42 kΩ (R16 ∥ R15 + R1), VBAT/2 ≈ 1</text>
+<text x="60" y="1698" font-size="11.5" fill="#1d2226">MΩ, B+ ≈ 2 MΩ, VPATH / VSYS / OUT+ > 1 MΩ; OUT+ ↔ VSYS and OUT+ ↔ VPATH open.</text>
 </svg>

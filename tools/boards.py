@@ -306,9 +306,9 @@ POWER_BOARD = dict(
     notes=[
         'Single-sided board, copper underneath: no copper under Q1 / Q5 nor under the part bodies.',
         'Lying parts (1/4 W, 7.62 pitch), D1 lying (Ø5.3): height ≤ 6 mm. Q1 and Q5 (SOT-23) glued legs up in the drawn orientation (seen from the top, flipped: G / S / D on the sketch), linked with insulated 30 AWG wire-wrap wire (Kynar), stripped 2 mm at each end (one touch of the iron each); glue on top once tested.',
-        'The underside carries the GND bus (tinned wire along row 1, B1–I1: the ground star), the bridges, three insulated jumpers (VUSB F5 → F7 and F5 → G4, VPATH A5 → A7) and all the wires, which leave towards the front (row 1) then go up or down in the front corridor. Two wires share B1 (TP4056 OUT−, TPS63020 GND), I3 (VBAT/2), C3 (VSYS); VUSB (E5) and VPATH (A5) sit on Q1\'s gate and source pads.',
+        'The underside carries the GND bus (tinned wire along row 1, B1–I1: the ground star), the bridges, three insulated jumpers in 26 AWG offcuts, as they carry the whole load on mains (VUSB F5 → F7 and F5 → G4, VPATH A5 → A7) and all the wires, which leave towards the front (row 1) then go up or down in the front corridor. Two wires share B1 (TP4056 OUT−, TPS63020 GND), I3 (VBAT/2), C3 (VSYS); VUSB (E5) and VPATH (A5) sit on Q1\'s gate and source pads.',
         'Holes left empty between the power nets and ground / the GPIOs: don\'t fill them with solder.',
-        'Check to GND, without the modules: VUSB ≈ 9.4 kΩ (R1 ∥ R15 + R16), USB_DET ≈ 44 kΩ, VBAT/2 ≈ 1 MΩ, B+ ≈ 2 MΩ, VPATH / VSYS / OUT+ > 1 MΩ; OUT+ ↔ VSYS and OUT+ ↔ VPATH open.',
+        'Check to GND, without the modules: VUSB ≈ 4.6 kΩ (R1 ∥ R15 + R16), USB_DET ≈ 42 kΩ (R16 ∥ R15 + R1), VBAT/2 ≈ 1 MΩ, B+ ≈ 2 MΩ, VPATH / VSYS / OUT+ > 1 MΩ; OUT+ ↔ VSYS and OUT+ ↔ VPATH open.',
     ])
 
 BOARDS = [CARRIER, P1, P2, POWER_BOARD]
