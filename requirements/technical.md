@@ -192,3 +192,13 @@
 **Dependencies:** none
 
 **Description:** Each board lying flat in a leg (`flat_slot`: microSD reader, TP4056, power-path board, buck-boost) slides into its grooves from the lid side and is then located without glue: total side play (x) ≤ 1 mm, front edge against the solid stop in front of its grooves, held in z by its grooves or by a lid tab. Acceptance (pytest): the model computes the side play of each flat board and prints no WARNING (play > 1 mm warns); print: each board slides in without forcing and does not move sideways by more than 1 mm.
+
+### TECH-MECH-LID-001
+
+**Title:** Lids do not flex between their supports
+
+**Status:** validated
+
+**Dependencies:** none
+
+**Description:** A lid (1.6 mm plate screwed onto the back of a column) is carried by its screw posts and by stops standing on the column walls; over the battery bay of each leg (print feedback 2026-11-21: the left leg lid flexes there, its screw rows are 77 mm apart), no stretch of lid longer than 45 mm along the column is left without a post or a stop under each edge. Elsewhere the lids are not reported to flex (screw posts, board blocks); a later requirement covers them if they are. The stops take no room needed by a module or a wire, and add no overhang over 45° when the column prints front face down. Acceptance: pytest: model clean, with an assert per leg on the longest unsupported lid span over the battery bay; print: a thumb press on each lid between its supports gives no visible flex.

@@ -254,3 +254,15 @@ derives_from: [FUNC-MECH-JOINT-001](functional.md#func-mech-joint-001)
 derives_from: [TECH-MECH-MOUNT-001](technical.md#tech-mech-mount-001)
 
 **Description:** The grooves of the microSD board stop `sd_side_clr` = 0.5 mm from each side edge of the board (print test 2026-11-21: 4 mm of the former 4.5 mm per side can be filled): the side blocks are solid from the side walls up to there. `flat_slot` takes an optional side clearance: given, the groove bottom sits at the board edge minus it, cut into the walls for a board wider than the interior (buck-boost, `bk_clr`); not given, the grooves still run to the side walls (TP4056 0.9 mm and power-path 0.6 mm total play, both printed and within 1 mm). Acceptance: pytest: model clean, with the side play assert of [TECH-MECH-MOUNT-001](technical.md#tech-mech-mount-001), and the microSD side play = 2 × `sd_side_clr`; print: the board slides in without forcing, total side play ≤ 1 mm.
+
+### PLAT-MECH-LIDSTOP-001
+
+**Title:** Leg lids rest on two side stops at mid-battery
+
+**Status:** validated
+
+**Dependencies:** none
+
+derives_from: [TECH-MECH-LID-001](technical.md#tech-mech-lid-001)
+
+**Description:** In both legs, a stop on each side wall carries the lid at mid-height of the cell (`bat_z0 + bat[1] / 2`), halfway between the lid screw rows that bound the battery bay (77 mm apart): 5 mm long (z), 2.5 mm out from the side wall, its top face in the lid's inner plane (`lid_y`), its underside at 45° (no support when the column prints front face down). The lid's edge rests on ~2.3 mm of each stop. Acceptance: pytest: model clean, with asserts in `spit.scad` (cell ≥ 4 mm from each stop, stop top face at `lid_y`, stop under the lid edge); renders regenerated; print: a thumb press on the lid over the middle of the cell gives no visible flex ([bench sheet](../tests/bench/PLAT-MECH-LIDSTOP-001.md)).
