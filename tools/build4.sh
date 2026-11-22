@@ -117,6 +117,11 @@ EOF
     printf 'include <%s/mechanical/scad/spit.scad>\nintersection() { union() { color([0.6, 0.6, 0.6]) column(0); dummies(0); } translate([-5, -5, 100]) cube([col_w / 2 + 5, 45, 50]); }\n' "$ROOT" > "$TMP/sd.scad"
     openscad -D 'part="none"' -o renders/spit_sd_reader.png --imgsize=900,900 --camera=12,15,118,60,0,120,75 --colorscheme=Tomorrow "$TMP/sd.scad" 2>>"$TMP/renders.err"
     openscad -D 'part="none"' -o renders/spit_buck_sd.png --imgsize=900,900 --camera=12,15,128,55,0,120,95 --colorscheme=Tomorrow "$TMP/sd.scad" 2>>"$TMP/renders.err"
+    # microSD grooves seen from above and behind, cut through the board: side blocks, 0.5 mm play each side (PLAT-MECH-SDSLOT-001)
+    printf 'include <%s/mechanical/scad/spit.scad>
+intersection() { union() { color([0.6, 0.6, 0.6]) column(0); dummies(0); } translate([-5, -5, sd_z0 - 12]) cube([45, 45, 12 + sd[2] + 0.05]); }
+' "$ROOT" > "$TMP/grooves.scad"
+    openscad -D 'part="none"' -o renders/spit_sd_grooves.png --imgsize=1200,1000 --camera=15.2,14,112,40,0,180,85 --colorscheme=Tomorrow "$TMP/grooves.scad" 2>>"$TMP/renders.err"
     # heel of the left leg (charge port + switch): from behind with the lid on, then lid off seen from the back right,
     # cut under the bottom shelf
     printf 'include <%s/mechanical/scad/spit.scad>\nintersection() { union() { color([0.6, 0.6, 0.6]) column(0); color([0.45, 0.45, 0.45]) lid(false, true); } translate([-5, -5, -1]) cube([45, 45, 27]); }\n' "$ROOT" > "$TMP/heel.scad"
