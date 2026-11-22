@@ -62,15 +62,16 @@ def run(cmd, log, cwd):
 
 
 def profiles(p, d):
-    """Flattened presets, or None when they cannot be resolved here (Windows: the system presets they inherit from are
-    packed in the install's .opc archives): the project is then sliced with its own embedded settings."""
+    """Flattened presets; None when a system preset they inherit from cannot be read (OrcaSlicer >= 2.5 packs them in
+    .opc archives): the project is then sliced with its own embedded settings; "missing" when a preset itself is missing."""
     files = []
     for kind in ("machine", "process", "filament"):
         name = p["printer" if kind == "machine" else kind]
         if name:
             f = os.path.join(d, kind + ".json")
-            if subprocess.run([sys.executable, "-I", os.path.join(ROOT, "scripts", "orca_profile.py"), kind, name, f]).returncode:
-                return None
+            rc = subprocess.run([sys.executable, "-I", os.path.join(ROOT, "scripts", "orca_profile.py"), kind, name, f]).returncode
+            if rc:
+                return None if rc == 3 else "missing"
             files.append(f)
     return files
 
@@ -96,11 +97,11 @@ def main():
         files = profiles(p, d)
         proj = os.path.join(ROOT, "mechanical", "3mf", p["file"])
         base = ["--arrange", "0", "--orient", "0"]
-        if files is None and os.name != "nt":
+        if files == "missing":
             failed.append(f"{p['file']}: presets {p['printer']} / {p['process']} not found")
             continue
         if files is None:
-            print(f"   {p['file']}: presets not resolvable here, sliced with the project's embedded settings")
+            print(f"   {p['file']}: system presets packed (.opc), sliced with the project's embedded settings")
         else:
             base += ["--load-settings", ";".join(f for f in files if "filament" not in f)]
             if p["filament"]:
