@@ -323,6 +323,7 @@ sd_sock_over = 2.8;           // socket mouth beyond the board's back edge (y): 
 sd_card_out = 6.9;            // latched card beyond the socket mouth (y)
 sd_fwd = 2;                   // board moved forward from the lid (sinks the card; costs wire room in front of the board)
 sd_lip = 1.0;                 // grooves reach over the board's side edges (keep clear of its components and GND pad)
+sd_side_clr = 0.5;            // side play per edge in its grooves (print test 2026-11-21: 4 of the former 4.5 mm filled)
 sd_slot = [12.5, 2.2];        // card slot through the lid (x, z): microSD is 11 x 1
 sd_dz = 10;                   // underside of the board above the lid screw posts over the top cell shelf
 
@@ -869,17 +870,18 @@ module usbb_notch() {
 
 // microSD board grooves: one block per side wall, from the front wall to the lid, with a groove open towards the lid;
 // the solid part in front of the groove is the front stop. Constant section along y: prints as vertical walls.
-module sd_mount() { flat_slot(sd, sd_z0, sd_y0, sd_lip); }
+module sd_mount() { flat_slot(sd, sd_z0, sd_y0, sd_lip, clr = sd_side_clr); }
 module bk_mount() { flat_slot(bk, bk_z0, bk_y1 - bk[1], bk_lip, top = false, clr = bk_clr); }
 
 // board lying flat (b = width x, depth y, thickness), underside at z0, front edge at y0: one block per side wall from
 // the front wall to the lid, with a groove open towards the lid; the solid part in front of the groove is the stop.
 // top = false: lower ledge only (connector / pads / parts along the side edges); a lid tab holds the back edge down
-module flat_slot(b, z0, y0, lip, top = true, clr = 0.2) {
+// clr: side play per edge, the groove bottom then cut into the walls if needed; undef: grooves down to the side walls
+module flat_slot(b, z0, y0, lip, top = true, clr = undef) {
     ex = col_w / 2 - b[0] / 2;                         // board side edge (x)
     for (m = [0, 1]) translate([m * col_w, 0, 0]) mirror([m, 0, 0]) difference() {
         translate([wall - eps, wall - eps, z0 - rib]) cube([ex + lip - wall + eps, lid_y - 0.5 - wall + eps, b[2] + 0.3 + 2 * rib]);
-        translate([min(ex - clr, wall - eps), y0 - 0.2, z0]) cube([b[0], D, top ? b[2] + 0.3 : b[2] + 0.3 + rib + eps]);
+        translate([clr == undef ? wall - eps : ex - clr, y0 - 0.2, z0]) cube([b[0], D, top ? b[2] + 0.3 : b[2] + 0.3 + rib + eps]);
     }
 }
 
@@ -1514,6 +1516,10 @@ if (battery) {
     if (fuse[0] + 0.4 + 2 * rib > col_w - 2 * wall) echo("WARNING: polyfuse holder wider than the leg");
     echo(str("polyfuses on the inner front walls in front of the cells: z ", fuse_z0, " - ", fuse_z0 + fuse[1]));
 }
+// flat boards located by their grooves (TECH-MECH-MOUNT-001): total side play <= 1 mm
+function flat_play(b, clr) = clr == undef ? col_w - 2 * wall - b[0] : 2 * clr;
+for (f = [["microSD", sd, sd_side_clr], ["TP4056", charger, undef], ["power-path", pp_b, undef], ["buck-boost", bk, bk_clr]])
+    if (flat_play(f[1], f[2]) > 1) echo(str("WARNING: ", f[0], " board side play ", flat_play(f[1], f[2]), " mm in its grooves (> 1 mm)"));
 if (bme) {
     if (bme_b[0] + 0.4 + 2 * rib > col_w - 2 * wall) echo("WARNING: weather sensor slot wider than the leg");
     if (bme_z0 + bme_b[1] + 0.3 + rib > leg_rows[3] - lid_boss_d / 2 - 0.3) echo("WARNING: weather sensor runs into the fourth leg screw row");

@@ -54,7 +54,6 @@ def test_plat_mech_pivot_001_teardrop_bores_sized_from_tube_test3(model):
     assert warnings == []
 
 
-@pytest.mark.xfail(strict=False, reason='model change pending (PLAT-MECH-SDSLOT-001)')
 @pytest.mark.req('TECH-MECH-MOUNT-001')
 def test_tech_mech_mount_001_flat_boards_side_play_within_1_mm(model):
     # Given the model with its side play assert over every flat board
@@ -68,7 +67,6 @@ def test_tech_mech_mount_001_flat_boards_side_play_within_1_mm(model):
     assert warnings == []
 
 
-@pytest.mark.xfail(strict=False, reason='model change pending (PLAT-MECH-SDSLOT-001)')
 @pytest.mark.req('PLAT-MECH-SDSLOT-001')
 def test_plat_mech_sdslot_001_microsd_grooves_0_5_mm_per_side(model):
     # Given the model
