@@ -123,6 +123,15 @@ EOF
     printf 'include <%s/mechanical/scad/spit.scad>\nintersection() { union() { color([0.6, 0.6, 0.6]) column(0); dummies(0); } translate([-5, -5, -1]) cube([45, 45, shelf_z - shelf_t - 0.5]); }\n' "$ROOT" > "$TMP/heel_open.scad"
     openscad -D 'part="none"' -o renders/spit_heel_back.png --imgsize=1200,900 --camera=-35,85,30,10,26,9 --colorscheme=Tomorrow "$TMP/heel.scad" 2>>"$TMP/renders.err"
     openscad -D 'part="none"' -o renders/spit_heel_open.png --imgsize=1200,1000 --camera=45,85,45,8,18,7 --colorscheme=Tomorrow "$TMP/heel_open.scad" 2>>"$TMP/renders.err"
+    # the 4 lids in place, columns removed, seen from the front and above: their inner faces (tabs, guides, microSD slot,
+    # charge port notch, vents), left leg on the left
+    printf 'include <%s/mechanical/scad/spit.scad>
+for (i = [0:3]) translate([col_x[i], 0, 0]) {
+    color([0.72, 0.72, 0.70]) if (col_mid[i]) lid(true, spk = i == 2); else lid(false, i == sd_col);
+    color("black") translate([col_w / 2, lid_y, -12]) rotate([90, 0, 0]) linear_extrude(0.2) text(["left leg", "left mid", "right mid", "right leg"][i], size = 4.5, halign = "center", font = "Liberation Sans:style=Bold");
+}
+' "$ROOT" > "$TMP/lids.scad"
+    openscad -D 'part="none"' -o renders/spit_lids_inside.png --imgsize=1100,1600 --camera=62,0,124,68,0,18,0 --viewall --autocenter --colorscheme=Tomorrow "$TMP/lids.scad" 2>>"$TMP/renders.err"
     # inside of a middle column, lid removed
     echo "color([0.78,0.78,0.76]) import(\"$TMP/col1.stl\");" > "$TMP/inside.scad"
     openscad -o renders/spit_mid_column_inside.png --imgsize=800,1400 --camera=14,200,114,14,14,114 --viewall --colorscheme=Tomorrow "$TMP/inside.scad" 2>>"$TMP/renders.err"
