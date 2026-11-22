@@ -2,7 +2,8 @@
 
 usage: python3 -I scripts/orca_profile.py machine|process|filament "<preset name>" out.json
 
-Presets are looked up in ~/.config/OrcaSlicer/user/default/<kind>/ then system/*/<kind>/ (recursive), and their
+Presets are looked up in <config>/user/default/<kind>/ then <config>/system/*/<kind>/ and, on Windows, the install's
+resources/profiles/*/<kind>/ (recursive); <config> is ~/.config/OrcaSlicer on Linux, %APPDATA%/OrcaSlicer on Windows. Their
 "inherits" chain is merged parent first. The CLI does not resolve the chain itself (it looks for the parent in the
 wrong vendor folder), so the result carries every key.
 """
@@ -11,11 +12,16 @@ import json
 import os
 import sys
 
-ROOT = os.path.expanduser("~/.config/OrcaSlicer")   # Linux only (the orca stage runs the Linux AppImage)
+if os.name == "nt":
+    ROOT = os.path.join(os.environ.get("APPDATA", ""), "OrcaSlicer")
+    SYSTEM = [os.path.join(os.environ.get("ProgramFiles", r"C:\Program Files"), "OrcaSlicer", "resources", "profiles")]
+else:
+    ROOT = os.path.expanduser("~/.config/OrcaSlicer")
+    SYSTEM = []
 
 
 def find(kind, name):
-    pats = [f"{ROOT}/user/default/{kind}/**/*.json", f"{ROOT}/system/*/{kind}/**/*.json"]
+    pats = [f"{ROOT}/user/default/{kind}/**/*.json", f"{ROOT}/system/*/{kind}/**/*.json"] + [f"{d}/*/{kind}/**/*.json" for d in SYSTEM]
     for pat in pats:
         for f in glob.glob(pat, recursive=True):
             if os.path.basename(f)[:-5] == name:
