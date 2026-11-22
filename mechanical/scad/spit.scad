@@ -190,7 +190,7 @@ charger_lip = 0.5;            // lower ledges under the board's side edges (no u
 // Charge port at the heel (PLAT-MECH-CHARGEPORT-001): the breakout stands against the outer side wall (x = 0), solder
 // side towards it, receptacle at its back end facing the lid; its back edge rests against the lid (pull-out stop), a
 // front stop in two tabs takes the plug's push; the receptacle goes through a notch at the bottom of the lid.
-usbb = [14.3, 16, 1.5];       // micro-USB breakout: width (z), length (y), PCB (measured)
+usbb = [14.3, 14.85, 1.5];    // micro-USB breakout: width (z), length (y), PCB (measured; length 14.85 re-measured 2026-11-22)
 usbb_rec = [7.85, 2.47];      // receptacle shell: width (z, centred on the PCB width), height above the PCB (x) (measured)
 usbb_out = 1.1;               // receptacle mouth past the PCB's back edge (measured ~1.1; mouth <= 1 mm inside the back face)
 usbb_z0 = wall + 1.5;         // bottom edge, above the rear foot pad (1.2)
