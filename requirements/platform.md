@@ -242,3 +242,15 @@ derives_from: [FUNC-POWER-CHARGE-001](functional.md#func-power-charge-001)
 derives_from: [FUNC-MECH-JOINT-001](functional.md#func-mech-joint-001)
 
 **Description:** Each column joint turns on a brass tube (7.93 measured outer Ø), glued into one column and turning in the next. The pivot bores are horizontal when the columns print front face down, so they are teardrop-shaped (point toward the print top, self-supporting 45° ceiling, no support inside the bore). Drawn Ø: glued side 8.00 (tube held, no play), turning side 8.05 (turns, micro play only), from tube_test3 (2026-10-28, IBoss PLA Silk, 0.20 mm Ender3 profile). Tight beats loose: a bore that binds is sanded or reamed with an 8 mm drill. Acceptance: `make check` clean (no WARNING); `tube_od` = 7.93, `tube_glue_clr` = 0.07, `tube_run_clr` = 0.12; `pivot_cut` uses `xtear`; first printed joint: glued side holds, turning side turns without wobble.
+
+### PLAT-MECH-SDSLOT-001
+
+**Title:** microSD breakout held sideways by its grooves, 0.5 mm per side
+
+**Status:** validated
+
+**Dependencies:** none
+
+derives_from: [TECH-MECH-MOUNT-001](technical.md#tech-mech-mount-001)
+
+**Description:** The grooves of the microSD board stop `sd_side_clr` = 0.5 mm from each side edge of the board (print test 2026-11-21: 4 mm of the former 4.5 mm per side can be filled): the side blocks are solid from the side walls up to there. `flat_slot` takes an optional side clearance: given, the groove bottom sits at the board edge minus it, cut into the walls for a board wider than the interior (buck-boost, `bk_clr`); not given, the grooves still run to the side walls (TP4056 0.9 mm and power-path 0.6 mm total play, both printed and within 1 mm). Acceptance: pytest: model clean, with the side play assert of [TECH-MECH-MOUNT-001](technical.md#tech-mech-mount-001), and the microSD side play = 2 × `sd_side_clr`; print: the board slides in without forcing, total side play ≤ 1 mm.

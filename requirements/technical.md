@@ -182,3 +182,13 @@
 **Dependencies:** none
 
 **Description:** Each hand-wired board described in `tools/boards.py` (P1, P2, the S3 carrier P3, the power-path board P4) is laid out to minimise its assembly effort, counted by `tools/boards.py` as a score: 1 per solder bridge between two neighbouring holes, 1 per strip cut, 2 per insulated jumper, 2 per bare bus or bare link. The board may be enlarged up to the room the model leaves for it (`hub_b`, `pp_b` within their columns; the carrier stays the size of the S3); the parts, nets, harness wires and their colours do not change, and every existing check of `tools/boards.py` keeps passing (net connectivity, no shared hole, power-net isolation on the pad boards, schematic cross-check, keep-out holes). Acceptance (pytest): each board passes its checks, and no single move of one part or one wire end to a free hole, on a board of the same size, lowers its score; the score of each board is no higher than before this requirement.
+
+### TECH-MECH-MOUNT-001
+
+**Title:** Boards lying flat in a leg are located by their grooves
+
+**Status:** validated
+
+**Dependencies:** none
+
+**Description:** Each board lying flat in a leg (`flat_slot`: microSD reader, TP4056, power-path board, buck-boost) slides into its grooves from the lid side and is then located without glue: total side play (x) ≤ 1 mm, front edge against the solid stop in front of its grooves, held in z by its grooves or by a lid tab. Acceptance (pytest): the model computes the side play of each flat board and prints no WARNING (play > 1 mm warns); print: each board slides in without forcing and does not move sideways by more than 1 mm.

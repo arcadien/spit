@@ -52,3 +52,30 @@ def test_plat_mech_pivot_001_teardrop_bores_sized_from_tube_test3(model):
     assert 'xtear(' in body and 'cylinder(' not in body
     # And the model is clean
     assert warnings == []
+
+
+@pytest.mark.xfail(strict=False, reason='model change pending (PLAT-MECH-SDSLOT-001)')
+@pytest.mark.req('TECH-MECH-MOUNT-001')
+def test_tech_mech_mount_001_flat_boards_side_play_within_1_mm(model):
+    # Given the model with its side play assert over every flat board
+    src = source()
+    assert 'function flat_play(b, clr)' in src
+    for board in ('microSD', 'TP4056', 'power-path', 'buck-boost'):
+        assert f'["{board}", ' in src
+    # When it is evaluated
+    _, warnings = model
+    # Then no board has more than 1 mm of side play (no WARNING at all)
+    assert warnings == []
+
+
+@pytest.mark.xfail(strict=False, reason='model change pending (PLAT-MECH-SDSLOT-001)')
+@pytest.mark.req('PLAT-MECH-SDSLOT-001')
+def test_plat_mech_sdslot_001_microsd_grooves_0_5_mm_per_side(model):
+    # Given the model
+    src = source()
+    # Then the microSD grooves stop 0.5 mm from each board edge
+    assert re.search(r'^sd_side_clr = 0\.5;', src, re.M)
+    assert 'flat_slot(sd, sd_z0, sd_y0, sd_lip, clr = sd_side_clr)' in src
+    # And the model is clean
+    _, warnings = model
+    assert warnings == []
