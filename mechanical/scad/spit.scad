@@ -384,6 +384,7 @@ leg_angle = [0, 0];           // assembly preview: swing of the left / right leg
 /* [Hardware] */
 rib = 1.6;                    // board slot rails and stops (charge port, amplifier, sensors, spare): 4 lines at 0.4
 pcb_gap = 1.2;                // boards whose solder side faces the wall stand off it on two edge strips (cut pins, pads)
+lid_stop = [5, 2.5];          // leg lid stops at mid-battery: length (z), reach from the side wall (x) = depth of the 45 deg underside (y)
 wire_room = 5;                // free depth wanted behind a board for the wires soldered on it
 stack_gap = 4;                // between two flat boards: components / wires of the lower one, solder tails of the upper
 
@@ -520,6 +521,7 @@ bk_y1 = lid_y - 0.3;                                  // back edge of the buck-b
 charger_z0 = bk_z0 + bk[2] + bk_h + stack_gap + rib;  // TP4056 underside: flat above the buck-boost's components
 charger_groove = max(0, (charger[0] + 0.3 - (col_w - 2 * wall)) / 2); // depth cut into each side wall for its edges
 pp_z0 = seam_z[power_col] + splint_h / 2 + 0.5 + rib; // power-path perfboard underside: just above the splint
+lid_stop_z = bat_z0 + bat[1] / 2;                     // lid stops: mid-height of the cell, halfway between the screw rows 0 and 1
 top_shelf_top = leg_rows[1] - lid_boss_d / 2 + 1;    // top face of the top contact shelf
 fuse_z0 = bat_z0 + bat[1] - 9 - 0.5 - fuse[1];       // polyfuse bottom: just under the top cradle
 
@@ -711,6 +713,7 @@ module column(i) {
                 if (battery && i == power_col) { flat_slot(charger, charger_z0, lid_y - 0.3 - charger[1], charger_lip, top = false); usbb_frame(); }
                 if (sensors && i == rtc_col) board_slot(rtc, rtc_z0, bottom = true, top_gap = plugs ? dp_w(6) + 1 : 0);
                 if (bme && i == bme_col) board_slot(bme_b, bme_z0, bottom = true);
+                if (battery) lid_stops();
             }
             if (feet) for (p = foot_pos) foot_pad(p); // pad behind the recess
             if (ties) for (t = TIES) if (t[0] == i) tie_anchor(t[1], t[2]);
@@ -872,6 +875,11 @@ module usbb_notch() {
 // the solid part in front of the groove is the front stop. Constant section along y: prints as vertical walls.
 module sd_mount() { flat_slot(sd, sd_z0, sd_y0, sd_lip, clr = sd_side_clr); }
 module bk_mount() { flat_slot(bk, bk_z0, bk_y1 - bk[1], bk_lip, top = false, clr = bk_clr); }
+
+// lid stops on both side walls at mid-battery (PLAT-MECH-LIDSTOP-001): top face in the lid's inner plane, the lid edge
+// rests on it; 45 deg underside (no support when the column prints front face down)
+module lid_stops() for (m = [0, 1]) translate([m * col_w, 0, lid_stop_z - lid_stop[0] / 2]) mirror([m, 0, 0])
+    linear_extrude(lid_stop[0]) polygon([[wall - eps, lid_y], [wall + lid_stop[1], lid_y], [wall - eps, lid_y - lid_stop[1] - eps]]);
 
 // board lying flat (b = width x, depth y, thickness), underside at z0, front edge at y0: one block per side wall from
 // the front wall to the lid, with a groove open towards the lid; the solid part in front of the groove is the stop.
@@ -1524,6 +1532,14 @@ if (bme) {
     if (bme_b[0] + 0.4 + 2 * rib > col_w - 2 * wall) echo("WARNING: weather sensor slot wider than the leg");
     if (bme_z0 + bme_b[1] + 0.3 + rib > leg_rows[3] - lid_boss_d / 2 - 0.3) echo("WARNING: weather sensor runs into the fourth leg screw row");
     if (wall + bme_b[2] + wire_room > lid_y) echo("WARNING: no wire room behind the weather sensor");
+}
+// leg lid over the battery bay (TECH-MECH-LID-001): screw rows 0 and 1, the stops halfway
+if (battery) {
+    if (max(lid_stop_z - leg_rows[0], leg_rows[1] - lid_stop_z) > 45) echo("WARNING: leg lid unsupported over more than 45 mm in the battery bay");
+    if (min([for (t = [0:0.1:1]) norm([wall + lid_stop[1] * t - col_w / 2, lid_y - lid_stop[1] * (1 - t) - bat_y])]) - (bat[0] + bat_clr) / 2 < 4)
+        echo("WARNING: lid stops closer than 4 mm to the cell");
+    if (wall + lid_stop[1] < wall + clr + 1) echo("WARNING: lid stops reach less than 1 mm under the lid edge");
+    if (lid_stop_z - lid_stop[0] / 2 < bat_z0 + 4 + 5 || lid_stop_z + lid_stop[0] / 2 > bat_z0 + bat[1] - 9) echo("WARNING: lid stops run into a cell cradle");
 }
 if (pir) {
     if (pir_top) { // cap skirt and breakout in the band; the sleeve may merge into the frame / post

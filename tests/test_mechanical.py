@@ -79,7 +79,6 @@ def test_plat_mech_sdslot_001_microsd_grooves_0_5_mm_per_side(model):
     assert warnings == []
 
 
-@pytest.mark.xfail(strict=False, reason='model change pending (PLAT-MECH-LIDSTOP-001)')
 @pytest.mark.req('TECH-MECH-LID-001')
 def test_tech_mech_lid_001_lid_span_over_battery_bay_within_45_mm(model):
     # Given the model with its assert on the longest unsupported lid span over the battery bay
@@ -90,7 +89,6 @@ def test_tech_mech_lid_001_lid_span_over_battery_bay_within_45_mm(model):
     assert warnings == []
 
 
-@pytest.mark.xfail(strict=False, reason='model change pending (PLAT-MECH-LIDSTOP-001)')
 @pytest.mark.req('PLAT-MECH-LIDSTOP-001')
 def test_plat_mech_lidstop_001_side_stops_at_mid_battery(model):
     # Given the model
