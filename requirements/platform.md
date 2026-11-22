@@ -257,7 +257,7 @@ derives_from: [TECH-MECH-MOUNT-001](technical.md#tech-mech-mount-001)
 
 ### PLAT-MECH-LIDSTOP-001
 
-**Title:** Leg lids rest on two side stops at mid-battery
+**Title:** Lid stops on the column side walls
 
 **Status:** validated
 
@@ -265,4 +265,4 @@ derives_from: [TECH-MECH-MOUNT-001](technical.md#tech-mech-mount-001)
 
 derives_from: [TECH-MECH-LID-001](technical.md#tech-mech-lid-001)
 
-**Description:** In both legs, a stop on each side wall carries the lid at mid-height of the cell (`bat_z0 + bat[1] / 2`), halfway between the lid screw rows that bound the battery bay (77 mm apart): 5 mm long (z), 2.5 mm out from the side wall, its top face in the lid's inner plane (`lid_y`), its underside at 45° (no support when the column prints front face down). The lid's edge rests on ~2.3 mm of each stop. Acceptance: pytest: model clean, with asserts in `spit.scad` (cell ≥ 4 mm from each stop, stop top face at `lid_y`, stop under the lid edge); renders regenerated; print: a thumb press on the lid over the middle of the cell gives no visible flex ([bench sheet](../tests/bench/PLAT-MECH-LIDSTOP-001.md)).
+**Description:** A pair of stops, one on each side wall, carries the lid at each entry `[column, z]` of `lid_stops`: both legs at the thirds of the battery bay (lid screw rows 0–1), the right leg also at the thirds of rows 1–2 (DS3231 zone, nothing else near its lid), the left middle column halfway between the controller's upper lid tab and screw row 1, the right middle column just under the band of the (unloaded) controller lid tabs and halfway from there to row 1. Each stop: 5 mm long (z), 2.5 mm out from the side wall, its top face in the lid's inner plane (`lid_y`), its underside at 45° (no support when the column prints front face down); the lid edge rests on ~2.3 mm of it. Acceptance: pytest: model clean, with asserts in `spit.scad` (cell ≥ 4 mm from the stops, stops clear of the cell cradles, stop under the lid edge) and the lid span check of [TECH-MECH-LID-001](technical.md#tech-mech-lid-001); renders regenerated; print: a thumb press on each lid between its supports gives no visible flex ([bench sheet](../tests/bench/PLAT-MECH-LIDSTOP-001.md)).

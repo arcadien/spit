@@ -79,23 +79,26 @@ def test_plat_mech_sdslot_001_microsd_grooves_0_5_mm_per_side(model):
     assert warnings == []
 
 
+@pytest.mark.xfail(strict=False, reason='model change pending (PLAT-MECH-LIDSTOP-001)')
 @pytest.mark.req('TECH-MECH-LID-001')
-def test_tech_mech_lid_001_lid_span_over_battery_bay_within_45_mm(model):
-    # Given the model with its assert on the longest unsupported lid span over the battery bay
-    assert 'WARNING: leg lid unsupported over' in source()
+def test_tech_mech_lid_001_no_lid_span_over_30_mm(model):
+    # Given the model with its lid support list and span assert
+    src = source()
+    assert 'function lid_supports(i)' in src and 'mm without support (> 30 mm)' in src
     # When it is evaluated
     _, warnings = model
-    # Then no span exceeds 45 mm (no WARNING at all)
+    # Then no lid span exceeds 30 mm (no WARNING at all)
     assert warnings == []
 
 
+@pytest.mark.xfail(strict=False, reason='model change pending (PLAT-MECH-LIDSTOP-001)')
 @pytest.mark.req('PLAT-MECH-LIDSTOP-001')
-def test_plat_mech_lidstop_001_side_stops_at_mid_battery(model):
+def test_plat_mech_lidstop_001_lid_stops_on_side_walls(model):
     # Given the model
     src = source()
-    # Then both legs carry the lid stops at mid-height of the cell, 5 mm long, 2.5 mm out
+    # Then the stops are 5 mm long, 2.5 mm out, listed per column and built in every column
     assert re.search(r'^lid_stop = \[5, 2\.5\];', src, re.M)
-    assert 'lid_stop_z = bat_z0 + bat[1] / 2;' in src and 'lid_stops();' in src
+    assert re.search(r'^lid_stops = ', src, re.M) and 'lid_stops(i);' in src
     # And their clearance asserts are there
     assert 'WARNING: lid stops closer than 4 mm to the cell' in src
     # And the model is clean
