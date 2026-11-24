@@ -5,10 +5,11 @@
 **State:** fixed: 1 (PLAT-POWER-CHARGE-001 points to PLAT-MECH-CHARGEPORT-001 for the port position), 3 (manual
 sheets moved to tests/bench/), 4 (every bench sheet tagged, tag asserted by the sheet test), 9 (`accepted_prefixes` for
 requirements/*.md); excluded: 5
-(AUDIT-META-TESTS-001, meta tests of the RBD process kept); open: 2, 6–8, 10–20.
+(AUDIT-META-TESTS-001, meta tests of the RBD process kept), 6 (AUDIT-PRE-RBD-IMPL-001, design of the initial
+snapshot); open: 2, 7, 8, 10–20.
 
 **Findings:** pushes are refused by the RBD plugin hook while the latest audit has open findings.
 
 **Open questions:** none.
 
-**Next step:** decide fix or exclude for 6, 7, 10, 11, 12.
+**Next step:** decide fix or exclude for 7, 10, 11, 12.

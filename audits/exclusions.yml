@@ -3,3 +3,7 @@ exclusions:
     finding: "test_every_validated_requirement_is_tested_or_excluded and test_every_test_sheet_is_complete_and_names_a_requirement in tests/test_requirements.py have no @pytest.mark.req tag (audit 2026-11-24, finding 5)"
     justification: "Meta tests of the RBD process (requirement coverage, bench sheet structure and tags), not of a product requirement: the rule is the RBD plugin's, a requirement for it would duplicate the process. They are kept because they run on every commit and in CI, where the audit runs on demand."
     date: 2026-11-24
+  - id: AUDIT-PRE-RBD-IMPL-001
+    finding: "PLAT-POWER-CHARGE-001, PLAT-POWER-GATE-001, PLAT-POWER-HOTPLUG-001, PLAT-POWER-REG-002, PLAT-POWER-REG-003, TECH-POWER-CELL-001, TECH-POWER-DIST-001, TECH-POWER-PROTECT-002, TECH-POWER-REG-001, TECH-POWER-GROUND-001: test commits without an implementation commit (audit 2026-11-24, finding 6)"
+    justification: "The design predates RBD: the schematic generator of the initial snapshot b337a5a (2026-10-28, before the RBD init d77f7d7) already holds these parts and nets (SMAJ5 TVS, PS/SYNC to GND, 220 uF on 3V3, Q5, the polyfuses); the requirements and their tests were written afterwards to pin the existing design. PLAT-POWER-CHARGE-001 (J1 drawn in the schematic) was implemented in the published commits c829b75 / 8f59892 under fix(ID):. Not fixable without rewriting published history; new changes use feat/tech(ID):."
+    date: 2026-11-24
