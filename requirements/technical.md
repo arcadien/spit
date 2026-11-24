@@ -11,7 +11,7 @@
 
 **Dependencies:** none
 
-**Description:** The battery is two 18650 lithium-ion cells in parallel (1S2P), connected to one charger and one protection circuit. Two chargers or two protection circuits in parallel are not allowed. Acceptance (pytest on kicad/spit.kicad_sch): exactly one charger/protection module; both cell branches end on the same BAT+ net and the same B− net.
+**Description:** The battery is two 18650 lithium-ion cells in parallel (1S2P), connected to one charger and one protection circuit. Two chargers or two protection circuits in parallel are not allowed.
 
 ### TECH-POWER-CELL-002
 
@@ -21,7 +21,7 @@
 
 **Dependencies:** [TECH-POWER-CELL-001](technical.md#tech-power-cell-001)
 
-**Description:** The two cells are the same model and age, and each is charged on its own to the same voltage within ±0.05 V before they are first connected in parallel. Acceptance (bench record): both cell voltages, measured with a multimeter just before the first insertion, are logged in the bring-up notes and differ by ≤ 0.05 V.
+**Description:** The two cells are the same model and age, and each is charged on its own to the same voltage within ±0.05 V before they are first connected in parallel.
 
 ### TECH-POWER-CHARGE-001
 
@@ -31,7 +31,7 @@
 
 **Dependencies:** [TECH-POWER-CELL-001](technical.md#tech-power-cell-001)
 
-**Description:** The charger charges at constant current and then at constant voltage, with a final voltage of 4.20 V ± 1 % (4.158–4.242 V) at the cell terminals, and stops on its own at the end of the charge. Acceptance (bench): from a half-empty cell, the charge ends with B+ between 4.158 and 4.242 V and the charge current falls to ≤ 10 % of the set current, then stops.
+**Description:** The charger charges at constant current and then at constant voltage, with a final voltage of 4.20 V ± 1 % (4.158–4.242 V) at the cell terminals, and stops on its own at the end of the charge. At the end of the charge the current falls to ≤ 10 % of the set current, then stops.
 
 ### TECH-POWER-PROTECT-001
 
@@ -41,7 +41,7 @@
 
 **Dependencies:** [TECH-POWER-CELL-001](technical.md#tech-power-cell-001)
 
-**Description:** A hardware circuit, independent of the firmware, disconnects the pack on over-discharge (2.4 V ± 0.1 V) and overcurrent. It is a last resort: the firmware cut-off ([FUNC-POWER-CUTOFF-001](functional.md#func-power-cutoff-001)) is at least 0.8 V higher. Overcharge is prevented by the charger's 4.20 V end of charge ([TECH-POWER-CHARGE-001](technical.md#tech-power-charge-001)); the protection's own overcharge cut is a backup that a bench supply in place of the cells cannot show. Acceptance (bench, bench supply in place of the cells): lowering the supply opens the pack output between 2.3 and 2.5 V; with the supply at 3.7 V (current limit 5 A), a 1 Ω load on OUT+ / OUT− (≈ 3.7 A) opens the output within 1 s.
+**Description:** A hardware circuit, independent of the firmware, disconnects the pack on over-discharge (2.4 V ± 0.1 V) and overcurrent. It is a last resort: the firmware cut-off ([FUNC-POWER-CUTOFF-001](functional.md#func-power-cutoff-001)) is at least 0.8 V higher. Overcharge is prevented by the charger's 4.20 V end of charge ([TECH-POWER-CHARGE-001](technical.md#tech-power-charge-001)); the protection's own overcharge cut is a backup that a bench supply in place of the cells cannot show. On overcurrent (≈ 3.7 A, a 1 Ω load at 3.7 V) the output opens within 1 s.
 
 ### TECH-POWER-PROTECT-002
 
@@ -51,7 +51,7 @@
 
 **Dependencies:** [TECH-POWER-CELL-001](technical.md#tech-power-cell-001)
 
-**Description:** The pack protection circuit only guards the pack's negative output, not a short in the cell wires that run through the rotating pivot tubes. So each cell's positive lead carries its own resettable fuse, placed next to the cell's + contact. Acceptance: pytest on the schematic (one polyfuse in series between each cell + and BAT+); visual check that each fuse sits in the cell bay.
+**Description:** The pack protection circuit only guards the pack's negative output, not a short in the cell wires that run through the rotating pivot tubes. So each cell's positive lead carries its own resettable fuse, placed next to the cell's + contact.
 
 ### TECH-POWER-HOTPLUG-001
 
@@ -61,7 +61,7 @@
 
 **Dependencies:** [FUNC-POWER-CHARGE-001](functional.md#func-power-charge-001)
 
-**Description:** Hot-plugging the external supply through the ~16 cm of wire from the charge port must not overshoot the charger's input nor, through D1, the system rail (the amplifier is rated 6 V absolute maximum). Acceptance (bench, scope, 10 hot-plugs of a 5 V ≥ 2 A supply into the charge port, whole robot, switch on): the peak stays ≤ 7.0 V at the charger IN pads and ≤ 6.0 V at the amplifier VIN.
+**Description:** Hot-plugging the external supply through the ~16 cm of wire from the charge port must not overshoot the charger's input nor, through D1, the system rail (the amplifier is rated 6 V absolute maximum). Over 10 hot-plugs of a 5 V ≥ 2 A supply into the charge port, the peak stays ≤ 7.0 V at the charger input and ≤ 6.0 V at the amplifier VIN.
 
 ### TECH-POWER-VBUS-001
 
@@ -71,7 +71,7 @@
 
 **Dependencies:** none
 
-**Description:** A USB host on the controller's programming port powers only the controller, never the system rail or the battery, and flashing works with the power switch on or off. Acceptance (bench): cells out, switch on, no external supply, host on → system rail < 0.1 V; on battery, host off and cable still in → current from the cells into the host's VBUS ≤ 1 mA; flashing succeeds with the switch in both positions. Pending: the ≤ 1 mA back-leak limit is provisional until measured.
+**Description:** A USB host on the controller's programming port powers only the controller, never the system rail or the battery, and flashing works with the power switch on or off. With the cells out and the switch on, a host alone leaves the system rail < 0.1 V; on battery, with the host off and its cable still in, the current from the cells into the host's VBUS is ≤ 1 mA. Pending: the ≤ 1 mA back-leak limit is provisional until measured.
 
 ### TECH-POWER-BACKFEED-001
 
@@ -81,7 +81,7 @@
 
 **Dependencies:** [FUNC-POWER-VSENSE-001](functional.md#func-power-vsense-001)
 
-**Description:** From reset, the amplifier enable, the amplifier's I2S lines and the backlight enable stay low or idle until [FUNC-POWER-VSENSE-001](functional.md#func-power-vsense-001) reports the system rail present. This stops a peripheral on an unpowered rail from being back-powered through its input pins (e.g. switch off, controller on a PC). If the rail disappears they are driven low again within 100 ms. Acceptance (on-target Unity test, rail sense injected or toggled with the switch): pins low with the rail absent; released only with the rail present; low within 100 ms of the rail dropping.
+**Description:** From reset, the amplifier enable, the amplifier's I2S lines and the backlight enable stay low or idle until [FUNC-POWER-VSENSE-001](functional.md#func-power-vsense-001) reports the system rail present. This stops a peripheral on an unpowered rail from being back-powered through its input pins (e.g. switch off, controller on a PC). If the rail disappears they are driven low again within 100 ms.
 
 ### TECH-POWER-GROUND-001
 
@@ -91,7 +91,7 @@
 
 **Dependencies:** [TECH-POWER-PROTECT-001](technical.md#tech-power-protect-001)
 
-**Description:** All power returns meet at one star point on the protected pack output (system GND). No load returns to the raw cell negative (B−), because the protection switches sit between B− and GND. Acceptance: pytest on the schematic (no load ground pin on the B− net); bench: B−, pack OUT−, the regulator GND and the amplifier GND are each < 0.1 Ω from the star point, with the protection switched on.
+**Description:** All power returns meet at one star point on the protected pack output (system GND). No load returns to the raw cell negative (B−), because the protection switches sit between B− and GND. B−, the pack output OUT−, the regulator GND and the amplifier GND are each < 0.1 Ω from the star point, with the protection switched on.
 
 ### TECH-POWER-DIST-001
 
@@ -101,7 +101,7 @@
 
 **Dependencies:** [TECH-POWER-GROUND-001](technical.md#tech-power-ground-001)
 
-**Description:** The 3.3 V regulator and the audio amplifier each get their own system-rail/GND wire pair from the star point, so that amplifier current peaks do not flow through the controller's supply wires. The logic GND leaves from the regulator's GND pad, next to its 3.3 V wire. Acceptance: pytest on the harness wire list (tools/harness.py) and the schematic: two distinct VSYS/GND pairs start at the star; the 3V3 pair starts at the regulator.
+**Description:** The 3.3 V regulator and the audio amplifier each get their own system-rail/GND wire pair from the star point, so that amplifier current peaks do not flow through the controller's supply wires. The logic GND leaves from the regulator's GND pad, next to its 3.3 V wire.
 
 ### TECH-POWER-REG-001
 
@@ -111,7 +111,7 @@
 
 **Dependencies:** none
 
-**Description:** All 3.3 V loads (controller, screens, sensors, storage card) are fed by one regulated rail, made from the system rail by a buck-boost converter that regulates whether the input is above or below 3.3 V (2.5 V cells up to the ~4.7 V of the external supply). No linear regulator is fed from the system rail. Acceptance: pytest on the schematic (every 3V3 load pin is on the +3V3 net; one regulator sourcing it, input on VSYS).
+**Description:** All 3.3 V loads (controller, screens, sensors, storage card) are fed by one regulated rail, made from the system rail by a buck-boost converter that regulates whether the input is above or below 3.3 V (2.5 V cells up to the ~4.7 V of the external supply). No linear regulator is fed from the system rail.
 
 ### TECH-POWER-REG-002
 
@@ -121,7 +121,7 @@
 
 **Dependencies:** [TECH-POWER-REG-001](technical.md#tech-power-reg-001)
 
-**Description:** When a host is plugged into the programming port, the controller's on-board LDO also drives the 3.3 V rail. The main regulator must then not sink current from the rail into the system rail. Acceptance (bench): switch on, on battery, host plugged in with the controller idle: the main regulator's input current stays ≥ 0, and the 3.3 V rail stays within [PERF-POWER-REG-001](performance.md#perf-power-reg-001).
+**Description:** When a host is plugged into the programming port, the controller's on-board LDO also drives the 3.3 V rail. The main regulator must then not sink current from the rail into the system rail. Its input current then stays ≥ 0, and the 3.3 V rail stays within [PERF-POWER-REG-001](performance.md#perf-power-reg-001).
 
 ### TECH-POWER-SLEEP-001
 
@@ -131,7 +131,7 @@
 
 **Dependencies:** none
 
-**Description:** No status LED or free-running clock output that draws current permanently is fed from the battery or from rails fed by the battery. LEDs fed only from the external supply (charger status) are allowed. Acceptance: visual inspection against the bring-up checklist (the resulting deep-sleep current is [PERF-POWER-SLEEP-001](performance.md#perf-power-sleep-001)'s).
+**Description:** No status LED or free-running clock output that draws current permanently is fed from the battery or from rails fed by the battery. LEDs fed only from the external supply (charger status) are allowed.
 
 ### TECH-BUILD-DOCS-001
 
@@ -141,7 +141,7 @@
 
 **Dependencies:** none
 
-**Description:** Values and limits live in the requirements; why each part is there, where it sits and how it is wired live in [design_notes.md](../hardware/design_notes.md) (parts, power and ground, signals and GPIO map, sleep, placement, wiring, colour code, boards, connectors); the bill of materials in [bom.md](../hardware/bom.md); currents in [power_budget.md](../hardware/power_budget.md); measured values in [measurements.md](../hardware/measurements.md); the build workflow and validation stages in [CONTRIBUTING.md](../CONTRIBUTING.md). The README is the entry point: overview, where to find what, printing, assembly, rebuild; other documents link to the owner instead of repeating a value. Documentation commits that only move, merge or correct text under these rules carry this ID. Acceptance (pytest): every relative link of the README resolves to a versioned file; the README has no bill of materials, GPIO table, colour code or connector table; `hardware/bom.md` and `hardware/design_notes.md` hold them.
+**Description:** Values and limits live in the requirements; why each part is there, where it sits and how it is wired live in [design_notes.md](../hardware/design_notes.md) (parts, power and ground, signals and GPIO map, sleep, placement, wiring, colour code, boards, connectors); the bill of materials in [bom.md](../hardware/bom.md); currents in [power_budget.md](../hardware/power_budget.md); measured values in [measurements.md](../hardware/measurements.md); the build workflow and validation stages in [CONTRIBUTING.md](../CONTRIBUTING.md). The README is the entry point: overview, where to find what, printing, assembly, rebuild; other documents link to the owner instead of repeating a value. Documentation commits that only move, merge or correct text under these rules carry this ID. Every relative link of the README resolves to a versioned file.
 
 ### TECH-BUILD-NAME-001
 
@@ -151,7 +151,7 @@
 
 **Dependencies:** none
 
-**Description:** The robot and the project are named **SPIT** ("SPit Is not TARS"): the model is `mechanical/scad/spit.scad`, every generated or versioned file carries the `spit` prefix (`spit_*`), the KiCad symbol library is `spit`, and the documentation calls the robot SPIT; the left middle column is engraved "SPIT" in letters and in braille. TARS from *Interstellar* is named only as the inspiration (README introduction, reference images). Archived reviews and audits keep their original wording. Acceptance (pytest): no versioned path outside `references/`, `reviews/` and `audits/` contains "tars"; the model engraves "SPIT" and its braille cells spell S P I T.
+**Description:** The robot and the project are named **SPIT** ("SPit Is not TARS"): the model is `mechanical/scad/spit.scad`, every generated or versioned file carries the `spit` prefix (`spit_*`), the KiCad symbol library is `spit`, and the documentation calls the robot SPIT; the left middle column is engraved "SPIT" in letters and in braille. TARS from *Interstellar* is named only as the inspiration (README introduction, reference images). Archived reviews and audits keep their original wording. No versioned path outside `references/`, `reviews/` and `audits/` contains "tars".
 
 ### TECH-BUILD-ARTIFACTS-001
 
@@ -161,7 +161,7 @@
 
 **Dependencies:** none
 
-**Description:** The STL parts (`mechanical/stl/`) and the raw plates (`mechanical/3mf/spit_plate*.3mf`) are build outputs of `mechanical/scad/spit.scad`: git ignores them, and they are regenerated on demand before a print (`make check-stl`, `tools/build4.sh 3mf`). The hand-arranged Orca projects (`mechanical/3mf/spit.3mf`, `spit_cr10.3mf`), the renders and the wiring / harness / schematic documents stay versioned. The OpenSCAD version used for the exports is pinned, in [CONTRIBUTING.md](../CONTRIBUTING.md) and in CI. Acceptance: `git ls-files mechanical/stl 'mechanical/3mf/spit_plate*'` is empty and both paths are in `.gitignore`; on a fresh clone, `make check-stl` produces every part listed in `tools/build4.sh` with no OpenSCAD WARNING and every plate on its bed.
+**Description:** The STL parts (`mechanical/stl/`) and the raw plates (`mechanical/3mf/spit_plate*.3mf`) are build outputs of `mechanical/scad/spit.scad`: git ignores them, and they are regenerated on demand before a print (`make check-stl`, `tools/build4.sh 3mf`). The hand-arranged Orca projects (`mechanical/3mf/spit.3mf`, `spit_cr10.3mf`), the renders and the wiring / harness / schematic documents stay versioned. The OpenSCAD version used for the exports is pinned, in [CONTRIBUTING.md](../CONTRIBUTING.md) and in CI. On a fresh clone, `make check-stl` produces every part listed in `tools/build4.sh` with no OpenSCAD WARNING and every plate on its bed.
 
 ### TECH-BUILD-CHECKS-001
 
@@ -171,7 +171,7 @@
 
 **Dependencies:** [TECH-BUILD-ARTIFACTS-001](technical.md#tech-build-artifacts-001)
 
-**Description:** The pre-commit hook runs only checks lasting seconds: model evaluation without export (every model WARNING), board / wiring / harness documents, ERC when the schematic changed. The pre-push hook runs the slow checks: STL export with bed fit (Ender 3 halves, CR-10 one-piece) and renders; it also refreshes the meshes of the Orca projects (`mechanical/3mf/spit.3mf`, `spit_cr10.3mf`) from the STLs when they changed, keeping plates, positions and settings; it refuses the push when a check fails or rewrites a tracked file. A CI job on every push and pull request to main runs the model, STL, ERC and docs checks with the pinned OpenSCAD, and main's branch protection requires it. `make hook` installs the pre-commit, commit-msg and pre-push hooks. Acceptance: pre-commit takes ≤ 30 s when `spit.scad` changed; a model WARNING blocks the commit; a part off its bed blocks the push and fails CI; a push whose STLs differ from the meshes of an Orca project is refused, with the project rewritten to match; a push with up-to-date meshes leaves the projects byte-identical; a pull request with a failing CI job cannot be merged.
+**Description:** The pre-commit hook runs only checks lasting seconds: model evaluation without export (every model WARNING), board / wiring / harness documents, ERC when the schematic changed. The pre-push hook runs the slow checks: STL export with bed fit (Ender 3 halves, CR-10 one-piece) and renders; it also refreshes the meshes of the Orca projects (`mechanical/3mf/spit.3mf`, `spit_cr10.3mf`) from the STLs when they changed, keeping plates, positions and settings; it refuses the push when a check fails or rewrites a tracked file. A CI job on every push and pull request to main runs the model, STL, ERC and docs checks with the pinned OpenSCAD, and main's branch protection requires it. `make hook` installs the pre-commit, commit-msg and pre-push hooks. The pre-commit takes ≤ 30 s when `spit.scad` changed. A model WARNING blocks the commit; a part off its bed blocks the push and fails CI; a push whose STLs differ from the meshes of an Orca project is refused, with the project rewritten to match, while up-to-date meshes leave the projects byte-identical; a pull request with a failing CI job cannot be merged.
 
 ### TECH-HARNESS-BOARDS-001
 
@@ -181,4 +181,4 @@
 
 **Dependencies:** none
 
-**Description:** Each hand-wired board described in `tools/boards.py` (P1, P2, the S3 carrier P3, the power-path board P4) is laid out to minimise its assembly effort, counted by `tools/boards.py` as a score: 1 per solder bridge between two neighbouring holes, 1 per strip cut, 2 per insulated jumper, 2 per bare bus or bare link. The board may be enlarged up to the room the model leaves for it (`hub_b`, `pp_b` within their columns; the carrier stays the size of the S3); the parts, nets, harness wires and their colours do not change, and every existing check of `tools/boards.py` keeps passing (net connectivity, no shared hole, power-net isolation on the pad boards, schematic cross-check, keep-out holes). Acceptance (pytest): each board passes its checks, and no single move of one part or one wire end to a free hole, on a board of the same size, lowers its score; the score of each board is no higher than before this requirement.
+**Description:** Each hand-wired board described in `tools/boards.py` (P1, P2, the S3 carrier P3, the power-path board P4) is laid out to minimise its assembly effort, counted by `tools/boards.py` as a score: 1 per solder bridge between two neighbouring holes, 1 per strip cut, 2 per insulated jumper, 2 per bare bus or bare link. The board may be enlarged up to the room the model leaves for it (`hub_b`, `pp_b` within their columns; the carrier stays the size of the S3); the parts, nets, harness wires and their colours do not change, and every existing check of `tools/boards.py` keeps passing (net connectivity, no shared hole, power-net isolation on the pad boards, schematic cross-check, keep-out holes). Each layout is a local minimum: no single move of one part or one wire end to a free hole, on a board of the same size, lowers its score; and the score of each board is no higher than before this requirement.
