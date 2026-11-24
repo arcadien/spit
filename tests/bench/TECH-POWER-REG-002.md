@@ -1,3 +1,4 @@
+<!-- @req TECH-POWER-REG-002 -->
 # Bench test TECH-POWER-REG-002 — no reverse current into the regulator when the S3 LDO also drives 3V3
 
 Requirement: [TECH-POWER-REG-002](../../requirements/technical.md#tech-power-reg-002). Manual test, run at bring-up step **3.7** ([bring-up.md](bring-up.md)); add a line to *Results* every time it is run.

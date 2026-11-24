@@ -1,3 +1,4 @@
+<!-- @req PLAT-MECH-CHARGEPORT-001 -->
 # Bench test PLAT-MECH-CHARGEPORT-001 — charge port holds in the printed left leg
 
 Requirement: [PLAT-MECH-CHARGEPORT-001](../../requirements/platform.md#plat-mech-chargeport-001). The model part (geometry

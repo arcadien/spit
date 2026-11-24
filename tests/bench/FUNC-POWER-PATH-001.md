@@ -1,3 +1,4 @@
+<!-- @req FUNC-POWER-PATH-001 -->
 # Bench test FUNC-POWER-PATH-001 — on the external supply, the system load does not draw from the battery
 
 Requirement: [FUNC-POWER-PATH-001](../../requirements/functional.md#func-power-path-001). Manual test, run at bring-up step **3.4** ([bring-up.md](bring-up.md)); add a line to *Results* every time it is run.

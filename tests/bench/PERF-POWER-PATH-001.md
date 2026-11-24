@@ -1,3 +1,4 @@
+<!-- @req PERF-POWER-PATH-001 -->
 # Bench test PERF-POWER-PATH-001 — power-path voltage drop
 
 Requirement: [PERF-POWER-PATH-001](../../requirements/performance.md#perf-power-path-001). Manual test, run at bring-up steps **3.2** (drops) and **3.4** (charge current, cells in) ([bring-up.md](bring-up.md)); add a line to *Results* every time it is run.

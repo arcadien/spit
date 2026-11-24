@@ -1,3 +1,4 @@
+<!-- @req PLAT-MECH-PIVOT-001 -->
 # Bench test PLAT-MECH-PIVOT-001 — first printed pivot joint: glued side holds, turning side turns
 
 Requirement: [PLAT-MECH-PIVOT-001](../../requirements/platform.md#plat-mech-pivot-001). The model part (bore sizes,

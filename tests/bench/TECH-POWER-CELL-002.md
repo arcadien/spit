@@ -1,3 +1,4 @@
+<!-- @req TECH-POWER-CELL-002 -->
 # Bench test TECH-POWER-CELL-002 — cells matched before they go in parallel
 
 Requirement: [TECH-POWER-CELL-002](../../requirements/technical.md#tech-power-cell-002). Manual test, run at bring-up step **2** ([bring-up.md](bring-up.md)); add a line to *Results* every time it is run.

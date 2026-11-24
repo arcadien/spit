@@ -1,3 +1,4 @@
+<!-- @req FUNC-POWER-SWITCH-002 -->
 # Bench test FUNC-POWER-SWITCH-002 — charging works the same with the switch off and on
 
 Requirement: [FUNC-POWER-SWITCH-002](../../requirements/functional.md#func-power-switch-002). Manual test, run at bring-up step **3.9** ([bring-up.md](bring-up.md)); add a line to *Results* every time it is run.

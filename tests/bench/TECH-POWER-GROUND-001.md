@@ -1,3 +1,4 @@
+<!-- @req TECH-POWER-GROUND-001 -->
 # Bench test TECH-POWER-GROUND-001 — every power return within 0.1 Ω of the star point
 
 Requirement: [TECH-POWER-GROUND-001](../../requirements/technical.md#tech-power-ground-001). Manual test, run at bring-up step **3.4 (cells in)** ([bring-up.md](bring-up.md)); add a line to *Results* every time it is run. The schematic part (no load ground on B−) is checked by `tests/test_power.py`.

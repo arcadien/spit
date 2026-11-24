@@ -1,3 +1,4 @@
+<!-- @req PERF-POWER-MAINS-001 -->
 # Bench test PERF-POWER-MAINS-001 — supply voltage under the maximum combined load
 
 Requirement: [PERF-POWER-MAINS-001](../../requirements/performance.md#perf-power-mains-001). Manual test, run at bring-up step **3.9** ([bring-up.md](bring-up.md)); add a line to *Results* every time it is run.

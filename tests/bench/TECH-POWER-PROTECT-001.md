@@ -1,3 +1,4 @@
+<!-- @req TECH-POWER-PROTECT-001 -->
 # Bench test TECH-POWER-PROTECT-001 — pack protection opens on over-discharge and overcurrent
 
 Requirement: [TECH-POWER-PROTECT-001](../../requirements/technical.md#tech-power-protect-001). Manual test, run at bring-up step **3.1** ([bring-up.md](bring-up.md)); add a line to *Results* every time it is run.

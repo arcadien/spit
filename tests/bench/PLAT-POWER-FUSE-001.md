@@ -1,3 +1,4 @@
+<!-- @req PLAT-POWER-FUSE-001 -->
 # Bench test PLAT-POWER-FUSE-001 — polyfuses F1 / F2 at each cell's + plate
 
 Requirement: [PLAT-POWER-FUSE-001](../../requirements/platform.md#plat-power-fuse-001). Manual test, run at bring-up step **3.4** ([bring-up.md](bring-up.md)); add a line to *Results* every time it is run.

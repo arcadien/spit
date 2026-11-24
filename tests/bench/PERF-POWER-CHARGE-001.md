@@ -1,3 +1,4 @@
+<!-- @req PERF-POWER-CHARGE-001 -->
 # Bench test PERF-POWER-CHARGE-001 — full charge time
 
 Requirement: [PERF-POWER-CHARGE-001](../../requirements/performance.md#perf-power-charge-001). Manual test, run at bring-up step **3.9** ([bring-up.md](bring-up.md)); add a line to *Results* every time it is run.

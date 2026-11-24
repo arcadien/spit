@@ -1,3 +1,4 @@
+<!-- @req FUNC-POWER-GATE-001 -->
 # Bench test FUNC-POWER-GATE-001 — the card supply is off in reset and when commanded off
 
 Requirement: [FUNC-POWER-GATE-001](../../requirements/functional.md#func-power-gate-001). Manual test, run at bring-up step **3.8** ([bring-up.md](bring-up.md)); add a line to *Results* every time it is run. Step 1 needs no firmware; step 2 needs a firmware that drives SD_EN (GPIO36). The Unity part of the acceptance (signal pins as inputs) is a firmware test.

@@ -1,3 +1,4 @@
+<!-- @req FUNC-MECH-JOINT-001 -->
 # Manual test FUNC-MECH-JOINT-001 — the columns turn on their joints
 
 Requirement: [FUNC-MECH-JOINT-001](../../requirements/functional.md#func-mech-joint-001). Manual test on the first

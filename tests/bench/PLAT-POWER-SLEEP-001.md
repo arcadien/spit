@@ -1,3 +1,4 @@
+<!-- @req PLAT-POWER-SLEEP-001 -->
 # Bench test PLAT-POWER-SLEEP-001 — battery-fed status LEDs removed
 
 Requirement: [PLAT-POWER-SLEEP-001](../../requirements/platform.md#plat-power-sleep-001). Manual test, run at bring-up step **2** ([bring-up.md](bring-up.md)); add a line to *Results* every time it is run.

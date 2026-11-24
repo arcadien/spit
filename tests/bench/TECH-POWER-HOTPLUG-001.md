@@ -1,3 +1,4 @@
+<!-- @req TECH-POWER-HOTPLUG-001 -->
 # Bench test TECH-POWER-HOTPLUG-001 — no overshoot when the supply is hot-plugged
 
 Requirement: [TECH-POWER-HOTPLUG-001](../../requirements/technical.md#tech-power-hotplug-001). Manual test, run at bring-up step **3.9 (whole robot)** ([bring-up.md](bring-up.md)); add a line to *Results* every time it is run.

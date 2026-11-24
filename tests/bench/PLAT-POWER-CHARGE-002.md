@@ -1,3 +1,4 @@
+<!-- @req PLAT-POWER-CHARGE-002 -->
 # Bench test PLAT-POWER-CHARGE-002 — charge current set by R_PROG
 
 Requirement: [PLAT-POWER-CHARGE-002](../../requirements/platform.md#plat-power-charge-002). Manual test, run at bring-up step **2 and 3.1** ([bring-up.md](bring-up.md)); add a line to *Results* every time it is run.

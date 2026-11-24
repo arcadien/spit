@@ -1,3 +1,4 @@
+<!-- @req FUNC-POWER-CHARGE-001 -->
 # Bench test FUNC-POWER-CHARGE-001 — battery charges from the heel port, robot standing
 
 Requirement: [FUNC-POWER-CHARGE-001](../../requirements/functional.md#func-power-charge-001). Manual test, run at bring-up step **3.9** ([bring-up.md](bring-up.md)); add a line to *Results* every time it is run.

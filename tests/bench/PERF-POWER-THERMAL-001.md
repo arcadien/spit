@@ -1,3 +1,4 @@
+<!-- @req PERF-POWER-THERMAL-001 -->
 # Bench test PERF-POWER-THERMAL-001 — leg wall temperature while charging (E-M8)
 
 Requirement: [PERF-POWER-THERMAL-001](../../requirements/performance.md#perf-power-thermal-001). Manual test, run at bring-up step **3.9** ([bring-up.md](bring-up.md)); add a line to *Results* every time it is run.
