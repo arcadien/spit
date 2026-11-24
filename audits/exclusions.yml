@@ -21,5 +21,5 @@ exclusions:
     date: 2026-11-24
   - id: COVERAGE-FIRMWARE-001
     finding: "CONF-POWER-THRESH-001, FUNC-POWER-CUTOFF-001, FUNC-POWER-CUTOFF-002, FUNC-POWER-DETECT-001, FUNC-POWER-DETECT-002, FUNC-POWER-MONITOR-001, FUNC-POWER-MONITOR-002, FUNC-POWER-MONITOR-003, FUNC-POWER-VSENSE-001, PLAT-POWER-SLEEP-002, TECH-POWER-BACKFEED-001: validated, no tagged test (audit 2026-11-24, finding 2)"
-    justification: "Firmware behaviour, verified by Unity tests (native, or on target with the instruments the requirement names). Main holds no S3 firmware yet, so these tests cannot exist yet. Each requirement leaves this list with its first tagged firmware test; the list is empty, and removed, once the firmware is on main."
+    justification: "Firmware behaviour, verified by Unity tests (native, or on target with the instruments the requirement names); main holds no S3 firmware yet. Not a waiver: tests/test_requirements.py only warns for these requirements while software/ has no Unity test, and requires their tests from the first one on."
     date: 2026-11-24
