@@ -1,4 +1,5 @@
-"""Requirement coverage: every validated requirement is checked somewhere, or justified in audits/exclusions.yml.
+"""Requirement coverage: every validated requirement is checked somewhere, or justified in audits/exclusions.yml
+(a coverage exclusion, `id: COVERAGE-…`).
 
 Covered = a pytest test tagged @pytest.mark.req('<ID>'), a manual test sheet tests/bench/<ID>.md (the RBD bench
 sheet path), or a firmware Unity test tagged `// req: <ID>` under software/. A requirement whose acceptance
@@ -46,7 +47,9 @@ def test_every_validated_requirement_is_tested_or_excluded():
               for i in re.findall(rf"@pytest\.mark\.req\('({ID})'\)", read(f))}
     unity = unity_tagged()
     covered = tagged | {os.path.basename(f)[:-3] for f in sheets()} | unity
-    excluded = set(re.findall(ID, read(os.path.join(ROOT, 'audits', 'exclusions.yml'))))
+    # only a coverage exclusion (id: COVERAGE-…) stands for a test; other exclusions only name the requirements they waive
+    entries = read(os.path.join(ROOT, 'audits', 'exclusions.yml')).split('  - id: ')[1:]
+    excluded = {i for e in entries if e.startswith('COVERAGE-') for i in re.findall(ID, e.split('\n', 1)[1])}
     # When the firmware has no test yet, its requirements are pending, not missing; a pytest named in the acceptance
     # is never deferred (it does not need the firmware)
     pending = sorted(i for i, acc in reqs.items() if i not in covered | excluded and not unity
