@@ -11,7 +11,7 @@
 
 **Dependencies:** none
 
-**Description:** The battery thresholds are configuration constants defined in one place: the level band bounds, the cut-off, the no-battery limit, the averaging window, the charge-full detection (peak level and drop from the peak), the empty-lockout release voltage and the lockout re-check interval. Their default values and their justification are in [design_notes.md](../hardware/design_notes.md) (*Battery thresholds*); the values measured on the bench must be settable without touching the logic. Acceptance (native Unity test): the logic reads the constants; overriding one at build time moves the matching boundary.
+**Description:** The battery thresholds are configuration constants defined in one place: the level band bounds, the cut-off, the no-battery limit, the averaging window, the charge-full detection (peak level and drop from the peak), the empty-lockout release voltage and the lockout re-check interval. Their default values and their justification are in [design_notes.md](../hardware/design_notes.md) (*Battery thresholds*); the values measured on the bench must be settable without touching the logic.
 
 ### CONF-POWER-ADCCAL-001
 
@@ -21,4 +21,4 @@
 
 **Dependencies:** none
 
-**Description:** The battery divider ratio (default 2.000) and an offset (default 0 mV) are configuration values, set once after the bench calibration. Pending: the calibration values come from bring-up step 3.7 (not done yet). Acceptance (native Unity test): with a known raw reading, changing the ratio or the offset changes the reported battery voltage by the expected amount.
+**Description:** The battery divider ratio (default 2.000) and an offset (default 0 mV) are configuration values, set once after the bench calibration. Pending: the calibration values come from bring-up step 3.7 (not done yet).
