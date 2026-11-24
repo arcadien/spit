@@ -19,3 +19,7 @@ exclusions:
     finding: "docs/architecture.md does not exist; T5 (Requirement → Component traceability, dependency injection map) and C5 cannot run (audit 2026-11-24, finding 11)"
     justification: "Main holds no firmware yet (software/ has only the Pro Micro PIR bench test): there are no software components or injected dependencies to map. The hardware design (parts, placement, signals, wiring) lives in hardware/design_notes.md, its owner under TECH-BUILD-DOCS-001; an architecture.md listing it again would duplicate it. Temporary: docs/architecture.md is written with the first S3 firmware merged to main, and this exclusion is then removed."
     date: 2026-11-24
+  - id: COVERAGE-FIRMWARE-001
+    finding: "CONF-POWER-THRESH-001, FUNC-POWER-CUTOFF-001, FUNC-POWER-CUTOFF-002, FUNC-POWER-DETECT-001, FUNC-POWER-DETECT-002, FUNC-POWER-MONITOR-001, FUNC-POWER-MONITOR-002, FUNC-POWER-MONITOR-003, FUNC-POWER-VSENSE-001, PLAT-POWER-SLEEP-002, TECH-POWER-BACKFEED-001: validated, no tagged test (audit 2026-11-24, finding 2)"
+    justification: "Firmware behaviour, verified by Unity tests (native, or on target with the instruments the requirement names). Main holds no S3 firmware yet, so these tests cannot exist yet. Each requirement leaves this list with its first tagged firmware test; the list is empty, and removed, once the firmware is on main."
+    date: 2026-11-24
