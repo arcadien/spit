@@ -1,1 +1,5 @@
-exclusions: []
+exclusions:
+  - id: AUDIT-META-TESTS-001
+    finding: "test_every_validated_requirement_is_tested_or_excluded and test_every_test_sheet_is_complete_and_names_a_requirement in tests/test_requirements.py have no @pytest.mark.req tag (audit 2026-11-24, finding 5)"
+    justification: "Meta tests of the RBD process (requirement coverage, bench sheet structure and tags), not of a product requirement: the rule is the RBD plugin's, a requirement for it would duplicate the process. They are kept because they run on every commit and in CI, where the audit runs on demand."
+    date: 2026-11-24
