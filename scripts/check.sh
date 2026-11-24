@@ -86,7 +86,7 @@ inputs() {
         orca) echo mechanical/stl/spit_*.stl mechanical/3mf/spit.3mf mechanical/3mf/spit_cr10.3mf scripts/orca_check.py scripts/orca_profile.py \
                    tools/update_orca_project.py tools/stl2_3mf.py "$ORCA_PRESETS"/machine/*.json "$ORCA_PRESETS"/process/*.json ;;
         erc) echo tools/kicad_sch_gen.py hardware/kicad/lib_src/* hardware/kicad/*.kicad_sch hardware/kicad/*.kicad_sym hardware/kicad/*.kicad_pro hardware/kicad/sym-lib-table \
-                  tests/*.py tests/bench/*.md tests/manual/*.md requirements/*.md audits/exclusions.yml \
+                  tests/*.py tests/bench/*.md requirements/*.md audits/exclusions.yml \
                   mechanical/scad/*.scad tools/boards.py tools/harness.py .gitignore \
                   $(git ls-files -co --exclude-standard 'software/*.c' 'software/*.cpp' 'software/*.h') ;;   # Unity req tags
         renders) echo mechanical/scad/*.scad tools/build4.sh scripts/check_renders.py ;;

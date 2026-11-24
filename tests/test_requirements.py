@@ -1,7 +1,7 @@
 """Requirement coverage: every validated requirement is checked somewhere, or justified in audits/exclusions.yml.
 
-Covered = a pytest test tagged @pytest.mark.req('<ID>'), a manual test sheet tests/bench/<ID>.md or
-tests/manual/<ID>.md, or a firmware Unity test tagged `// req: <ID>` under software/. A requirement whose acceptance
+Covered = a pytest test tagged @pytest.mark.req('<ID>'), a manual test sheet tests/bench/<ID>.md (the RBD bench
+sheet path), or a firmware Unity test tagged `// req: <ID>` under software/. A requirement whose acceptance
 needs the firmware (Unity, on-target) is only reported (warning) while no firmware test exists yet; it becomes
 mandatory with the first one. A pytest named in the acceptance is required at once. A manual sheet that was never run (no result line) is reported too.
 """
@@ -30,8 +30,7 @@ def requirements():
 
 
 def sheets():
-    return glob.glob(os.path.join(ROOT, 'tests', 'bench', '*-*-*-*.md')) + \
-        glob.glob(os.path.join(ROOT, 'tests', 'manual', '*-*-*-*.md'))
+    return glob.glob(os.path.join(ROOT, 'tests', 'bench', '*-*-*-*.md'))
 
 
 def unity_tagged():
