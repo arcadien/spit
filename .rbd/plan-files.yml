@@ -8,3 +8,6 @@ plan_files:
   - requirements/configuration.md
   - requirements/platform.md
   - audits/exclusions.yml
+# a requirement file changes through req(ID): commits (RBD: draft → validated with the user), as well as plan:
+accepted_prefixes:
+  requirements/*.md: [req]
