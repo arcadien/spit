@@ -11,3 +11,7 @@ exclusions:
     finding: "TECH-BUILD-DOCS-001, TECH-BUILD-NAME-001, TECH-HARNESS-BOARDS-001, CONF-POWER-THRESH-001, FUNC-POWER-MONITOR-003: implementation commits without a test(ID): commit (audit 2026-11-24, finding 7)"
     justification: "TECH-BUILD-DOCS-001, TECH-BUILD-NAME-001 and TECH-HARNESS-BOARDS-001 have tagged pytests, committed in their published req(ID): commits (6353de8, cc89181, 757b539) instead of a test(ID): commit. The conf / feat commits of CONF-POWER-THRESH-001 (438b5d3) and FUNC-POWER-MONITOR-003 (d7cc4b5) only document the thresholds in design_notes.md; their tests are firmware tests, still pending and tracked by the coverage check (finding 2). Not fixable without rewriting published history."
     date: 2026-11-24
+  - id: AUDIT-REQ-FILE-COMMITS-001
+    finding: "Commits 9580f04 (docs:), 2cf9af2 (refactor:), ef88d4b (feat(ID):) and cc1ba2b (test(ID):) changed requirements/*.md without a req: or plan: commit (audit 2026-11-24, finding 10)"
+    justification: "Published history. 9580f04 only adds the blank lines between fields, 2cf9af2 only follows the folder split in the paths, ef88d4b only follows the SPIT rename in file names. cc1ba2b changes the content of one requirement: the BME280 board leaves the list of boards whose LED is removed, since it has none; a factual correction, kept, that should have been a req(ID): commit. A requirement file now changes only through req(ID): or plan: commits (.rbd/plan-files.yml accepted_prefixes)."
+    date: 2026-11-24
