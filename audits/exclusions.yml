@@ -15,3 +15,7 @@ exclusions:
     finding: "Commits 9580f04 (docs:), 2cf9af2 (refactor:), ef88d4b (feat(ID):) and cc1ba2b (test(ID):) changed requirements/*.md without a req: or plan: commit (audit 2026-11-24, finding 10)"
     justification: "Published history. 9580f04 only adds the blank lines between fields, 2cf9af2 only follows the folder split in the paths, ef88d4b only follows the SPIT rename in file names. cc1ba2b changes the content of one requirement: the BME280 board leaves the list of boards whose LED is removed, since it has none; a factual correction, kept, that should have been a req(ID): commit. A requirement file now changes only through req(ID): or plan: commits (.rbd/plan-files.yml accepted_prefixes)."
     date: 2026-11-24
+  - id: AUDIT-NO-ARCHITECTURE-001
+    finding: "docs/architecture.md does not exist; T5 (Requirement → Component traceability, dependency injection map) and C5 cannot run (audit 2026-11-24, finding 11)"
+    justification: "Main holds no firmware yet (software/ has only the Pro Micro PIR bench test): there are no software components or injected dependencies to map. The hardware design (parts, placement, signals, wiring) lives in hardware/design_notes.md, its owner under TECH-BUILD-DOCS-001; an architecture.md listing it again would duplicate it. Temporary: docs/architecture.md is written with the first S3 firmware merged to main, and this exclusion is then removed."
+    date: 2026-11-24

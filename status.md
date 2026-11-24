@@ -7,10 +7,11 @@ sheets moved to tests/bench/), 4 (every bench sheet tagged, tag asserted by the 
 requirements/*.md); excluded: 5
 (AUDIT-META-TESTS-001, meta tests of the RBD process kept), 6 (AUDIT-PRE-RBD-IMPL-001, design of the initial
 snapshot), 7 (AUDIT-NO-TEST-COMMIT-001, tests inside req commits), 10 (AUDIT-REQ-FILE-COMMITS-001, published
-format / path commits); open: 2, 8, 11–20.
+format / path commits), 11 (AUDIT-NO-ARCHITECTURE-001, no firmware on main yet:
+temporary); open: 2, 8, 12–20.
 
 **Findings:** pushes are refused by the RBD plugin hook while the latest audit has open findings.
 
 **Open questions:** none.
 
-**Next step:** decide fix or exclude for 11, 12.
+**Next step:** decide fix or exclude for 12.
