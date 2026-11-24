@@ -13,7 +13,7 @@
 
 derives_from: [FUNC-POWER-CHARGE-001](functional.md#func-power-charge-001)
 
-**Description:** The charger is one protected TP4056 module (U1, with DW01) lying flat in the left leg. Its own micro-USB is desoldered. A micro-USB breakout in the left foot, its receptacle facing backwards through an opening at the bottom of the leg's lid, feeds its IN+ / IN− pads (net VUSB). Acceptance: pytest on the schematic (the breakout's VBUS/GND are on U1 IN+/IN−; U1 OUT+ is the only charger output); bench: plugging into the breakout charges the cells.
+**Description:** The charger is one protected TP4056 module (U1, with DW01) lying flat in the left leg. Its own micro-USB is desoldered. A micro-USB breakout in the left foot (position: [PLAT-MECH-CHARGEPORT-001](#plat-mech-chargeport-001)) feeds its IN+ / IN− pads (net VUSB). Acceptance: pytest on the schematic (the breakout's VBUS/GND are on U1 IN+/IN−; U1 OUT+ is the only charger output); bench: plugging into the breakout charges the cells.
 
 ### PLAT-POWER-CHARGE-002
 
