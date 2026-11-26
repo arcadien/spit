@@ -29,6 +29,5 @@ order in `tests/bench/bring-up.md`, currents in `hardware/power_budget.md`).
 | E-M3 | D1 leakage when warm | — |
 | E-M4 | AM312 high level | — |
 | E-M5 | DW01 wake-up | — |
-| E-M6 | SW1 rating (marking, ≥ 2 A) | PLAT-POWER-SWITCH-001, branch `mech-audio` |
 | E-M7 | Sleep current with and without the microSD card | — |
 | AU1 | Firmware volume cap: VSYS ≥ 3.0 V at the amplifier with the pack at 3.30 V | PERF-AUDIO-PEAK-001, branch `mech-audio` |

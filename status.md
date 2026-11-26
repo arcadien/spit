@@ -1,19 +1,19 @@
-# Branch mech-lid-stop
+# Branch mech-switch-3a
 
-## Goal
-Print feedback on the left leg (CR-10, 2026-11-21): the lid flexes over the battery bay; the microSD breakout floats
-sideways in its grooves; the charge port breakout stops ~1 mm short of the lid.
+**Goal:** fit the new 3 A slide switch SW1 (TRU Components TC-R13-603C-05, received 2026-11-26) in the left leg floor
+([PLAT-MECH-SWITCH-001](requirements/platform.md#plat-mech-switch-001)). The old mini switch body (12.95 × 6.9) is
+replaced; the new one has a 19.5 mm mounting plate with two ears, which ran into the charge port when centred.
 
-## State
-- TECH-MECH-LID-001 / PLAT-MECH-LIDSTOP-001 validated and done: 13 lid stops on the column side walls (all four
-  columns, around the splint zones); no lid span over 30 mm (longest 29.7, between existing screw rows).
-- TECH-MECH-MOUNT-001 / PLAT-MECH-SDSLOT-001 validated and done: microSD grooves 0.5 mm per side (`sd_side_clr`).
-- PLAT-MECH-CHARGEPORT-001 fix: breakout length re-measured 14.85 (was 16), PCB back against the lid again.
-- Renders added: `renders/spit_lids_inside.png` (4 lids, inner faces), `renders/spit_sd_grooves.png`.
+**State:** model done: plate seated in a 0.6 mm pocket of its outline on a pad (pins dropped: less dependent on hole accuracy; no screws: a
+screwdriver cannot reach them under the bottom contact shelf), switch 3 mm off-centre towards the right wall (pocket to
+charge port ~1 mm, merged into the right wall), lever 0.5 mm recessed in a 6.8 × 4.5 floor slot. Rating 3 A 125 V recorded
+(E-M6 closed).
+Cell contact plates re-measured (flat 13 × 11, 3 × 7.5 tab) and located without glue by front stops and side rails
+([PLAT-MECH-CONTACT-001](requirements/platform.md#plat-mech-contact-001)), both legs.
 
-## Open questions
-- None.
+**Open on this branch:** PLAT-POWER-SWITCH-001 stays draft: only its 1 A
+temperature-rise bench check remains.
 
-## Next step
-Push (pre-push: STL, renders, Orca meshes), print a leg and its lid, run the bench sheets PLAT-MECH-LIDSTOP-001 and
-PLAT-MECH-SDSLOT-001, then merge.
+**Next step:** push (renders, meshes), print the left leg bottom, run
+[tests/bench/PLAT-MECH-SWITCH-001.md](tests/bench/PLAT-MECH-SWITCH-001.md) and
+[tests/bench/PLAT-MECH-CONTACT-001.md](tests/bench/PLAT-MECH-CONTACT-001.md), merge. Remove this file before the merge.

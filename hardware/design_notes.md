@@ -204,8 +204,9 @@ USB end.
   z 22–24.5 → − plate (1.2) + spring (Ø5, 10.7 free, ~4 working, 2.85 solid) → cell 29.7–94.7 → + plate (bump 0.6, 1.8 overall) →
   top shelf 96.5–100.5. Both shelves span the whole interior, merged with the walls and the lid screw posts; wires pass
   through a 13 × 7.9 slot at the front centre. Polarity marks ("+" top, "−" bottom) on the shelves' back faces.
-- Plates (13 × 18): solder the wire on the tab first, then slide the plate in from the back **tab first** (the tab ends
-  over the slot), wire fed through the slot; a dab of glue holds them while the cell is out. Insert the cell − end
+- Plates (flat 13 × 11, 3 × 7.5 tab): solder the wire on the tab first, then, the leg lying on its front with the lid
+  off, slide the plate in from the back **tab first** between its side rails until it drops against its two front
+  stops (the tab ends 3 mm over the slot), wire fed through the slot; **no glue**: the cell then clamps both plates. Insert the cell − end
   first, pushing the spring down (solid at 2.85: the cell top clears the + bump by ~0.5 mm), then tilt in.
 - The two cells are wired **in parallel** behind **one protected TP4056** (DW01) in the left leg (`power_col = 0`).
   Never two TP4056 in parallel (two chargers and two DW01 fighting).

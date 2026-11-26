@@ -85,7 +85,7 @@ derives_from: [FUNC-POWER-PATH-001](functional.md#func-power-path-001)
 
 derives_from: [FUNC-POWER-SWITCH-001](functional.md#func-power-switch-001)
 
-**Description:** SW1, a mini slide switch in the floor of the left leg, sits after the power-path merge (VPATH) and before VSYS. Its contacts are rated ≥ 1 A. Acceptance: pytest on the schematic (SW1 between VPATH and VSYS); bench: datasheet or marking ≥ 1 A; a temperature rise of ≤ 10 °C after 10 min at 1 A (3.9 Ω 5 W load). Pending: E-M6 (the actual rating of SW1) not checked yet.
+**Description:** SW1, a mini slide switch in the floor of the left leg, sits after the power-path merge (VPATH) and before VSYS. Its contacts are rated ≥ 1 A. Acceptance: pytest on the schematic (SW1 between VPATH and VSYS); bench: datasheet or marking ≥ 1 A; a temperature rise of ≤ 10 °C after 10 min at 1 A (3.9 Ω 5 W load). SW1 is rated 3 A 125 V (marking, see [measurements.md](../hardware/measurements.md)); pending: the temperature-rise bench check.
 
 ### PLAT-POWER-REG-001
 
@@ -230,6 +230,30 @@ derives_from: [TECH-POWER-SLEEP-001](technical.md#tech-power-sleep-001)
 derives_from: [FUNC-POWER-CHARGE-001](functional.md#func-power-charge-001)
 
 **Description:** The micro-USB breakout stands against the outer side wall of the left foot, its receptacle axis horizontal along y. The receptacle mouth is at most 1 mm inside the back face, and its centre is ≥ 6 mm above the floor, so a plug overmold up to 11.6 × 8 mm clears both the table and the leg edges. The breakout is held so that the plug's insertion force (≤ 35 N, micro-USB spec) does not move it, and the lid can still be removed without unsoldering anything. The floor opening of the former port is closed. Acceptance: `make check` clean (geometry asserts in `spit.scad` for the axis, mouth depth, height and clearances); print: a plug inserted and removed 10 times, with the breakout staying in place.
+
+### PLAT-MECH-SWITCH-001
+
+**Title:** Power switch seated in a pocket of a floor pad of the left leg
+
+**Status:** validated
+
+**Dependencies:** [PLAT-MECH-CHARGEPORT-001](platform.md#plat-mech-chargeport-001)
+
+derives_from: [FUNC-POWER-SWITCH-001](functional.md#func-power-switch-001)
+
+**Description:** SW1 (slide switch, 3 A 125 V; body 9.75 × 8.17, lever 3.96 × 3.75 with 2.2 mm of travel, mounting plate 19.5 × 8 × 0.42, see [measurements.md](../hardware/measurements.md)) rests, plate flat, in a 0.6 mm deep pocket that follows its plate outline with 0.15 mm of play, on a pad of the left leg floor. The pocket locates it in x and y, without pins or screws, and takes the lever force; a drop of glue only keeps it from lifting. It is moved 3 mm towards the right side wall so that the pocket clears the charge port. The lever points down into a floor slot, its tip 0.5 mm above the underside: nothing sticks out under SPIT, it is flipped with a pen tip. Acceptance: pytest on the model (measured switch parameters, pocket and offset; model clean, including its asserts "switch pad runs into the charge port or the lid" and "switch pins run into the bottom contact shelf"); bench: the plate goes into the pocket without forcing and without visible play, the lever slides freely over its whole travel, on and off are reached with a pen tip, and the switch stays in place after a drop of glue.
+
+### PLAT-MECH-CONTACT-001
+
+**Title:** Cell contact plates located on their shelves without glue
+
+**Status:** validated
+
+**Dependencies:** [PLAT-MECH-SWITCH-001](platform.md#plat-mech-switch-001)
+
+derives_from: [TECH-POWER-CELL-001](technical.md#tech-power-cell-001)
+
+**Description:** Each cell contact plate (flat part 13 × 11 × 1.2, centred 3 × 7.5 solder tab, 18.5 overall; see [measurements.md](../hardware/measurements.md)) is located on its shelf without glue: its flat part centred under the cell axis, two stops at its front corners on either side of the tab, two side rails open towards the lid, 0.2 mm of play per side. The guides are 1.0 mm high, below the plate face, so the cell cannot touch them. Their faces towards the front are 45° ramps: no support when the column prints front face down. The tab ends 3 mm over the wire slot. The cell, shelf and lid screw positions do not change. Acceptance: pytest on the model (measured plate parameters; asserts "contact guides higher than the plate" and "contact stops run into the tab"; model clean); bench: with the leg lying on its front and the lid off, a plate slid in from the back drops against its stops by itself; with the cell in, both plates stay in place, lid closed, without glue.
 
 ### PLAT-MECH-PIVOT-001
 

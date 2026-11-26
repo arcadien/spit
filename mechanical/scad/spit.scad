@@ -194,11 +194,14 @@ usbb = [14.3, 14.85, 1.5];    // micro-USB breakout: width (z), length (y), PCB 
 usbb_rec = [7.85, 2.47];      // receptacle shell: width (z, centred on the PCB width), height above the PCB (x) (measured)
 usbb_out = 1.1;               // receptacle mouth past the PCB's back edge (measured ~1.1; mouth <= 1 mm inside the back face)
 usbb_z0 = wall + 1.5;         // bottom edge, above the rear foot pad (1.2)
-foot_room = 22;               // under the bottom contact shelf: switch (lever tip to pins 18.9) + its wires, breakout
+foot_room = 22;               // under the bottom contact shelf: switch (lever tip to pins 12.8) + its wires, breakout
 // Bare cells: spring contact plates at both ends (never solder on the cell). Each plate lies on / under a shelf,
 // slid in from the back, solder tab first (towards the front, over the wire slot: wire soldered on the tab beforehand
-// and fed through the slot), held by a dab of glue; the spring pushes them onto the shelves.
-contact = [13, 18, 1.2];      // contact plate width (x), length (y), thickness
+// and fed through the slot), located by low guides without glue (front stops + side rails); the spring pushes them
+// onto the shelves.
+contact = [13, 11, 1.2];      // contact plate flat part: width (x), length (y), thickness (measured 2026-11-26)
+contact_tab = [3, 7.5];       // solder tab, centred on the front edge: width, length (18.5 overall, measured)
+cg = [1, 0.2, 1];             // contact guides: wall, play per side, height (below the plate face: the cell never reaches them)
 contact_bump = 0.6;           // + plate: bump towards the cell (1.8 overall)
 spring_work = 4;              // - plate spring length with the cell in (free length 10.7, solid 2.85 measured)
 cradle_groove = [3, 6];       // vertical wire groove in each cell cradle, from the cell towards the front wall (width, depth)
@@ -342,17 +345,21 @@ amp_z0 = seam_z[1] + splint_h / 2 + 0.5;                           // just above
 
 /* [Switch and feet] */
 // Slide switch in the power leg floor (next to the charge port), lever pointing down into a floor slot and recessed:
-// nothing sticks out under SPIT, it is flipped with a pen tip. Body glued in a low frame on a raised pad.
+// nothing sticks out under SPIT, it is flipped with a pen tip. Its mounting plate lies flat in a shallow pocket of its
+// outline on a raised pad (3 A TRU Components TC-R13-603C-05, measured 2026-11-26); a drop of glue keeps it down.
 switch_on = true;
-sw_body = [12.95, 6.9];       // mini slide switch body (x, y), measured
-sw_lever_h = 5.15;            // lever height out of the body, measured
-sw_h = 18.39;                 // lever tip to pin tips, measured
-sw_lever = [4, 4];            // lever cross-section (x, y): 3.88 measured, 4 to slide freely (tried in print)
-sw_travel = 6;                // lever travel along x, measured
+sw_body = [9.75, 8.17];       // switch body under its plate (x, y), measured
+sw_plate = [19.5, 8, 0.42];   // mounting plate with its two ears (x, y, thickness), measured
+sw_pocket = [0.6, 0.15];      // plate pocket: depth, play per side (wall 1 mm)
+sw_lever_h = 3.4;             // lever height out of the plate (datasheet)
+sw_h = sw_lever_h + sw_plate[2] + 5.8 + 3.2; // lever tip to pin tips: plate, body 5.8, pins 3.2 (datasheet)
+sw_lever = [4, 3.9];          // lever cross-section (x, y): 3.96 x 3.75 measured, room to slide freely
+sw_travel = 2.2;              // lever travel along x, measured (6.13 - 3.96)
 sw_recess = 0.5;              // lever tip above the underside of the floor
 sw_window = [sw_lever[0] + sw_travel + 0.6, sw_lever[1] + 0.6]; // slot: lever + travel (room for the pen tip beside it)
 sw_pad_h = sw_recess + sw_lever_h - wall;                       // pad under the body (lever face above the floor)
 sw_y = D - wall - 8;          // switch centre (y), near the back of the floor
+sw_x = col_w / 2 + 3;         // switch centre (x): off-centre so that its pocket clears the charge port (merges into the right wall)
 // Recesses under every column for stick-on rubber feet (e.g. 3M Bumpon 8 mm).
 feet = true;
 foot_d = 8.4;
@@ -472,8 +479,8 @@ bx = [wall + lid_boss_d / 2 - 0.5, col_w - wall - lid_boss_d / 2 + 0.5]; // boss
 // half-lid has at least 3 screws and nothing collides (D1 mini, charger, battery, pivots, splint)
 bat_y = lid_y - (bat[0] + bat_clr) / 2 - 0.3;          // cell axis, close to the lid
 // wire passage through each contact shelf, centred against the front wall (x, y): 0.6 mm clear of the screw posts that
-// fill the corners at these heights, 1 mm of shelf left in front of the contact plates
-wire_slot = [col_w - 2 * (bx[0] + lid_boss_d / 2 + 0.6), bat_y - contact[1] / 2 - 1 - wall];
+// fill the corners at these heights; the plate tab ends 3 mm over it (wire soldered there)
+wire_slot = [col_w - 2 * (bx[0] + lid_boss_d / 2 + 0.6), bat_y - contact[1] / 2 - contact_tab[1] + 3 - wall]; // tab tip 3 mm over it
 leg_rows = [shelf_z + 1.2, bat_top_shelf_z + 4 + lid_boss_d / 2 - 1, H * 0.75, H * 0.85]; // top shelf 4 thick into row 1
 mid_rows = [wall + lid_boss_d / 2 - 0.5, H * 0.4, H * 0.548];  // none behind the lower panel hole; row 2 low enough for the RTC
 // leg / middle lid splits, both away from the column seams so the bottom lid half is screwed on both sides of the
@@ -719,7 +726,7 @@ module column(i) {
             }
             else {
                 if (battery) battery_bay(i == power_col);
-                if (switch_on && i == power_col) switch_frame();
+                if (switch_on && i == power_col) switch_pad();
                 if (sd_reader && i == sd_col) sd_mount();
                 if (buck && i == power_col) bk_mount();
                 if (pp && i == power_col) flat_slot(pp_b, pp_z0, lid_y - 0.3 - pp_b[1], pp_lip);
@@ -757,7 +764,7 @@ module column(i) {
             if (battery) pol_marks();
             if (battery && i == power_col && charger_groove > 0)   // TP4056 edge grooves, open at the back (slid in)
                 translate([col_w / 2 - charger[0] / 2 - 0.15, lid_y - 0.3 - charger[1] - 0.2, charger_z0]) cube([charger[0] + 0.3, D, charger[2] + 0.3]);
-            if (switch_on && i == power_col) translate([col_w / 2, sw_y, -eps]) sw_slot(wall + 2 * eps);
+            if (switch_on && i == power_col) translate([sw_x, sw_y, -eps]) sw_slot(wall + 2 * eps);
             if (bme && i == bme_col) translate([col_w / 2, -eps, bme_z0 + bme_b[1] / 2 + bme_port_dz]) rotate([-90, 0, 0])
                 cylinder(d = bme_hole_d, h = wall + 2 * eps, $fn = 16);                       // weather sensor vent
         }
@@ -795,25 +802,26 @@ module foot_pad(p) {
 
 // raised pad + low frame around the body (glue it in), lever slot through both; the front of pad and frame is one
 // 45 deg slope (no overhang when printed front face down)
-module switch_frame() {
-    fx = sw_body[0] + 2.4;
-    fy = sw_body[1] + 2.4;
-    translate([col_w / 2, sw_y, wall - eps]) difference() {
-        union() {
-            hull() {
+// switch mounting plate outline (two rounded ears), grown by d
+module sw_outline(d = 0) {
+    hull() for (s = [-1, 1]) translate([s * (sw_plate[0] - sw_plate[1]) / 2, 0]) circle(d = sw_plate[1] + 2 * d, $fn = 48);
+}
+module switch_pad() {
+    fx = sw_plate[0] + 2 * (sw_pocket[1] + 1);
+    fy = sw_plate[1] + 2 * (sw_pocket[1] + 1);
+    translate([sw_x, sw_y, wall - eps]) {
+        difference() {
+            hull() { // 45 deg front face: prints without support front face down
                 translate([-fx / 2, -fy / 2 - sw_pad_h, 0]) cube([fx, fy + sw_pad_h, eps]);
                 translate([-fx / 2, -fy / 2, sw_pad_h]) cube([fx, fy, eps]);
             }
-            hull() { // under the frame's front wall, up to the top of the frame (1.0 = wall left by the body pocket)
-                translate([-fx / 2, -fy / 2 - sw_pad_h - 2, 0]) cube([fx, sw_pad_h + 3, eps]);
-                translate([-fx / 2, -fy / 2, sw_pad_h + 2 - eps]) cube([fx, 1, eps]);
-            }
-            translate([0, 0, sw_pad_h]) difference() { // front and sides only: a back wall would bridge the pocket
-                translate([-fx / 2, -fy / 2, 0]) cube([fx, fy, 2]);
-                translate([-sw_body[0] / 2 - 0.2, -sw_body[1] / 2 - 0.2, -eps]) cube([sw_body[0] + 0.4, fy, 2 + 2 * eps]);
-            }
+            translate([0, 0, -eps]) sw_slot(sw_pad_h + 3 * eps);
         }
-        translate([0, 0, -eps]) sw_slot(sw_pad_h + 3 * eps);
+        // pocket rim around the plate; cut back beside the body (wider than the plate) so it never touches it
+        translate([0, 0, sw_pad_h - eps]) difference() {
+            linear_extrude(sw_pocket[0] + eps) difference() { sw_outline(sw_pocket[1] + 1); sw_outline(sw_pocket[1]); }
+            translate([-sw_body[0] / 2 - 0.2, -sw_body[1] / 2 - 0.2, sw_plate[2]]) cube([sw_body[0] + 0.4, sw_body[1] + 0.4, 1]);
+        }
     }
 }
 
@@ -826,11 +834,29 @@ module sw_slot(h) {
 }
 
 // ---------- battery bay (legs) ----------
+// guide block x0..x0+w, ya..yb, h high off the shelf face; its -y end is a 45 deg ramp (that end faces down when the
+// column prints front face down: no support)
+module cg_block(x0, w, ya, yb, h) {
+    r = min(h, yb - ya);
+    translate([x0, 0, 0]) rotate([90, 0, 90]) linear_extrude(w) polygon([[ya, 0], [yb, 0], [yb, r], [ya + r, r]]);
+}
+// contact plate guides on a shelf face at z (dir 1: on top, -1: under it): a stop at each front corner of the flat
+// part, on either side of the tab, and a side rail from there to the back of the shelf (the plate slides in from the lid)
+module contact_guides(z, dir) {
+    hx = contact[0] / 2 + cg[1];
+    y0 = bat_y - contact[1] / 2;
+    translate([0, 0, z - dir * eps]) scale([1, 1, dir]) for (m = [0, 1]) translate([m * col_w, 0, 0]) mirror([m, 0, 0]) {
+        cg_block(col_w / 2 - hx - cg[0], cg[0] + 2.5, y0 - cg[0], y0, cg[2]);        // front stop
+        cg_block(col_w / 2 - hx - cg[0], cg[0], y0 - cg[0], lid_y - 0.5, cg[2]);    // side rail
+    }
+}
 module battery_bay(with_charger = true) {
     bd = bat[0] + bat_clr;
     cw = bd + 3;                                       // cradle width
     contact_shelf(shelf_z - shelf_t, shelf_t);                                          // - side, overlaps the 34.3 posts
     contact_shelf(bat_top_shelf_z, leg_rows[1] - lid_boss_d / 2 + 1 - bat_top_shelf_z); // + side, thickened into the next posts
+    contact_guides(shelf_z, 1);
+    contact_guides(bat_top_shelf_z, -1);
     // cell: two U cradles open towards the lid (no overhang when printed front face down; the shelves above also
     // print as vertical walls)
     translate([col_w / 2, 0, 0]) {
@@ -1246,7 +1272,10 @@ module dummies(i) {
         }
     } else if (battery) {
         color("royalblue") translate([col_w / 2, bat_y, bat_z0]) cylinder(d = bat[0], h = bat[1]);
-        color("silver") for (z = [shelf_z, bat_top_shelf_z - contact[2]]) translate([col_w / 2 - contact[0] / 2, bat_y - contact[1] / 2, z]) cube(contact);
+        color("silver") for (z = [shelf_z, bat_top_shelf_z - contact[2]]) translate([col_w / 2, bat_y - contact[1] / 2, z]) {
+            translate([-contact[0] / 2, 0, 0]) cube(contact);
+            translate([-contact_tab[0] / 2, -contact_tab[1], 0]) cube([contact_tab[0], contact_tab[1] + eps, contact[2]]);
+        }
         color("silver") translate([col_w / 2, bat_y, shelf_z + contact[2]]) cylinder(d = 5, h = spring_work);
         if (i == power_col) {
             color("darkgreen") translate([col_w / 2 - charger[0] / 2, lid_y - 0.3 - charger[1], charger_z0]) cube([charger[0], charger[1], charger[2] + charger_h]);
@@ -1270,9 +1299,11 @@ module dummies(i) {
             color("dimgray") translate([col_w / 2 - 3, bk_y1 - bk[1] / 2 - 3, bk_z0 + bk[2]]) cube([6, 6, bk_h]);
         }
     }
-    if (switch_on && i == power_col) color("black") translate([col_w / 2, sw_y, sw_recess]) {
-        translate([-sw_lever[0] / 2 - sw_travel / 2, -sw_lever[1] / 2, 0]) cube([sw_lever[0], sw_lever[1], sw_lever_h]);
-        translate([-sw_body[0] / 2, -sw_body[1] / 2, sw_lever_h]) cube([sw_body[0], sw_body[1], sw_h - sw_lever_h - 6.7]);
+    if (switch_on && i == power_col) translate([sw_x, sw_y, sw_recess]) {
+        color("black") translate([-sw_lever[0] / 2 - sw_travel / 2, -sw_lever[1] / 2, 0]) cube([sw_lever[0], sw_lever[1], sw_lever_h]);
+        color("silver") translate([0, 0, sw_lever_h]) linear_extrude(sw_plate[2]) sw_outline();
+        color("royalblue") translate([-sw_body[0] / 2, -sw_body[1] / 2, sw_lever_h + sw_plate[2]]) cube([sw_body[0], sw_body[1], 5.8]);
+        color("gold") for (s = [-1, 0, 1]) translate([s * 2.5 - 0.4, -0.25, sw_lever_h + sw_plate[2] + 5.8]) cube([0.8, 0.5, 3.2]);
     }
     if (i < 3) for (z = pivot_z) color("gold") translate([col_w - wall - pivot_boss_l, D / 2, z]) rotate([0, 90, 0])
         difference() { cylinder(d = tube_od, h = 2 * (wall + pivot_boss_l) + gap + collar[1] + tube_over); cylinder(d = tube_od - 1, h = 90, center = true); }
@@ -1664,7 +1695,8 @@ if (battery && bat_top_shelf_z + 1 > leg_rows[1] - lid_boss_d / 2)
     echo("WARNING: the cell runs into the leg lid screws");
 if (switch_on && battery && sw_recess + sw_h + 3 > shelf_z - shelf_t)
     echo("WARNING: switch pins (+3 mm for the wires) run into the bottom contact shelf");
-if (switch_on && (col_w / 2 - sw_body[0] / 2 - 1.2 < usbb_x0 + usbb[2] + max(usbb_rec[1], 1.2) + 0.5 || sw_y + sw_body[1] / 2 + 1.2 > lid_y - 0.5))
+if (switch_on && (sw_x - sw_plate[0] / 2 - sw_pocket[1] - 1 < usbb_x0 + usbb[2] + max(usbb_rec[1], 1.2) + 0.5
+    || sw_x + sw_plate[0] / 2 + sw_pocket[1] > col_w - wall || sw_y + sw_plate[1] / 2 + sw_pocket[1] + 1 > lid_y - 0.5))
     echo("WARNING: switch pad runs into the charge port or the lid");
 if (sensors) {
     if (rtc[0] + 0.4 + 2 * rib > col_w - 2 * wall) echo("WARNING: RTC slot too wide for the leg");
@@ -1677,3 +1709,7 @@ if (sensors) {
 }
 if (battery && contact[1] / 2 > lid_y - 0.5 - bat_y)
     echo("WARNING: contact plates stick out past the lid face");
+if (battery && cg[2] >= contact[2])
+    echo("WARNING: contact guides higher than the plate (the cell end would reach them)");
+if (battery && contact[0] / 2 + cg[1] - 2.5 < contact_tab[0] / 2 + 0.5)
+    echo("WARNING: contact stops run into the tab");
