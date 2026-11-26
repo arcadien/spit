@@ -26,9 +26,11 @@ order in `tests/bench/bring-up.md`, currents in `hardware/power_budget.md`).
 | ST1 | Solder tails on the wall side (ADXL345, MAX98357A, micro-USB), ≤ 1 mm | — |
 | E-M1 | SD pull-up of the amplifier (R18) | measured on branch `mech-audio` (36 mV, pass): closes with it |
 | E-M2 | Screens' BLK current and pull-up | — |
-| E-M3 | D1 leakage when warm | — |
+| E-M3 | D1 leakage when warm (the ≤ 60 µA switch-off drain depends on it) | PERF-POWER-OFF-001 |
 | E-M4 | AM312 high level | — |
-| E-M5 | DW01 wake-up | — |
+| E-M5 | DW01 wake-up: does it switch on by itself when the cells are first connected? | PLAT-POWER-PROTECT-001 |
 | E-M6 | SW1 rating (marking, ≥ 2 A) | PLAT-POWER-SWITCH-001, branch `mech-audio` |
-| E-M7 | Sleep current with and without the microSD card | — |
+| E-M7 | Sleep current with and without the microSD card (the ≤ 0.65 mA limit is provisional until then, to be tightened) | PERF-POWER-SLEEP-001 |
+| E-M9 | Back-leak from the cells into a host's VBUS, host off and cable in (the ≤ 1 mA limit is provisional until then) | TECH-POWER-VBUS-001 |
+| E-M10 | ADC calibration of the battery reading (divider ratio and offset), bring-up step 3.7 | CONF-POWER-ADCCAL-001, PERF-POWER-MONITOR-001 |
 | AU1 | Firmware volume cap: VSYS ≥ 3.0 V at the amplifier with the pack at 3.30 V | PERF-AUDIO-PEAK-001, branch `mech-audio` |
