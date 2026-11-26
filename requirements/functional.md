@@ -111,7 +111,7 @@
 
 **Dependencies:** none
 
-**Description:** The firmware knows whether the system rail (after the power switch) is powered, independently of the battery voltage and of the external supply. This covers the case "switch off, controller powered from the programming port". The rail is reported present for 3.0–5.0 V and absent below 2.3 V (the amplifier needs ≥ 2.5 V); on battery, the report follows a switch toggle within 100 ms. With the controller powered from the programming port and the switch turned off, the falling edge may take longer: the rail capacitors then drain only through the regulator's quiescent current.
+**Description:** The firmware knows whether the system rail (after the power switch) is powered, independently of the battery voltage and of the external supply. This covers the case "switch off, controller powered from the programming port". The rail is reported present for 3.0–5.0 V and absent below 2.3 V (the amplifier needs ≥ 2.5 V); on battery, the report follows a switch toggle within 100 ms. With the controller powered from the programming port and the switch turned off, the rail capacitors drain only through the regulator's quiescent current and the rail takes tens of seconds to fall; the report then turns absent within 100 ms of the rail falling below 2.3 V.
 
 ### FUNC-POWER-CUTOFF-001
 
