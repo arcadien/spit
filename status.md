@@ -11,7 +11,7 @@ charge port ~1 mm, merged into the right wall), lever 0.5 mm recessed in a 6.8 �
 Cell contact plates re-measured (flat 13 × 11, 3 × 7.5 tab) and located without glue by front stops and side rails
 ([PLAT-MECH-CONTACT-001](requirements/platform.md#plat-mech-contact-001)), both legs.
 
-**Open on this branch:** PLAT-POWER-SWITCH-001 (draft, on `mech-audio`) still says "Pending: E-M6"; only its 1 A
+**Open on this branch:** PLAT-POWER-SWITCH-001 stays draft: only its 1 A
 temperature-rise bench check remains.
 
 **Next step:** push (renders, meshes), print the left leg bottom, run
