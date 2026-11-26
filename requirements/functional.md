@@ -79,7 +79,7 @@
 
 **Status:** validated
 
-**Dependencies:** [FUNC-POWER-DETECT-001](functional.md#func-power-detect-001), [FUNC-POWER-MONITOR-001](functional.md#func-power-monitor-001)
+**Dependencies:** [FUNC-POWER-DETECT-001](functional.md#func-power-detect-001), [FUNC-POWER-MONITOR-001](functional.md#func-power-monitor-001), [CONF-POWER-THRESH-001](configuration.md#conf-power-thresh-001)
 
 **Description:** While the external supply is present, the firmware reports the battery state as "charging" instead of a level, then "full" once the charge has ended. The end of charge is inferred from the battery voltage alone; the charger's status output is not wired. "Full" is reported once the averaged voltage, having reached the charge-full peak level, has fallen by the charge-full drop below its highest value ([CONF-POWER-THRESH-001](configuration.md#conf-power-thresh-001)): relative to the peak, so a charger ending anywhere in 4.158–4.242 V is seen. When the supply is removed, the [FUNC-POWER-MONITOR-002](functional.md#func-power-monitor-002) level is reported again.
 
@@ -121,7 +121,7 @@
 
 **Dependencies:** [FUNC-POWER-MONITOR-002](functional.md#func-power-monitor-002), [FUNC-POWER-DETECT-001](functional.md#func-power-detect-001), [CONF-POWER-THRESH-001](configuration.md#conf-power-thresh-001)
 
-**Description:** When the averaged battery voltage reaches the empty level (≤ 3.30 V) and no external supply is present, the firmware puts the robot into deep sleep. No shutdown happens while the external supply is present, nor when the battery reading is < 2.50 V (no cells: controller powered from the programming port).
+**Description:** When the averaged battery voltage reaches the empty level (≤ the cut-off of [CONF-POWER-THRESH-001](configuration.md#conf-power-thresh-001)) and no external supply is present, the firmware puts the robot into deep sleep. No shutdown happens while the external supply is present, nor when the battery reading is below the no-battery limit of [CONF-POWER-THRESH-001](configuration.md#conf-power-thresh-001) (no cells: controller powered from the programming port).
 
 ### FUNC-POWER-CUTOFF-002
 
