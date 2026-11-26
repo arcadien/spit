@@ -41,7 +41,7 @@
 
 **Dependencies:** [FUNC-POWER-CHARGE-001](functional.md#func-power-charge-001), [CONF-POWER-THRESH-001](configuration.md#conf-power-thresh-001)
 
-**Description:** A full charge of the pack, from the cut-off of [CONF-POWER-THRESH-001](configuration.md#conf-power-thresh-001) to the end of charge, with the robot switched off, takes ≤ 12 h at the 0.5 A charge current, or ≤ 16 h if the 0.33 A fallback (R_PROG 3.6 kΩ) is used. The choice between them is made after E-M8 ([open_questions.md](../open_questions.md)).
+**Description:** A full charge of the pack, from the cut-off of [CONF-POWER-THRESH-001](configuration.md#conf-power-thresh-001) to the end of charge, with the robot switched off, takes ≤ 8 h at the 1 A charge current (R_PROG 1.2 kΩ).
 
 ### PERF-POWER-THERMAL-001
 
