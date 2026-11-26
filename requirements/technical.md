@@ -71,7 +71,7 @@
 
 **Dependencies:** none
 
-**Description:** A USB host on the controller's programming port powers only the controller, never the system rail or the battery, and flashing works with the power switch on or off. With the cells out and the switch on, a host alone leaves the system rail < 0.1 V; on battery, with the host off and its cable still in, the current from the cells into the host's VBUS is ≤ 1 mA. Pending: the ≤ 1 mA back-leak limit is provisional until measured.
+**Description:** A USB host on the controller's programming port powers only the controller, never the system rail or the battery, and flashing works with the power switch on or off. With the cells out and the switch on, a host alone leaves the system rail < 0.1 V; on battery, with the host off and its cable still in, the current from the cells into the host's VBUS is ≤ 1 mA.
 
 ### TECH-POWER-BACKFEED-001
 

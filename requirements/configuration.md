@@ -21,4 +21,4 @@
 
 **Dependencies:** none
 
-**Description:** The battery divider ratio (default 2.000) and an offset (default 0 mV) are configuration values, set once after the bench calibration. Pending: the calibration values come from bring-up step 3.7 (not done yet).
+**Description:** The battery divider ratio (default 2.000) and an offset (default 0 mV) are configuration values, set once after the bench calibration.

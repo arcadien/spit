@@ -49,7 +49,7 @@ derives_from: [TECH-POWER-HOTPLUG-001](technical.md#tech-power-hotplug-001)
 
 derives_from: [TECH-POWER-PROTECT-001](technical.md#tech-power-protect-001)
 
-**Description:** The pack protection is the DW01 and its MOSFET pair on the TP4056 module, switching OUT−. OUT− opens between 2.3 and 2.5 V on over-discharge, and the module's quiescent current with USB out is < 10 µA (see [power_budget.md](../hardware/power_budget.md)). Pending: E-M5 (whether the DW01 switches on by itself when the cells are first connected) is still to record.
+**Description:** The pack protection is the DW01 and its MOSFET pair on the TP4056 module, switching OUT−. OUT− opens between 2.3 and 2.5 V on over-discharge, and the module's quiescent current with USB out is < 10 µA (see [power_budget.md](../hardware/power_budget.md)).
 
 ### PLAT-POWER-FUSE-001
 
@@ -85,7 +85,7 @@ derives_from: [FUNC-POWER-PATH-001](functional.md#func-power-path-001)
 
 derives_from: [FUNC-POWER-SWITCH-001](functional.md#func-power-switch-001)
 
-**Description:** SW1, a mini slide switch in the floor of the left leg, sits after the power-path merge (VPATH) and before VSYS. Its contacts are rated ≥ 1 A. Its temperature rise is ≤ 10 °C after 10 min at 1 A. Pending: E-M6 (the actual rating of SW1) not checked yet.
+**Description:** SW1, a mini slide switch in the floor of the left leg, sits after the power-path merge (VPATH) and before VSYS. Its contacts are rated ≥ 1 A. Its temperature rise is ≤ 10 °C after 10 min at 1 A.
 
 ### PLAT-POWER-REG-001
 

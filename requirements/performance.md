@@ -71,7 +71,7 @@
 
 **Dependencies:** [FUNC-POWER-MONITOR-001](functional.md#func-power-monitor-001), [CONF-POWER-ADCCAL-001](configuration.md#conf-power-adccal-001)
 
-**Description:** After calibration ([CONF-POWER-ADCCAL-001](configuration.md#conf-power-adccal-001)), the battery voltage reported by the firmware is within ±3 % of a multimeter reading at B+ over 3.0–4.2 V. Pending: the ADC calibration has not been done yet.
+**Description:** After calibration ([CONF-POWER-ADCCAL-001](configuration.md#conf-power-adccal-001)), the battery voltage reported by the firmware is within ±3 % of a multimeter reading at B+ over 3.0–4.2 V.
 
 ### PERF-POWER-SLEEP-001
 
@@ -81,7 +81,7 @@
 
 **Dependencies:** [TECH-POWER-SLEEP-001](technical.md#tech-power-sleep-001), [FUNC-POWER-GATE-001](functional.md#func-power-gate-001)
 
-**Description:** In deep sleep, with every wake source armed and the storage card supply cut, the robot draws ≤ 0.65 mA from the battery (breakdown per module: [power_budget.md](../hardware/power_budget.md)). With ~5–10 % of capacity left after the cut-off, this keeps the pack above the protection's 2.4 V threshold for weeks. Provisional limit: to be tightened once E-M7 has been measured.
+**Description:** In deep sleep, with every wake source armed and the storage card supply cut, the robot draws ≤ 0.65 mA from the battery (breakdown per module: [power_budget.md](../hardware/power_budget.md)). With ~5–10 % of capacity left after the cut-off, this keeps the pack above the protection's 2.4 V threshold for weeks.
 
 ### PERF-POWER-OFF-001
 
@@ -91,7 +91,7 @@
 
 **Dependencies:** [FUNC-POWER-SWITCH-001](functional.md#func-power-switch-001)
 
-**Description:** With the power switch off and no external supply, the battery drain is ≤ 60 µA: charger and protection quiescent current, the battery divider and power-path diode leakage (breakdown: [power_budget.md](../hardware/power_budget.md)). Pending: the limit depends on E-M3 (D1 leakage), not measured yet. The limit holds at room temperature and at 35 °C (a hot room).
+**Description:** With the power switch off and no external supply, the battery drain is ≤ 60 µA: charger and protection quiescent current, the battery divider and power-path diode leakage (breakdown: [power_budget.md](../hardware/power_budget.md)). The limit holds at room temperature and at 35 °C (a hot room).
 
 ### PERF-POWER-RUNTIME-001
 
