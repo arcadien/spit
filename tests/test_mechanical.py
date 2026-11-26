@@ -54,17 +54,19 @@ def test_plat_mech_pivot_001_teardrop_bores_sized_from_tube_test3(model):
     assert warnings == []
 
 
+@pytest.mark.xfail(strict=True, reason='PLAT-MECH-SWITCH-001 pocket not implemented yet')
 @pytest.mark.req('PLAT-MECH-SWITCH-001')
-def test_plat_mech_switch_001_switch_glued_on_pad_located_by_pins(model):
+def test_plat_mech_switch_001_switch_seated_in_a_pocket(model):
     # Given the model
     src = source()
-    # Then the switch is the measured 3 A one: body, lever, travel, mounting plate and its holes
+    # Then the switch is the measured 3 A one: body, lever, travel, mounting plate
     for line in (r'sw_body = \[9\.75, 8\.17\];', r'sw_lever = \[4, 3\.9\];', r'sw_travel = 2\.2;',
-                 r'sw_recess = 0\.5;', r'sw_plate = \[19\.5, 8, 0\.42\];', r'sw_pitch = 14\.45;',
-                 r'sw_hole = 2\.45;', r'sw_x = col_w / 2 \+ 2;'):
+                 r'sw_recess = 0\.5;', r'sw_plate = \[19\.5, 8, 0\.42\];', r'sw_pocket = \[0\.6, 0\.15\];',
+                 r'sw_x = col_w / 2 \+ 3;'):
         assert re.search('^' + line, src, re.M), line
-    # And it is located by pins through its holes, no screws
-    assert 'sw_pin' in src and 'pilot' not in re.search(r'module switch_pad\(\) \{(.*?)\n\}', src, re.S).group(1)
+    # And it sits in a pocket of its plate outline, no pins or screws
+    body = re.search(r'module switch_pad\(\) \{(.*?)\n\}', src, re.S).group(1)
+    assert 'sw_pocket' in body and 'sw_pin' not in src
     # And the model is clean (charge port, lid and shelf asserts included)
     _, warnings = model
     assert warnings == []

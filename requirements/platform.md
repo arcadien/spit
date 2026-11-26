@@ -233,7 +233,7 @@ derives_from: [FUNC-POWER-CHARGE-001](functional.md#func-power-charge-001)
 
 ### PLAT-MECH-SWITCH-001
 
-**Title:** Power switch glued on a floor pad of the left leg, located by its ears
+**Title:** Power switch seated in a pocket of a floor pad of the left leg
 
 **Status:** validated
 
@@ -241,7 +241,7 @@ derives_from: [FUNC-POWER-CHARGE-001](functional.md#func-power-charge-001)
 
 derives_from: [FUNC-POWER-SWITCH-001](functional.md#func-power-switch-001)
 
-**Description:** SW1 (slide switch, 3 A 125 V; body 9.75 × 8.17, lever 3.96 × 3.75 with 2.2 mm of travel, mounting plate 19.5 × 8 × 0.42 with two Ø2.45 holes 14.45 apart, see [measurements.md](../hardware/measurements.md)) is glued, plate flat, on a pad of the left leg floor and located by two printed pins through its holes; no screws. It is moved 2 mm towards the right side wall so that its plate clears the charge port. The lever points down into a floor slot, its tip 0.5 mm above the underside: nothing sticks out under SPIT, it is flipped with a pen tip. Acceptance: pytest on the model (measured switch parameters, pins and offset; model clean, including its asserts "switch pad runs into the charge port or the lid" and "switch pins run into the bottom contact shelf"); bench: the pins go through the plate holes, the lever slides freely over its whole travel, on and off are reached with a pen tip, and the body has no play once glued.
+**Description:** SW1 (slide switch, 3 A 125 V; body 9.75 × 8.17, lever 3.96 × 3.75 with 2.2 mm of travel, mounting plate 19.5 × 8 × 0.42, see [measurements.md](../hardware/measurements.md)) rests, plate flat, in a 0.6 mm deep pocket that follows its plate outline with 0.15 mm of play, on a pad of the left leg floor. The pocket locates it in x and y, without pins or screws, and takes the lever force; a drop of glue only keeps it from lifting. It is moved 3 mm towards the right side wall so that the pocket clears the charge port. The lever points down into a floor slot, its tip 0.5 mm above the underside: nothing sticks out under SPIT, it is flipped with a pen tip. Acceptance: pytest on the model (measured switch parameters, pocket and offset; model clean, including its asserts "switch pad runs into the charge port or the lid" and "switch pins run into the bottom contact shelf"); bench: the plate goes into the pocket without forcing and without visible play, the lever slides freely over its whole travel, on and off are reached with a pen tip, and the switch stays in place after a drop of glue.
 
 ### PLAT-MECH-CONTACT-001
 
