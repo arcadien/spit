@@ -179,7 +179,7 @@ crisp fine lines / braille / text, hides layer lines), **matte black PLA** for t
   joint (teardrop hole 8.00), turning in the right-hand one (teardrop hole 8.05, PLAT-MECH-PIVOT-001) on a Ø16 bearing ring with 2 detent bumps; 24 dimples on the fixed side
   → a click every 15°. A printed collar (Ø13 × 2, `collar`) glued on the tube inside the turning column holds the joint
   together; the tube sticks out 0.5 past it (`tube_over`). Bosses Ø14 × 5 inside the walls; nothing else at that height.
-- Swinging back and forth is fine; endless rotation would need a Ø12.5 slip ring.
+- Swinging back and forth over ±45° is fine (FUNC-MECH-JOINT-001); endless rotation would need a Ø12.5 slip ring.
 
 ## Assembly order
 
