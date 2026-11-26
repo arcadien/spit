@@ -243,6 +243,18 @@ derives_from: [FUNC-POWER-SWITCH-001](functional.md#func-power-switch-001)
 
 **Description:** SW1 (slide switch, 3 A 125 V; body 9.75 × 8.17, lever 3.96 × 3.75 with 2.2 mm of travel, mounting plate 19.5 × 8 × 0.42 with two Ø2.45 holes 14.45 apart, see [measurements.md](../hardware/measurements.md)) is glued, plate flat, on a pad of the left leg floor and located by two printed pins through its holes; no screws. It is moved 2 mm towards the right side wall so that its plate clears the charge port. The lever points down into a floor slot, its tip 0.5 mm above the underside: nothing sticks out under SPIT, it is flipped with a pen tip. Acceptance: pytest on the model (measured switch parameters, pins and offset; model clean, including its asserts "switch pad runs into the charge port or the lid" and "switch pins run into the bottom contact shelf"); bench: the pins go through the plate holes, the lever slides freely over its whole travel, on and off are reached with a pen tip, and the body has no play once glued.
 
+### PLAT-MECH-CONTACT-001
+
+**Title:** Cell contact plates located on their shelves without glue
+
+**Status:** validated
+
+**Dependencies:** [PLAT-MECH-SWITCH-001](platform.md#plat-mech-switch-001)
+
+derives_from: [TECH-POWER-CELL-001](technical.md#tech-power-cell-001)
+
+**Description:** Each cell contact plate (flat part 13 × 11 × 1.2, centred 3 × 7.5 solder tab, 18.5 overall; see [measurements.md](../hardware/measurements.md)) is located on its shelf without glue: its flat part centred under the cell axis, two stops at its front corners on either side of the tab, two side rails open towards the lid, 0.2 mm of play per side. The guides are 1.0 mm high, below the plate face, so the cell cannot touch them. Their faces towards the front are 45° ramps: no support when the column prints front face down. The tab ends 3 mm over the wire slot. The cell, shelf and lid screw positions do not change. Acceptance: pytest on the model (measured plate parameters; asserts "contact guides higher than the plate" and "contact stops run into the tab"; model clean); bench: with the leg lying on its front and the lid off, a plate slid in from the back drops against its stops by itself; with the cell in, both plates stay in place, lid closed, without glue.
+
 ### PLAT-MECH-PIVOT-001
 
 **Title:** Column pivot bores sized from tube_test3: teardrop bores, glued 8.00 / turning 8.05 for the 7.93 brass tube

@@ -68,3 +68,20 @@ def test_plat_mech_switch_001_switch_glued_on_pad_located_by_pins(model):
     # And the model is clean (charge port, lid and shelf asserts included)
     _, warnings = model
     assert warnings == []
+
+
+@pytest.mark.xfail(strict=True, reason='PLAT-MECH-CONTACT-001 not implemented yet')
+@pytest.mark.req('PLAT-MECH-CONTACT-001')
+def test_plat_mech_contact_001_plates_located_by_guides_without_glue(model):
+    # Given the model
+    src = source()
+    # Then the plates are the measured ones (flat part + centred tab)
+    assert re.search(r'^contact = \[13, 11, 1\.2\];', src, re.M)
+    assert re.search(r'^contact_tab = \[3, 7\.5\];', src, re.M)
+    # And both shelves get their guides, below the plate face, clear of the tab
+    assert src.count('contact_guides(') >= 3
+    assert 'WARNING: contact guides higher than the plate' in src
+    assert 'WARNING: contact stops run into the tab' in src
+    # And the model is clean
+    _, warnings = model
+    assert warnings == []
