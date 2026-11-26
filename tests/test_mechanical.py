@@ -70,7 +70,6 @@ def test_plat_mech_switch_001_switch_glued_on_pad_located_by_pins(model):
     assert warnings == []
 
 
-@pytest.mark.xfail(strict=True, reason='PLAT-MECH-CONTACT-001 not implemented yet')
 @pytest.mark.req('PLAT-MECH-CONTACT-001')
 def test_plat_mech_contact_001_plates_located_by_guides_without_glue(model):
     # Given the model

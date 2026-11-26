@@ -197,8 +197,11 @@ usbb_z0 = wall + 1.5;         // bottom edge, above the rear foot pad (1.2)
 foot_room = 22;               // under the bottom contact shelf: switch (lever tip to pins 12.8) + its wires, breakout
 // Bare cells: spring contact plates at both ends (never solder on the cell). Each plate lies on / under a shelf,
 // slid in from the back, solder tab first (towards the front, over the wire slot: wire soldered on the tab beforehand
-// and fed through the slot), held by a dab of glue; the spring pushes them onto the shelves.
-contact = [13, 18, 1.2];      // contact plate width (x), length (y), thickness
+// and fed through the slot), located by low guides without glue (front stops + side rails); the spring pushes them
+// onto the shelves.
+contact = [13, 11, 1.2];      // contact plate flat part: width (x), length (y), thickness (measured 2026-11-26)
+contact_tab = [3, 7.5];       // solder tab, centred on the front edge: width, length (18.5 overall, measured)
+cg = [1, 0.2, 1];             // contact guides: wall, play per side, height (below the plate face: the cell never reaches them)
 contact_bump = 0.6;           // + plate: bump towards the cell (1.8 overall)
 spring_work = 4;              // - plate spring length with the cell in (free length 10.7, solid 2.85 measured)
 cradle_groove = [3, 6];       // vertical wire groove in each cell cradle, from the cell towards the front wall (width, depth)
@@ -476,8 +479,8 @@ bx = [wall + lid_boss_d / 2 - 0.5, col_w - wall - lid_boss_d / 2 + 0.5]; // boss
 // half-lid has at least 3 screws and nothing collides (D1 mini, charger, battery, pivots, splint)
 bat_y = lid_y - (bat[0] + bat_clr) / 2 - 0.3;          // cell axis, close to the lid
 // wire passage through each contact shelf, centred against the front wall (x, y): 0.6 mm clear of the screw posts that
-// fill the corners at these heights, 1 mm of shelf left in front of the contact plates
-wire_slot = [col_w - 2 * (bx[0] + lid_boss_d / 2 + 0.6), bat_y - contact[1] / 2 - 1 - wall];
+// fill the corners at these heights; the plate tab ends 3 mm over it (wire soldered there)
+wire_slot = [col_w - 2 * (bx[0] + lid_boss_d / 2 + 0.6), bat_y - contact[1] / 2 - contact_tab[1] + 3 - wall]; // tab tip 3 mm over it
 leg_rows = [shelf_z + 1.2, bat_top_shelf_z + 4 + lid_boss_d / 2 - 1, H * 0.75, H * 0.85]; // top shelf 4 thick into row 1
 mid_rows = [wall + lid_boss_d / 2 - 0.5, H * 0.4, H * 0.548];  // none behind the lower panel hole; row 2 low enough for the RTC
 // leg / middle lid splits, both away from the column seams so the bottom lid half is screwed on both sides of the
@@ -808,11 +811,29 @@ module sw_slot(h) {
 }
 
 // ---------- battery bay (legs) ----------
+// guide block x0..x0+w, ya..yb, h high off the shelf face; its -y end is a 45 deg ramp (that end faces down when the
+// column prints front face down: no support)
+module cg_block(x0, w, ya, yb, h) {
+    r = min(h, yb - ya);
+    translate([x0, 0, 0]) rotate([90, 0, 90]) linear_extrude(w) polygon([[ya, 0], [yb, 0], [yb, r], [ya + r, r]]);
+}
+// contact plate guides on a shelf face at z (dir 1: on top, -1: under it): a stop at each front corner of the flat
+// part, on either side of the tab, and a side rail from there to the back of the shelf (the plate slides in from the lid)
+module contact_guides(z, dir) {
+    hx = contact[0] / 2 + cg[1];
+    y0 = bat_y - contact[1] / 2;
+    translate([0, 0, z - dir * eps]) scale([1, 1, dir]) for (m = [0, 1]) translate([m * col_w, 0, 0]) mirror([m, 0, 0]) {
+        cg_block(col_w / 2 - hx - cg[0], cg[0] + 2.5, y0 - cg[0], y0, cg[2]);        // front stop
+        cg_block(col_w / 2 - hx - cg[0], cg[0], y0 - cg[0], lid_y - 0.5, cg[2]);    // side rail
+    }
+}
 module battery_bay(with_charger = true) {
     bd = bat[0] + bat_clr;
     cw = bd + 3;                                       // cradle width
     contact_shelf(shelf_z - shelf_t, shelf_t);                                          // - side, overlaps the 34.3 posts
     contact_shelf(bat_top_shelf_z, leg_rows[1] - lid_boss_d / 2 + 1 - bat_top_shelf_z); // + side, thickened into the next posts
+    contact_guides(shelf_z, 1);
+    contact_guides(bat_top_shelf_z, -1);
     // cell: two U cradles open towards the lid (no overhang when printed front face down; the shelves above also
     // print as vertical walls)
     translate([col_w / 2, 0, 0]) {
@@ -1222,7 +1243,10 @@ module dummies(i) {
         }
     } else if (battery) {
         color("royalblue") translate([col_w / 2, bat_y, bat_z0]) cylinder(d = bat[0], h = bat[1]);
-        color("silver") for (z = [shelf_z, bat_top_shelf_z - contact[2]]) translate([col_w / 2 - contact[0] / 2, bat_y - contact[1] / 2, z]) cube(contact);
+        color("silver") for (z = [shelf_z, bat_top_shelf_z - contact[2]]) translate([col_w / 2, bat_y - contact[1] / 2, z]) {
+            translate([-contact[0] / 2, 0, 0]) cube(contact);
+            translate([-contact_tab[0] / 2, -contact_tab[1], 0]) cube([contact_tab[0], contact_tab[1] + eps, contact[2]]);
+        }
         color("silver") translate([col_w / 2, bat_y, shelf_z + contact[2]]) cylinder(d = 5, h = spring_work);
         if (i == power_col) {
             color("darkgreen") translate([col_w / 2 - charger[0] / 2, lid_y - 0.3 - charger[1], charger_z0]) cube([charger[0], charger[1], charger[2] + charger_h]);
@@ -1625,3 +1649,7 @@ if (sensors) {
 }
 if (battery && contact[1] / 2 > lid_y - 0.5 - bat_y)
     echo("WARNING: contact plates stick out past the lid face");
+if (battery && cg[2] >= contact[2])
+    echo("WARNING: contact guides higher than the plate (the cell end would reach them)");
+if (battery && contact[0] / 2 + cg[1] - 2.5 < contact_tab[0] / 2 + 0.5)
+    echo("WARNING: contact stops run into the tab");
