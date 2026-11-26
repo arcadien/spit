@@ -82,20 +82,20 @@ TP4056 OUT+ (cells)   ──► AO3401A P-MOSFET Q1 (D → S) ──┘
 
 ### Battery thresholds
 
-Defaults of the configuration constants of [CONF-POWER-THRESH-001](../requirements/configuration.md#conf-power-thresh-001)
-(used by FUNC-POWER-MONITOR-002, FUNC-POWER-CUTOFF-001 / 002, FUNC-POWER-DETECT-002), from the cell datasheet and the
-TPS63020 input range; the bench measurements may move them (record the measured value in
+Why each default of the configuration constants of [CONF-POWER-THRESH-001](../requirements/configuration.md#conf-power-thresh-001)
+(the values are there; used by FUNC-POWER-MONITOR-002, FUNC-POWER-CUTOFF-001 / 002, FUNC-POWER-DETECT-002): from the
+cell datasheet and the TPS63020 input range; the bench measurements may move them (record the measured value in
 [measurements.md](measurements.md)).
 
-| Constant | Default | Why |
-|---|---|---|
-| Level bounds fed / peckish / hungry | 3.90 / 3.70 / 3.50 V | hunger levels; to check against the cells' discharge on the bench |
-| Cut-off (empty) | 3.30 V | ~5–10 % left (*Sleep and wake-up*); the TPS63020 holds 3.3 V down to ~2.5 V in, so the cut-off only spares the cells |
-| No-battery limit | 2.50 V | GPIO1 < 1.25 V: no cells, the S3 runs from a PC's USB: the cut-off is ignored |
-| Averaging window | 60 s | longer than any Wi-Fi / amplifier peak: the only hysteresis of the levels |
-| Charge full | peak ≥ 4.10 V, then 20 mV below the peak | end of charge deduced from B+ while USB_DET stays high (*Signals*; audit D5) |
-| Empty-lockout release | 3.50 V | = the hungry bound: the robot wakes up hungry, not starving |
-| Lockout re-check interval | 10 min | timer wake on the supply only; no wake on battery alone |
+| Constant | Why |
+|---|---|
+| Level bounds fed / peckish / hungry | hunger levels; to check against the cells' discharge on the bench |
+| Cut-off (empty) | ~5–10 % left (*Sleep and wake-up*); the TPS63020 holds 3.3 V down to ~2.5 V in, so the cut-off only spares the cells |
+| No-battery limit | GPIO1 < 1.25 V: no cells, the S3 runs from a PC's USB: the cut-off is ignored |
+| Averaging window | longer than any Wi-Fi / amplifier peak: the only hysteresis of the levels |
+| Charge full | end of charge deduced from B+ while USB_DET stays high (*Signals*; audit D5) |
+| Empty-lockout release | = the hungry bound: the robot wakes up hungry, not starving |
+| Lockout re-check interval | timer wake on the supply only; no wake on battery alone |
 
 ## Signals
 
