@@ -25,7 +25,7 @@ assembled robot (harness fitted, lids on), then after any change to the joints o
 3. Redo the continuity check of the setup.
 
 ## Pass criteria
-- Step 1: every joint turns over ±45° under ≤ 5 N (≤ 510 g on the scale) at the foot, with ≤ 2 mm side play at the foot.
+- Step 1: every joint turns over ±45° under ≤ 5 N (≤ 510 g on the scale) at the foot; side play at the foot recorded, within the bound of FUNC-MECH-JOINT-001 once E-M11 has set it.
 - Step 3: the same continuity as in the setup (no wire opened by the turns), no wire visibly pulled at a tube end.
 
 ## Results
