@@ -69,6 +69,7 @@ def test_every_test_sheet_is_complete_and_names_a_requirement():
         assert f'[{rid}](../../requirements/' in text, f'{f}: no link to its requirement'
         # And it carries the RBD tag of its requirement on its first line
         assert text.startswith(f'<!-- @req {rid} -->\n'), f'{f}: first line is not <!-- @req {rid} -->'
+        # When reading its sections and result table
         # Then it has every section, in order
         pos = [text.find(s) for s in SECTIONS]
         assert -1 not in pos and pos == sorted(pos), f'{f}: sections missing or out of order'

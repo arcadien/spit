@@ -19,6 +19,7 @@ def test_plat_power_charge_001_breakout_feeds_the_charger_in_pads(sch):
     # Given the protected TP4056 module and the micro-USB charging socket J1 (usbb in spit.scad)
     u, = sch.refs('TP4056_DW01')
     j, = sch.refs('usb_charging_socket')
+    # When following the breakout pins and the charger output
     # Then the breakout's VBUS / GND are on the module's IN+ / IN- pads
     assert sch.net(j, 'VBUS') == sch.net(u, 'IN+') and sch.net(j, 'GND') == sch.net(u, 'IN-')
     # And OUT+ is the only charger output: it feeds only the power-path P-MOSFET
@@ -31,6 +32,7 @@ def test_plat_power_path_001_q1_and_d1_the_right_way_round(sch):
     # Given the charger, the switch and the power-path parts
     u, = sch.refs('TP4056_DW01')
     vpath = sch.net('SW1', '1')
+    # When reading the pins of D1, Q1 and R1
     # Then D1 goes from VUSB (anode) to VPATH (cathode)
     assert sch.net('D1', '2') == vusb(sch) and sch.net('D1', '1') == vpath
     # And Q1 has its drain on the charger OUT+, its source on VPATH and its gate on VUSB (body diode OUT+ → VPATH,
@@ -43,6 +45,8 @@ def test_plat_power_path_001_q1_and_d1_the_right_way_round(sch):
 
 @pytest.mark.req('PLAT-POWER-PATH-001')
 def test_plat_power_path_001_r1_is_4k7(sch):
+    # Given the power-path gate resistor R1
+    # When reading its value
     # Then R1 is 4.7 kΩ: a warm D1 leaking 50 µA leaves the gate below 0.25 V
     assert sch.value('R1') == '4.7k'
 
@@ -62,6 +66,7 @@ def test_plat_power_hotplug_001_tvs_and_capacitor_across_vusb(sch):
 def test_plat_power_reg_002_tps63020_ps_sync_on_gnd(sch):
     # Given the TPS63020
     reg, = sch.refs('TPS63020_3V3')
+    # When following its PS/SYNC pin
     # Then its PS/SYNC pin is tied to GND (power-save mode, never forced PWM)
     assert sch.net(reg, 'PS') == 'GND'
 
@@ -69,6 +74,7 @@ def test_plat_power_reg_002_tps63020_ps_sync_on_gnd(sch):
 @pytest.mark.req('PLAT-POWER-REG-003')
 def test_plat_power_reg_003_220uF_tantalum_on_3v3_at_the_s3(sch):
     # Given C1
+    # When reading its symbol, value and pins
     # Then it is the 220 µF polarised capacitor, + on +3V3, - on GND
     assert sch.parts['C1'] == 'C_Polarized' and sch.value('C1') == '220µ'
     assert sch.between('C1') == ('+3V3', 'GND')
@@ -81,6 +87,7 @@ def test_plat_power_dist_001_amplifier_on_its_own_vsys_pair_with_c7(sch):
     # Given the amplifier and VSYS (switch SW1 output)
     amp, = sch.refs('MAX98357A')
     vsys = sch.net('SW1', '2')
+    # When following its supply pins and the harness wires
     # Then VIN is on VSYS and GND on system GND (never B-)
     assert sch.net(amp, 'VIN') == vsys and sch.net(amp, 'GND') == 'GND'
     # And C7 470 µF sits across them, + on VIN
@@ -95,6 +102,7 @@ def test_plat_power_monitor_001_vbat_divider_on_gpio1(sch):
     # Given the TP4056 B+ pad and GPIO1 of the S3 (VBAT/2)
     bplus = sch.net(sch.refs('TP4056_DW01')[0], 'B+')
     mid = s3_pin(sch, 1)
+    # When reading R2, R3 and C6
     # Then R2 1M runs from B+ to the midpoint and R3 1M from the midpoint to GND
     assert sch.value('R2') == '1M' and set(sch.between('R2')) == {bplus, mid}
     assert sch.value('R3') == '1M' and set(sch.between('R3')) == {mid, 'GND'}
@@ -106,6 +114,7 @@ def test_plat_power_monitor_001_vbat_divider_on_gpio1(sch):
 def test_plat_power_detect_001_usb_det_divider_on_gpio21(sch):
     # Given VUSB and the USB_DET net
     det = sch.net('R16', '1')
+    # When reading R15, R16, C8 and GPIO21
     # Then GPIO21 is on USB_DET
     assert s3_pin(sch, 21) == det == '/USB_DET'
     # And R15 68k runs from VUSB, R16 100k and C8 100 nF to GND
@@ -118,6 +127,7 @@ def test_plat_power_detect_001_usb_det_divider_on_gpio21(sch):
 def test_plat_power_vsense_001_npn_from_vsys_to_gpio37(sch):
     # Given GPIO37 of the S3
     io37 = s3_pin(sch, 37)
+    # When following the transistor on that pin
     # Then it is the collector of an NPN whose emitter is on GND
     npn = [r for r, p in sch.nets[io37] if sch.parts.get(r, '').startswith('Q_NPN')]
     assert len(npn) == 1
@@ -133,6 +143,7 @@ def test_plat_power_vsense_001_npn_from_vsys_to_gpio37(sch):
 def test_plat_power_gate_001_q5_switches_the_sd_card_supply(sch):
     # Given Q5 (AO3401A) and the microSD reader
     sd, = sch.refs('microSD_3V3')
+    # When reading the pins of Q5 and R22
     # Then Q5 switches +3V3 (source) to SD_3V3 (drain, the reader's VCC)
     assert sch.value('Q5') == 'AO3401A' and sch.parts['Q5'] == 'Q_PMOS'
     assert sch.net('Q5', 'S') == '+3V3' and sch.net('Q5', 'D') == sch.net(sd, 'VCC')
