@@ -21,7 +21,7 @@
 # Incremental: a stage runs only when its input files changed since its last pass (sha256 of their contents in
 # build/check/<stage>.sum, written after the stage passes). FORCE=1 runs everything. Geometry changes (spit.scad)
 # trigger stl → renders → docs (wire lengths); a wire colour change only docs; the schematic only erc.
-# Logs go to build/check/<stage>.log. ORCA=/path/to/OrcaSlicer.AppImage and KICAD=/path/to/kicad.AppImage override
+# Logs go to build/check/<stage>.log. ORCA=/path/to/OrcaSlicer.AppImage (or orca-slicer.exe) and KICAD=/path/to/kicad.AppImage override
 # the tool lookup; otherwise KiCad is the newest ~/bin/kicad-*.AppImage, else `kicad-cli` on the PATH, and Ghostscript
 # is `gs`, else `gswin64c` (Windows).
 set -uo pipefail
@@ -53,7 +53,8 @@ if command -v cygpath >/dev/null; then
 fi
 KICAD=${KICAD:-$(ls ~/bin/kicad-*.AppImage 2>/dev/null | sort | tail -1)}
 GS=$(command -v gs || command -v gswin64c)
-ORCA_PRESETS=~/.config/OrcaSlicer/user/default   # Linux only: the orca stage runs the OrcaSlicer AppImage
+ORCA_PRESETS=~/.config/OrcaSlicer/user/default   # Linux; Windows: %APPDATA%\OrcaSlicer (orca-slicer.exe)
+[ -n "${APPDATA:-}" ] && command -v cygpath >/dev/null && ORCA_PRESETS="$(cygpath -u "$APPDATA")/OrcaSlicer/user/default"
 FAILED=()
 T0=$(date +%s)
 
