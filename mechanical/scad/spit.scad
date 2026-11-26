@@ -194,7 +194,7 @@ usbb = [14.3, 16, 1.5];       // micro-USB breakout: width (z), length (y), PCB 
 usbb_rec = [7.85, 2.47];      // receptacle shell: width (z, centred on the PCB width), height above the PCB (x) (measured)
 usbb_out = 1.1;               // receptacle mouth past the PCB's back edge (measured ~1.1; mouth <= 1 mm inside the back face)
 usbb_z0 = wall + 1.5;         // bottom edge, above the rear foot pad (1.2)
-foot_room = 22;               // under the bottom contact shelf: switch (lever tip to pins 18.9) + its wires, breakout
+foot_room = 22;               // under the bottom contact shelf: switch (lever tip to pins 12.8) + its wires, breakout
 // Bare cells: spring contact plates at both ends (never solder on the cell). Each plate lies on / under a shelf,
 // slid in from the back, solder tab first (towards the front, over the wire slot: wire soldered on the tab beforehand
 // and fed through the slot), held by a dab of glue; the spring pushes them onto the shelves.
@@ -341,17 +341,23 @@ amp_z0 = seam_z[1] + splint_h / 2 + 0.5;                           // just above
 
 /* [Switch and feet] */
 // Slide switch in the power leg floor (next to the charge port), lever pointing down into a floor slot and recessed:
-// nothing sticks out under SPIT, it is flipped with a pen tip. Body glued in a low frame on a raised pad.
+// nothing sticks out under SPIT, it is flipped with a pen tip. Its mounting plate is glued flat on a raised pad,
+// located by two pins through its holes (3 A TRU Components TC-R13-603C-05, measured 2026-11-26).
 switch_on = true;
-sw_body = [12.95, 6.9];       // mini slide switch body (x, y), measured
-sw_lever_h = 5.15;            // lever height out of the body, measured
-sw_h = 18.39;                 // lever tip to pin tips, measured
-sw_lever = [4, 4];            // lever cross-section (x, y): 3.88 measured, 4 to slide freely (tried in print)
-sw_travel = 6;                // lever travel along x, measured
+sw_body = [9.75, 8.17];       // switch body under its plate (x, y), measured
+sw_plate = [19.5, 8, 0.42];   // mounting plate with its two ears (x, y, thickness), measured
+sw_pitch = 14.45;             // ear hole spacing, measured
+sw_hole = 2.45;               // ear hole diameter, measured
+sw_pin = sw_hole - 0.25;      // locating pin diameter
+sw_lever_h = 3.4;             // lever height out of the plate (datasheet)
+sw_h = sw_lever_h + sw_plate[2] + 5.8 + 3.2; // lever tip to pin tips: plate, body 5.8, pins 3.2 (datasheet)
+sw_lever = [4, 3.9];          // lever cross-section (x, y): 3.96 x 3.75 measured, room to slide freely
+sw_travel = 2.2;              // lever travel along x, measured (6.13 - 3.96)
 sw_recess = 0.5;              // lever tip above the underside of the floor
 sw_window = [sw_lever[0] + sw_travel + 0.6, sw_lever[1] + 0.6]; // slot: lever + travel (room for the pen tip beside it)
 sw_pad_h = sw_recess + sw_lever_h - wall;                       // pad under the body (lever face above the floor)
 sw_y = D - wall - 8;          // switch centre (y), near the back of the floor
+sw_x = col_w / 2 + 2;         // switch centre (x): off-centre so that its plate clears the charge port
 // Recesses under every column for stick-on rubber feet (e.g. 3M Bumpon 8 mm).
 feet = true;
 foot_d = 8.4;
@@ -703,7 +709,7 @@ module column(i) {
             }
             else {
                 if (battery) battery_bay(i == power_col);
-                if (switch_on && i == power_col) switch_frame();
+                if (switch_on && i == power_col) switch_pad();
                 if (sd_reader && i == sd_col) sd_mount();
                 if (buck && i == power_col) bk_mount();
                 if (pp && i == power_col) flat_slot(pp_b, pp_z0, lid_y - 0.3 - pp_b[1], pp_lip);
@@ -740,7 +746,7 @@ module column(i) {
             if (battery) pol_marks();
             if (battery && i == power_col && charger_groove > 0)   // TP4056 edge grooves, open at the back (slid in)
                 translate([col_w / 2 - charger[0] / 2 - 0.15, lid_y - 0.3 - charger[1] - 0.2, charger_z0]) cube([charger[0] + 0.3, D, charger[2] + 0.3]);
-            if (switch_on && i == power_col) translate([col_w / 2, sw_y, -eps]) sw_slot(wall + 2 * eps);
+            if (switch_on && i == power_col) translate([sw_x, sw_y, -eps]) sw_slot(wall + 2 * eps);
             if (bme && i == bme_col) translate([col_w / 2, -eps, bme_z0 + bme_b[1] / 2 + bme_port_dz]) rotate([-90, 0, 0])
                 cylinder(d = bme_hole_d, h = wall + 2 * eps, $fn = 16);                       // weather sensor vent
         }
@@ -778,25 +784,18 @@ module foot_pad(p) {
 
 // raised pad + low frame around the body (glue it in), lever slot through both; the front of pad and frame is one
 // 45 deg slope (no overhang when printed front face down)
-module switch_frame() {
-    fx = sw_body[0] + 2.4;
-    fy = sw_body[1] + 2.4;
-    translate([col_w / 2, sw_y, wall - eps]) difference() {
-        union() {
-            hull() {
+module switch_pad() {
+    fx = sw_plate[0];
+    fy = sw_plate[1] + 1;
+    translate([sw_x, sw_y, wall - eps]) {
+        difference() {
+            hull() { // 45 deg front face: prints without support front face down
                 translate([-fx / 2, -fy / 2 - sw_pad_h, 0]) cube([fx, fy + sw_pad_h, eps]);
                 translate([-fx / 2, -fy / 2, sw_pad_h]) cube([fx, fy, eps]);
             }
-            hull() { // under the frame's front wall, up to the top of the frame (1.0 = wall left by the body pocket)
-                translate([-fx / 2, -fy / 2 - sw_pad_h - 2, 0]) cube([fx, sw_pad_h + 3, eps]);
-                translate([-fx / 2, -fy / 2, sw_pad_h + 2 - eps]) cube([fx, 1, eps]);
-            }
-            translate([0, 0, sw_pad_h]) difference() { // front and sides only: a back wall would bridge the pocket
-                translate([-fx / 2, -fy / 2, 0]) cube([fx, fy, 2]);
-                translate([-sw_body[0] / 2 - 0.2, -sw_body[1] / 2 - 0.2, -eps]) cube([sw_body[0] + 0.4, fy, 2 + 2 * eps]);
-            }
+            translate([0, 0, -eps]) sw_slot(sw_pad_h + 3 * eps);
         }
-        translate([0, 0, -eps]) sw_slot(sw_pad_h + 3 * eps);
+        for (s = [-1, 1]) translate([s * sw_pitch / 2, 0, sw_pad_h - eps]) cylinder(d = sw_pin, h = sw_plate[2] + 0.6, $fn = 24);
     }
 }
 
@@ -1247,9 +1246,14 @@ module dummies(i) {
             color("dimgray") translate([col_w / 2 - 3, bk_y1 - bk[1] / 2 - 3, bk_z0 + bk[2]]) cube([6, 6, bk_h]);
         }
     }
-    if (switch_on && i == power_col) color("black") translate([col_w / 2, sw_y, sw_recess]) {
-        translate([-sw_lever[0] / 2 - sw_travel / 2, -sw_lever[1] / 2, 0]) cube([sw_lever[0], sw_lever[1], sw_lever_h]);
-        translate([-sw_body[0] / 2, -sw_body[1] / 2, sw_lever_h]) cube([sw_body[0], sw_body[1], sw_h - sw_lever_h - 6.7]);
+    if (switch_on && i == power_col) translate([sw_x, sw_y, sw_recess]) {
+        color("black") translate([-sw_lever[0] / 2 - sw_travel / 2, -sw_lever[1] / 2, 0]) cube([sw_lever[0], sw_lever[1], sw_lever_h]);
+        color("silver") translate([0, 0, sw_lever_h]) difference() {
+            hull() for (s = [-1, 1]) translate([s * (sw_plate[0] - sw_plate[1]) / 2, 0, 0]) cylinder(d = sw_plate[1], h = sw_plate[2], $fn = 32);
+            for (s = [-1, 1]) translate([s * sw_pitch / 2, 0, -1]) cylinder(d = sw_hole, h = 3, $fn = 24);
+        }
+        color("royalblue") translate([-sw_body[0] / 2, -sw_body[1] / 2, sw_lever_h + sw_plate[2]]) cube([sw_body[0], sw_body[1], 5.8]);
+        color("gold") for (s = [-1, 0, 1]) translate([s * 2.5 - 0.4, -0.25, sw_lever_h + sw_plate[2] + 5.8]) cube([0.8, 0.5, 3.2]);
     }
     if (i < 3) for (z = pivot_z) color("gold") translate([col_w - wall - pivot_boss_l, D / 2, z]) rotate([0, 90, 0])
         difference() { cylinder(d = tube_od, h = 2 * (wall + pivot_boss_l) + gap + collar[1] + tube_over); cylinder(d = tube_od - 1, h = 90, center = true); }
@@ -1607,7 +1611,8 @@ if (battery && bat_top_shelf_z + 1 > leg_rows[1] - lid_boss_d / 2)
     echo("WARNING: the cell runs into the leg lid screws");
 if (switch_on && battery && sw_recess + sw_h + 3 > shelf_z - shelf_t)
     echo("WARNING: switch pins (+3 mm for the wires) run into the bottom contact shelf");
-if (switch_on && (col_w / 2 - sw_body[0] / 2 - 1.2 < usbb_x0 + usbb[2] + max(usbb_rec[1], 1.2) + 0.5 || sw_y + sw_body[1] / 2 + 1.2 > lid_y - 0.5))
+if (switch_on && (sw_x - sw_plate[0] / 2 < usbb_x0 + usbb[2] + max(usbb_rec[1], 1.2) + 0.5 || sw_x + sw_plate[0] / 2 > col_w - wall - 1
+    || sw_y + sw_plate[1] / 2 + 0.5 > lid_y - 0.5))
     echo("WARNING: switch pad runs into the charge port or the lid");
 if (sensors) {
     if (rtc[0] + 0.4 + 2 * rib > col_w - 2 * wall) echo("WARNING: RTC slot too wide for the leg");

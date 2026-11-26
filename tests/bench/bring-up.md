@@ -44,7 +44,7 @@ What is left to buy: [shopping_list.md](../../hardware/shopping_list.md). Open q
 - [ ] TP4056 R_PROG 2.4 k → [PLAT-POWER-CHARGE-002](PLAT-POWER-CHARGE-002.md)
 - [ ] Battery-fed LEDs removed → [PLAT-POWER-SLEEP-001](PLAT-POWER-SLEEP-001.md), [TECH-POWER-SLEEP-001](TECH-POWER-SLEEP-001.md)
 - [ ] TPS63020 output and idle current → [PLAT-POWER-REG-001](PLAT-POWER-REG-001.md)
-- [ ] Slide switch current rating (≥ 1 A).
+- [x] Slide switch current rating (≥ 1 A): 3 A 125 V marking (TC-R13-603C-05).
 - [ ] ZS-042: CR2032 charging resistor removed.
 - [ ] Cells matched → [TECH-POWER-CELL-002](TECH-POWER-CELL-002.md)
 
@@ -107,7 +107,7 @@ cells until step 3.5; nothing goes on the 3V3 before step 3.6 is green)
 **4. Print** (`mechanical/3mf/spit.3mf`, or the CR-10 plate)
 - [ ] bed levelling (`part="print_test_level"`) and screen fit (`part="print_test_screen"`), exported by hand from the scad if needed, then the plates; PETG collars, black PLA plugs.
 - [ ] Check the lid slot / microSD, the TPS63020 and P1 / P2 grooves on the printed parts before gluing the splints.
-- [ ] Charge port in the left leg, first pivot joint → [PLAT-MECH-CHARGEPORT-001](PLAT-MECH-CHARGEPORT-001.md), [PLAT-MECH-PIVOT-001](PLAT-MECH-PIVOT-001.md)
+- [ ] Charge port in the left leg, first pivot joint → [PLAT-MECH-CHARGEPORT-001](PLAT-MECH-CHARGEPORT-001.md), [PLAT-MECH-SWITCH-001](PLAT-MECH-SWITCH-001.md), [PLAT-MECH-PIVOT-001](PLAT-MECH-PIVOT-001.md)
 
 **5. Firmware**
 - [ ] GPIO map from the *Signals* table of `hardware/design_notes.md` and the carrier plan (`renders/spit_board_s3.svg`); SPI 26.7 MHz first (scope SCK at screen 2 if possible), then 40 MHz;
