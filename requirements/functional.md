@@ -147,8 +147,8 @@
 
 **Title:** The columns turn on their joints
 
-**Status:** draft
+**Status:** validated
 
 **Dependencies:** none
 
-**Description:** The four columns are joined on one horizontal axis by three joints; each column turns by hand ±45° from the aligned position relative to its neighbours, and the wires running from column to column cross each joint inside its tube, so turning a column twists them over their free length instead of pulling on them. Over the whole ±45°, the column turns under a push ≤ 5 N at its foot, with the smallest side play at the foot that this force allows; its bound is set from the side play measured on the first assembled joint (pending: E-M11, [open_questions.md](../open_questions.md)). Twenty turns back and forth over ±45° leave every wire crossing a joint intact.
+**Description:** The four columns are joined on one horizontal axis by three joints; each column turns by hand ±45° from the aligned position relative to its neighbours, and the wires running from column to column cross each joint inside its tube, so turning a column twists them over their free length instead of pulling on them. Over the whole ±45°, the column turns under a push ≤ 5 N at its foot, with the smallest side play at the foot that this force allows, ≤ 2 mm (≈ 0.5°). The 2 mm bound is provisional: it is tightened to the side play measured on the first assembled joint (E-M11, [open_questions.md](../open_questions.md)). Twenty turns back and forth over ±45° leave every wire crossing a joint intact.

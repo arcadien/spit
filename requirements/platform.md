@@ -235,7 +235,7 @@ derives_from: [FUNC-POWER-CHARGE-001](functional.md#func-power-charge-001)
 
 **Title:** Column pivot bores sized from tube_test3: teardrop bores, glued 8.00 / turning 8.05 for the 7.93 brass tube
 
-**Status:** draft
+**Status:** validated
 
 **Dependencies:** none
 
