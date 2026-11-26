@@ -1,6 +1,6 @@
 """Slice the saved Orca projects headlessly to prove every plate fits its printer's bed.
 
-usage: python3 -I scripts/orca_check.py [--orca path/to/OrcaSlicer.AppImage]
+usage: python3 -I scripts/orca_check.py [--orca path/to/OrcaSlicer.AppImage | orca-slicer.exe]
 
   spit.3mf       Ender 3 (220 x 220), the hand-arranged 5-plate project, user presets
                   "Creality Ender-3 0.4" + "0.20mm PETG @Ender3"
@@ -50,7 +50,10 @@ def find_orca():
     exe = shutil.which("orca-slicer")
     if exe:
         return exe
-    sys.exit("orca_check: OrcaSlicer not found (set ORCA=/path/to/OrcaSlicer.AppImage)")
+    win = os.path.join(os.environ.get("ProgramFiles", r"C:\Program Files"), "OrcaSlicer", "orca-slicer.exe")
+    if os.name == "nt" and os.path.exists(win):
+        return win
+    sys.exit("orca_check: OrcaSlicer not found (set ORCA=/path/to/OrcaSlicer.AppImage or orca-slicer.exe)")
 
 
 def run(cmd, log, cwd):
@@ -59,12 +62,16 @@ def run(cmd, log, cwd):
 
 
 def profiles(p, d):
+    """Flattened presets; None when a system preset they inherit from cannot be read (OrcaSlicer >= 2.5 packs them in
+    .opc archives): the project is then sliced with its own embedded settings; "missing" when a preset itself is missing."""
     files = []
     for kind in ("machine", "process", "filament"):
         name = p["printer" if kind == "machine" else kind]
         if name:
             f = os.path.join(d, kind + ".json")
-            subprocess.run([sys.executable, "-I", os.path.join(ROOT, "scripts", "orca_profile.py"), kind, name, f], check=True)
+            rc = subprocess.run([sys.executable, "-I", os.path.join(ROOT, "scripts", "orca_profile.py"), kind, name, f]).returncode
+            if rc:
+                return None if rc == 3 else "missing"
             files.append(f)
     return files
 
@@ -89,9 +96,16 @@ def main():
         os.makedirs(d)
         files = profiles(p, d)
         proj = os.path.join(ROOT, "mechanical", "3mf", p["file"])
-        base = ["--arrange", "0", "--orient", "0", "--load-settings", ";".join(f for f in files if "filament" not in f)]
-        if p["filament"]:
-            base += ["--load-filaments", files[-1]]
+        base = ["--arrange", "0", "--orient", "0"]
+        if files == "missing":
+            failed.append(f"{p['file']}: presets {p['printer']} / {p['process']} not found")
+            continue
+        if files is None:
+            print(f"   {p['file']}: system presets packed (.opc), sliced with the project's embedded settings")
+        else:
+            base += ["--load-settings", ";".join(f for f in files if "filament" not in f)]
+            if p["filament"]:
+                base += ["--load-filaments", files[-1]]
         if not os.path.exists(proj):
             # first run: seed the saved layout from the strip packer, written as an Orca project
             seed = os.path.join(d, "seed.3mf")
