@@ -54,7 +54,6 @@ def test_plat_mech_pivot_001_teardrop_bores_sized_from_tube_test3(model):
     assert warnings == []
 
 
-@pytest.mark.xfail(strict=True, reason='PLAT-MECH-SWITCH-001 pocket not implemented yet')
 @pytest.mark.req('PLAT-MECH-SWITCH-001')
 def test_plat_mech_switch_001_switch_seated_in_a_pocket(model):
     # Given the model
