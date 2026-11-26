@@ -51,7 +51,7 @@
 
 **Dependencies:** [FUNC-POWER-CHARGE-001](functional.md#func-power-charge-001), [FUNC-POWER-SWITCH-001](functional.md#func-power-switch-001)
 
-**Description:** The robot recharges when plugged in, whether it is switched on or off: switching it off neither stops nor slows the charge, and while it is on, its own consumption is taken from the external supply, not from the charge. On the same battery, the charge current with the robot switched off and with it switched on and idle differ by no more than 10 %.
+**Description:** The robot recharges when plugged in, whether it is switched on or off: switching it off neither stops nor slows the charge: on the same battery, the charge current with the robot switched off and with it switched on and idle differ by no more than 10 %. Where its consumption comes from while it is on is [FUNC-POWER-PATH-001](functional.md#func-power-path-001)'s.
 
 ### FUNC-POWER-MONITOR-001
 
