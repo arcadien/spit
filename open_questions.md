@@ -33,4 +33,5 @@ order in `tests/bench/bring-up.md`, currents in `hardware/power_budget.md`).
 | E-M7 | Sleep current with and without the microSD card (the ≤ 0.65 mA limit is provisional until then, to be tightened) | PERF-POWER-SLEEP-001 |
 | E-M9 | Back-leak from the cells into a host's VBUS, host off and cable in (the ≤ 1 mA limit is provisional until then) | TECH-POWER-VBUS-001 |
 | E-M10 | ADC calibration of the battery reading (divider ratio and offset), bring-up step 3.7 | CONF-POWER-ADCCAL-001, PERF-POWER-MONITOR-001 |
+| CELL1 | Model and rated capacity of the two 18650 cells (wrapper marking) → `hardware/bom.md`; the charge and runtime limits assume ~2 × 2500 mAh | PERF-POWER-CHARGE-001, PERF-POWER-RUNTIME-001, PLAT-POWER-CHARGE-002 |
 | AU1 | Firmware volume cap: VSYS ≥ 3.0 V at the amplifier with the pack at 3.30 V | PERF-AUDIO-PEAK-001, branch `mech-audio` |
