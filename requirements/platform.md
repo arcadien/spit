@@ -231,6 +231,18 @@ derives_from: [FUNC-POWER-CHARGE-001](functional.md#func-power-charge-001)
 
 **Description:** The micro-USB breakout stands against the outer side wall of the left foot, its receptacle axis horizontal along y. The receptacle mouth is at most 1 mm inside the back face, and its centre is ≥ 6 mm above the floor, so a plug overmold up to 11.6 × 8 mm clears both the table and the leg edges. The breakout is held so that the plug's insertion force (≤ 35 N, micro-USB spec) does not move it, and the lid can still be removed without unsoldering anything. The floor opening of the former port is closed. Acceptance: `make check` clean (geometry asserts in `spit.scad` for the axis, mouth depth, height and clearances); print: a plug inserted and removed 10 times, with the breakout staying in place.
 
+### PLAT-MECH-SWITCH-001
+
+**Title:** Power switch glued on a floor pad of the left leg, located by its ears
+
+**Status:** validated
+
+**Dependencies:** [PLAT-MECH-CHARGEPORT-001](platform.md#plat-mech-chargeport-001)
+
+derives_from: [FUNC-POWER-SWITCH-001](functional.md#func-power-switch-001)
+
+**Description:** SW1 (slide switch, 3 A 125 V; body 9.75 × 8.17, lever 3.96 × 3.75 with 2.2 mm of travel, mounting plate 19.5 × 8 × 0.42 with two Ø2.45 holes 14.45 apart, see [measurements.md](../hardware/measurements.md)) is glued, plate flat, on a pad of the left leg floor and located by two printed pins through its holes; no screws. It is moved 2 mm towards the right side wall so that its plate clears the charge port. The lever points down into a floor slot, its tip 0.5 mm above the underside: nothing sticks out under SPIT, it is flipped with a pen tip. Acceptance: pytest on the model (measured switch parameters, pins and offset; model clean, including its asserts "switch pad runs into the charge port or the lid" and "switch pins run into the bottom contact shelf"); bench: the pins go through the plate holes, the lever slides freely over its whole travel, on and off are reached with a pen tip, and the body has no play once glued.
+
 ### PLAT-MECH-PIVOT-001
 
 **Title:** Column pivot bores sized from tube_test3: teardrop bores, glued 8.00 / turning 8.05 for the 7.93 brass tube
