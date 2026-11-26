@@ -11,7 +11,7 @@ Why each part is there and where it sits: [design_notes.md](design_notes.md). Wh
 | U3, U4 1.3" IPS 240×240 ST7789 SPI module **with CS** (8 pins), board 27 × 42 | 2 | `lcd130cs` |
 | BT1, BT2 18650 Li-ion cell | 2 | one per leg; 18500 also fits (`bat = [18.5, 50]`) |
 | Battery contact plates 13 × 18 × 1.2: spring (Ø5, 10.7 high) + button (+, 1.8 overall) | 2 pairs | one pair per leg, wires soldered on the tabs |
-| U1 TP4056 charger breakout, **protected (DW01)**, 28.7 × 17.15 × 0.9 (26.3 once its micro-USB is desoldered and the nubs filed) | 1 | left leg, flat above the TPS63020; fed by J1 on its IN pads; **R_PROG swapped for 2.4 k** (0.5 A) |
+| U1 TP4056 charger breakout, **protected (DW01)**, 28.7 × 17.15 × 0.9 (26.3 once its micro-USB is desoldered and the nubs filed) | 1 | left leg, flat above the TPS63020; fed by J1 on its IN pads; factory R_PROG 1.2 k kept (1 A) until E-M8 |
 | J1 micro-USB breakout | 1 | charge port in the left foot, plug from behind at the heel |
 | SW1 mini slide switch, 3 pins (1P2T), body 12.95 × 6.9, lever 5.15 | 1 | left leg floor; **check its current rating** (≥ 1 A) |
 | U9 **TPS63020** buck-boost module, 3.3 V, EN + PS/SYNC, 26.7 × 17.7 (measured) | 1 | left leg, flat above the microSD; EN to VIN, PS/SYNC to GND |
@@ -32,7 +32,6 @@ Why each part is there and where it sits: [design_notes.md](design_notes.md). Wh
 | R2, R3 **1 MΩ** | 2 | B+ divider (battery monitor): R2 in line in the harness at the TP4056 B+ pad (heat-shrink), R3 on the power-path perfboard |
 | Q4 NPN **BC547B** + R23 **1 MΩ**, R24 **330 kΩ** 1/4 W | 1 + 2 | VSYS sense into GPIO37: Q4 and R24 standing on the carrier, R23 in line in the harness at the power-path board (heat-shrink) |
 | R15 **68 kΩ**, R16 **100 kΩ** | 1 + 1 | VUSB → USB_DET divider, on the power-path perfboard |
-| **2.4 kΩ** (through-hole 1/4 W, or SMD 0805 / 1206) | 1 | replaces the TP4056's R_PROG (1.2 k, removed). A through-hole one can hang on two short wires (≤ 2 cm) on the R_PROG pads, heat-shrink over each joint and the body, glued flat within 5.5 mm above the board (`charger_h`). **The PROG node must never touch GND** (charge current unlimited); a broken wire only stops the charge |
 | R4, R18 **10 kΩ** (+ R5–R9 10 kΩ) | 2 (+ 5) | R4 BL_EN → GND (P1), R18 amp SD → GND (P2); R5–R9 microSD pull-ups, only if the reader has none |
 | R10, R17 **1 kΩ** | 2 | in series GPIO4 → amp SD, AM312 OUT → GPIO3, on P2 |
 | R11, R13, R14, R20 **33 Ω** | 4 | microSD CLK, amp BCLK, amp LRC, MOSI, at the S3 pins |

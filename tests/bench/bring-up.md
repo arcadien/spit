@@ -41,7 +41,7 @@ What is left to buy: [shopping_list.md](../../hardware/shopping_list.md). Open q
       tied to VIN, cut the trace.
 - [ ] D1 (1N5822) reverse leakage at 4.2 V, at 35 °C (hot room; D1 only blocks on battery, the charger is off then and does not heat the leg): > 50 µA → a lower-leakage Schottky (R1 is already 4.7 k).
 - [ ] AM312 output high level at 3.3 V > 2.5 V; DW01: does it switch on by itself when the cells are first connected?
-- [ ] TP4056 R_PROG 2.4 k → [PLAT-POWER-CHARGE-002](PLAT-POWER-CHARGE-002.md)
+- [ ] TP4056 R_PROG 1.2 k (factory, kept) → [PLAT-POWER-CHARGE-002](PLAT-POWER-CHARGE-002.md)
 - [ ] Battery-fed LEDs removed → [PLAT-POWER-SLEEP-001](PLAT-POWER-SLEEP-001.md), [TECH-POWER-SLEEP-001](TECH-POWER-SLEEP-001.md)
 - [ ] TPS63020 output and idle current → [PLAT-POWER-REG-001](PLAT-POWER-REG-001.md); PS/SYNC to GND (continuity).
 - [ ] Slide switch current rating (≥ 1 A) → [PLAT-POWER-SWITCH-001](PLAT-POWER-SWITCH-001.md)

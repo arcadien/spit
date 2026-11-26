@@ -10,7 +10,7 @@ and the harness guide [spit_harness.html](spit_harness.html). Requirements: `req
 
 | Ref | Part | Why / where |
 |---|---|---|
-| U1 | TP4056 + DW01 + FS8205A | 0.5 A charge: its R_PROG (1.2 k, "122") is replaced by 2.4 k ("242"); at 1 A it would dissipate 1–1.8 W in the closed leg. Cell protection. |
+| U1 | TP4056 + DW01 + FS8205A | 1 A charge: factory R_PROG (1.2 k, "122") kept until E-M8; it dissipates 1–1.8 W in the closed leg, so a wall > 45 °C swaps it for 2.4 k ("242", 0.5 A). Cell protection. |
 | BT1, BT2 | 18650, in parallel | same model, voltages equal within ±0.05 V before joining them; each cell comes through its XH connector (X12 left, X16 right), joined on the TP4056 B+ / B− pads |
 | F1, F2 | PPTC 30 V, 1.6 A hold (~3.2 A trip), XF160 | on the + of each cell, right after the + plate; standing on the inner front wall in front of each cell (15 mm wide: too wide for the top shelf) |
 | J1 | micro-USB breakout (`usbb` in the model) | the charge port, at the heel of the left leg; its VBUS / GND go to the TP4056 IN pads |
@@ -75,7 +75,7 @@ TP4056 OUT+ (cells)   ──► AO3401A P-MOSFET Q1 (D → S) ──┘
                            gate → IN+, R1 4.7 kΩ gate → GND
 ```
 
-- The switch sits after the merge: off = robot off, charging still works. Use a 5 V ≥ 2 A charger (0.5 A charge + up to
+- The switch sits after the merge: off = robot off, charging still works. Use a 5 V ≥ 2 A charger (1 A charge + up to
   ~1 A for the robot on mains: a PC port is not enough).
 - The battery is read on the cells, not on VSYS: on mains VSYS is the USB rail (~4.7 V) and says nothing about the
   battery. B− needs no wire (it differs from GND only by the DW01 switches, < 50 mV).

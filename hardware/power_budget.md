@@ -28,7 +28,7 @@ Conventions:
 | ZS-042 EEPROM (AT24C32) | 3V3 | µA range idle | | µA range, to check | | | |
 | microSD card + reader | 3V3 (Q5) | 20–100 mA reading / writing, card dependent | ~100 mA+ at insertion / writes | 0 (cut by Q5) | [FUNC-POWER-GATE-001](../requirements/functional.md#func-power-gate-001), E-M7 | | |
 | TPS63020 buck-boost (U9) | VSYS | efficiency ~85–90 % on the 3V3 load | | ~25–50 µA idle (PS/SYNC to GND) | [design notes](design_notes.md) *Parts* (U9) | | |
-| TP4056 + DW01 module | B+ | charging: 0.5 A in (R_PROG 2.4k) | | < 10 µA from the cells, USB out | checklist 3.1 | | |
+| TP4056 + DW01 module | B+ | charging: 1 A in (R_PROG 1.2k) | | < 10 µA from the cells, USB out | checklist 3.1 | | |
 | D1 1N5822 (power path) | B+ | | | reverse leakage up to tens of µA, warm | E-M3 | | |
 | VBAT/2 divider R2 / R3 1 M / 1 M | B+ | ~2 µA | | ~2 µA (before SW1: also when off) | [design notes](design_notes.md) *Parts* (R2, R3) | | |
 | USB_DET divider R15 / R16 | VUSB | ~30 µA, only on the external supply | | 0 on battery | | | |
