@@ -151,4 +151,4 @@
 
 **Dependencies:** none
 
-**Description:** The four columns are joined on one horizontal axis by three joints; each column turns by hand relative to its neighbours, without wobble, and the wires running from column to column cross each joint inside its tube, so turning a column does not pull on them. Twenty turns back and forth leave every wire crossing a joint intact.
+**Description:** The four columns are joined on one horizontal axis by three joints; each column turns by hand ±45° from the aligned position relative to its neighbours, and the wires running from column to column cross each joint inside its tube, so turning a column twists them over their free length instead of pulling on them. Over the whole ±45°, the column turns under a push ≤ 5 N at its foot, with ≤ 2 mm of side play at the foot (≈ 0.5°). Twenty turns back and forth over ±45° leave every wire crossing a joint intact.
