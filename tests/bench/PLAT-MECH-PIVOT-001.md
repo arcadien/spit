@@ -31,7 +31,7 @@ bring-up step **4** ([bring-up.md](bring-up.md)); add a line to *Results* every 
 - Glued side: the tube holds before glue and does not turn once glued.
 - Turning side: turns over ±45° under ≤ 5 N at the foot ([FUNC-MECH-JOINT-001](../../requirements/functional.md#func-mech-joint-001)). Over 5 N: ream the bore, or check that no glue reached the boss.
 - Collar: the paper strip no longer slides between collar and boss (axial play ≤ 0.1 mm).
-- Side play at the foot: recorded; its bound comes from this first measurement (E-M11 in [open_questions.md](../../open_questions.md)).
+- Side play at the foot ≤ 2 mm (provisional), recorded: this first measurement tightens the bound (E-M11 in [open_questions.md](../../open_questions.md)).
 
 ## Results
 | Date | Commit / build | Glued side | Turning side N / mm | Pass | By | Notes |
