@@ -49,7 +49,7 @@ stage. Logs in `build/check/`.
 | Stage | Runs when | What fails it |
 |---|---|---|
 | model | the `.scad` files change | `spit.scad` evaluated without export (seconds): any OpenSCAD `WARNING` / `ERROR`, the model's own geometry checks included |
-| stl | the `.scad` files, `build4.sh`, `stl2_3mf.py` change, or the STLs on disk are not the last ones it exported (they are not in git) | any print part (Ender 3 halves, CR-10 one-piece, the `tube_test3` trial print) with an OpenSCAD `WARNING` / `ERROR`; a raw plate (written to `build/plates/`) off its bed (Ender 3 220 × 220, CR-10 300 × 300) |
+| stl | the `.scad` files, `build4.sh`, `stl2_3mf.py` change, or the STLs on disk are not the last ones it exported (they are not in git) | any print part (Ender 3 halves, CR-10 one-piece, the `tube_test3` / `pivot_test<i>` trial prints) with an OpenSCAD `WARNING` / `ERROR`; a raw plate (written to `build/plates/`) off its bed (Ender 3 220 × 220, CR-10 300 × 300) |
 | meshes | **pre-push** (`make check-meshes`, not part of `make check`), when the STLs or the Orca projects change | `tools/update_orca_project.py` on `mechanical/3mf/spit.3mf` and `spit_cr10.3mf`: meshes swapped for the current STLs, layout kept, backup in `backups/`; an up-to-date project is not rewritten; an object without its STL fails. The pre-push hook then refuses the push until the rewritten projects are committed |
 | overhang | **only on request** (`make check-overhang`, not part of `make check`: overhangs are checked in Orca) | `scripts/overhang.py` (uv + trimesh): a region over 2 cm² facing down more than 50° from vertical, unless it is a ceiling narrower than 3 mm (bridge) or listed with its reason in `scripts/overhang_allow.json` (`--limit 45` for a stricter pass) |
 | orca | **only on request** (`make check-orca`, not part of `make check`: needs the OrcaSlicer AppImage, Linux only) | `scripts/orca_check.py` refreshes the meshes of `mechanical/3mf/spit.3mf` (Ender 3) and `mechanical/3mf/spit_cr10.3mf` (CR-10) in place (layout kept, backup in `backups/`; same as `update_orca_project.py`), then the OrcaSlicer CLI (AppImage, no GUI) slices every plate: a part that grew off its plate or into its neighbour fails |
@@ -97,7 +97,7 @@ one step by hand instead:
 |---|---|
 | `tools/build4.sh stl` | `mechanical/stl/spit_*.stl` (Ender 3 halves) |
 | `tools/build4.sh cr10stl` | `mechanical/stl/spit_cr10_*.stl` (one-piece parts) |
-| `tools/build4.sh tests` | trial print `tube_test3` (finished trials `pir_test`, `tube_test`, `tube_test2` stay in the model, export them one-off) |
+| `tools/build4.sh tests` | trial prints `tube_test3`, `pivot_test1` / `pivot_test2` (top of a middle column, ~25 mm, to try a joint against a printed leg: [PLAT-MECH-PIVOT-001 sheet](tests/bench/PLAT-MECH-PIVOT-001.md)) (finished trials `pir_test`, `tube_test`, `tube_test2` stay in the model, export them one-off) |
 | `openscad -D 'part="print_<part>"' -o <part>.stl mechanical/scad/spit.scad` | any other part, one-off (e.g. `test_level`, `test_screen`: kept in the model, no longer exported) |
 | `tools/build4.sh renders` | `renders/*.png` (README pictures, connector details) |
 | `python3 -I tools/harness.py` | `hardware/spit_harness.html` + `.pdf` (wire lengths are read from the model) |

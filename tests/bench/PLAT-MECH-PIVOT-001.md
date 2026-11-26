@@ -6,7 +6,11 @@ teardrop bores, no WARNING) is checked by `tests/test_mechanical.py`; this sheet
 bring-up step **4** ([bring-up.md](bring-up.md)); add a line to *Results* every time it is run.
 
 ## Equipment
-- Two printed neighbouring columns (first joint), the brass tube (7.93 measured) cut to length.
+- Two printed neighbouring columns (first joint), the brass tube (7.93 measured) cut to length. With only one leg
+  printed, its neighbour can be the trial piece `pivot_test<i>` (the top ~25 mm of the middle column, same bores and
+  bearing ring, `tools/build4.sh tests`): `pivot_test1` next to the left leg (tube glued in the leg, turning in the
+  piece), `pivot_test2` next to the right leg (tube glued in the piece, the leg turns). Hold the piece in the hand and
+  take the force and the side play at the leg's foot.
 - Epoxy or cyanoacrylate glue; an 8 mm drill bit to ream a bore that binds.
 - The printed collar (`print_collar`), a strip of 80 g printer paper (~0.1 mm) as a shim.
 - A protractor, a ruler, a kitchen scale or a luggage scale (5 N ≈ 510 g).

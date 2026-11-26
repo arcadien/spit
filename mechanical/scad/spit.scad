@@ -12,7 +12,7 @@
 // Display only: the JST-XH pairs use XH() from connectors.scad (next to this file); prints do not need it.
 use <connectors.scad>
 
-part = "assembly"; // assembly | open | open_ghost | col0..col3 | col<i>_bottom | col<i>_top | lid_<leg|mid>_<bottom|top> | splint | inserts | collar | test_screen | pir_test | tube_test | tube_test2 | tube_test3 | print_<part>
+part = "assembly"; // assembly | open | open_ghost | col0..col3 | col<i>_bottom | col<i>_top | lid_<leg|mid>_<bottom|top> | splint | inserts | collar | test_screen | pir_test | tube_test | tube_test2 | tube_test3 | pivot_test<i> | print_<part>
 
 /* [Proportions] */
 D = 31;                       // depth (mm). Minimum ~28.5 for a D1 mini alone (wall grooves), 30 for the 0.96" OLED, 31 for the 1.3" LCD
@@ -374,6 +374,7 @@ pivot_boss_l = 5;             // boss depth inside the column (bearing / glue le
 pivot_ring_d = 16;            // bearing ring on the turning side, thickness = gap
 collar = [13, 2];             // retaining collar glued on the tube inside the turning column (OD, thickness; 2 leaves room for the motion sensor)
 tube_over = 0.5;              // tube end past the collar
+pivot_test_below = 8;         // trial piece pivot_test<i>: the column top from this far below its pivot bosses (E-M11)
 detent_r = 6.5;
 detent_n = 24;
 detent_bump_d = 1.6;
@@ -913,12 +914,14 @@ module contact_shelf(z, t) {
 }
 
 // ---------- halves and splint ----------
-module half(i, top) { // one half of column i (z below / above its seam)
+module slab(i, z0, z1) { // column i between heights z0 and z1
     intersection() {
         column(i);
-        translate([-gap - 2, -1, top ? seam_z[i] : -1]) cube([col_w + 2 * gap + 4, D + 2, top ? H - seam_z[i] + 1 : seam_z[i] + 1]);
+        translate([-gap - 2, -1, z0]) cube([col_w + 2 * gap + 4, D + 2, z1 - z0]);
     }
 }
+module half(i, top) slab(i, top ? seam_z[i] : -1, top ? H + 1 : seam_z[i]); // one half of column i (z below / above its seam)
+pivot_test_z = pivot_z[0] - pivot_boss_d / 2 - pivot_test_below;
 
 module lid_half(mid, top, sd_slot_on = false, spk = true) {
     sz = mid ? lid_seam_z[1] : lid_seam_z[0];
@@ -1485,6 +1488,11 @@ else if (part == "print_tube_test3") rotate([90, 0, 0]) tube_test(glue = tube_te
 for (i = [0:3], h = ["bottom", "top"]) {
     if (part == str("col", i, "_", h)) half(i, h == "top");
     if (part == str("print_col", i, "_", h)) rotate([90, 0, 0]) half(i, h == "top");
+}
+// pivot trial piece: the top of column i with its bores and bearing ring, to try a joint against a printed column
+for (i = [0:3]) {
+    if (part == str("pivot_test", i)) slab(i, pivot_test_z, H + 1);
+    if (part == str("print_pivot_test", i)) rotate([90, 0, 0]) slab(i, pivot_test_z, H + 1);
 }
 for (k = ["leg", "mid", "leg_sd", "mid_left"], h = ["bottom", "top"]) {
     if (part == str("lid_", k, "_", h)) lid_half(k == "mid" || k == "mid_left", h == "top", k == "leg_sd", k != "mid_left");
