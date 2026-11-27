@@ -190,7 +190,7 @@ charger_lip = 0.5;            // lower ledges under the board's side edges (no u
 // Charge port at the heel (PLAT-MECH-CHARGEPORT-001): the breakout stands against the outer side wall (x = 0), solder
 // side towards it, receptacle at its back end facing the lid; its back edge rests against the lid (pull-out stop), a
 // front stop in two tabs takes the plug's push; the receptacle goes through a notch at the bottom of the lid.
-usbb = [14.3, 16, 1.5];       // micro-USB breakout: width (z), length (y), PCB (measured)
+usbb = [14.3, 14.85, 1.5];    // micro-USB breakout: width (z), length (y), PCB (measured; length 14.85 re-measured 2026-11-22)
 usbb_rec = [7.85, 2.47];      // receptacle shell: width (z, centred on the PCB width), height above the PCB (x) (measured)
 usbb_out = 1.1;               // receptacle mouth past the PCB's back edge (measured ~1.1; mouth <= 1 mm inside the back face)
 usbb_z0 = wall + 1.5;         // bottom edge, above the rear foot pad (1.2)
@@ -323,6 +323,7 @@ sd_sock_over = 2.8;           // socket mouth beyond the board's back edge (y): 
 sd_card_out = 6.9;            // latched card beyond the socket mouth (y)
 sd_fwd = 2;                   // board moved forward from the lid (sinks the card; costs wire room in front of the board)
 sd_lip = 1.0;                 // grooves reach over the board's side edges (keep clear of its components and GND pad)
+sd_side_clr = 0.5;            // side play per edge in its grooves (print test 2026-11-21: 4 of the former 4.5 mm filled)
 sd_slot = [12.5, 2.2];        // card slot through the lid (x, z): microSD is 11 x 1
 sd_dz = 10;                   // underside of the board above the lid screw posts over the top cell shelf
 
@@ -384,6 +385,7 @@ leg_angle = [0, 0];           // assembly preview: swing of the left / right leg
 /* [Hardware] */
 rib = 1.6;                    // board slot rails and stops (charge port, amplifier, sensors, spare): 4 lines at 0.4
 pcb_gap = 1.2;                // boards whose solder side faces the wall stand off it on two edge strips (cut pins, pads)
+lid_stop = [5, 2.5];          // leg lid stops at mid-battery: length (z), reach from the side wall (x) = depth of the 45 deg underside (y)
 wire_room = 5;                // free depth wanted behind a board for the wires soldered on it
 stack_gap = 4;                // between two flat boards: components / wires of the lower one, solder tails of the upper
 
@@ -520,6 +522,20 @@ bk_y1 = lid_y - 0.3;                                  // back edge of the buck-b
 charger_z0 = bk_z0 + bk[2] + bk_h + stack_gap + rib;  // TP4056 underside: flat above the buck-boost's components
 charger_groove = max(0, (charger[0] + 0.3 - (col_w - 2 * wall)) / 2); // depth cut into each side wall for its edges
 pp_z0 = seam_z[power_col] + splint_h / 2 + 0.5 + rib; // power-path perfboard underside: just above the splint
+// lid stops [column, z, side (0 left / 1 right, undef both), length (undef: lid_stop[0])] (TECH-MECH-LID-001: <= 30 mm
+// of lid without support), kept off the Ender splint zone (seam_z +- splint_h / 2): legs at the thirds of the battery
+// bay (screw rows 0-1); right leg halfway from row 1 to its splint, then on both sides of the splint; left leg on the
+// right wall only (parked connector on the left) between the TP4056 and its splint, 4 long; middle columns on both
+// sides of their splint, the right one also just under its unloaded controller lid tabs
+function sp_lo(i, l = lid_stop[0]) = seam_z[i] - splint_h / 2 - 0.5 - l / 2;
+function sp_hi(i, l = lid_stop[0]) = seam_z[i] + splint_h / 2 + 0.5 + l / 2;
+function stop_len(st) = len(st) > 3 && st[3] != undef ? st[3] : lid_stop[0];
+lid_stops = concat(
+    [for (i = [0:3], k = [1, 2]) if (!col_mid[i]) [i, leg_rows[0] + k * (leg_rows[1] - leg_rows[0]) / 3]],
+    [for (i = [0:3]) if (!col_mid[i] && i != power_col) each [[i, (leg_rows[1] + lid_boss_d / 2 + sp_lo(i) - lid_stop[0] / 2) / 2], [i, sp_lo(i)], [i, sp_hi(i)]]],
+    [[power_col, sp_lo(power_col, 4), 1, 4]],
+    [for (i = [0:3]) if (col_mid[i]) each [[i, sp_lo(i)], [i, sp_hi(i)]]],
+    [[2, d1_holds[1] - 0.5 - lid_stop[0] / 2]]);
 top_shelf_top = leg_rows[1] - lid_boss_d / 2 + 1;    // top face of the top contact shelf
 fuse_z0 = bat_z0 + bat[1] - 9 - 0.5 - fuse[1];       // polyfuse bottom: just under the top cradle
 
@@ -712,6 +728,7 @@ module column(i) {
                 if (sensors && i == rtc_col) board_slot(rtc, rtc_z0, bottom = true, top_gap = plugs ? dp_w(6) + 1 : 0);
                 if (bme && i == bme_col) board_slot(bme_b, bme_z0, bottom = true);
             }
+            lid_stops(i);
             if (feet) for (p = foot_pos) foot_pad(p); // pad behind the recess
             if (ties) for (t = TIES) if (t[0] == i) tie_anchor(t[1], t[2]);
         }
@@ -870,17 +887,23 @@ module usbb_notch() {
 
 // microSD board grooves: one block per side wall, from the front wall to the lid, with a groove open towards the lid;
 // the solid part in front of the groove is the front stop. Constant section along y: prints as vertical walls.
-module sd_mount() { flat_slot(sd, sd_z0, sd_y0, sd_lip); }
+module sd_mount() { flat_slot(sd, sd_z0, sd_y0, sd_lip, clr = sd_side_clr); }
 module bk_mount() { flat_slot(bk, bk_z0, bk_y1 - bk[1], bk_lip, top = false, clr = bk_clr); }
+
+// lid stops on both side walls of column i (PLAT-MECH-LIDSTOP-001): top face in the lid's inner plane, the lid edge
+// rests on it; 45 deg underside (no support when the column prints front face down)
+module lid_stops(i) for (st = lid_stops) if (st[0] == i) for (m = len(st) > 2 && st[2] != undef ? [st[2]] : [0, 1])
+    translate([m * col_w, 0, st[1] - stop_len(st) / 2]) mirror([m, 0, 0]) linear_extrude(stop_len(st)) polygon([[wall - eps, lid_y], [wall + lid_stop[1], lid_y], [wall - eps, lid_y - lid_stop[1] - eps]]);
 
 // board lying flat (b = width x, depth y, thickness), underside at z0, front edge at y0: one block per side wall from
 // the front wall to the lid, with a groove open towards the lid; the solid part in front of the groove is the stop.
 // top = false: lower ledge only (connector / pads / parts along the side edges); a lid tab holds the back edge down
-module flat_slot(b, z0, y0, lip, top = true, clr = 0.2) {
+// clr: side play per edge, the groove bottom then cut into the walls if needed; undef: grooves down to the side walls
+module flat_slot(b, z0, y0, lip, top = true, clr = undef) {
     ex = col_w / 2 - b[0] / 2;                         // board side edge (x)
     for (m = [0, 1]) translate([m * col_w, 0, 0]) mirror([m, 0, 0]) difference() {
         translate([wall - eps, wall - eps, z0 - rib]) cube([ex + lip - wall + eps, lid_y - 0.5 - wall + eps, b[2] + 0.3 + 2 * rib]);
-        translate([min(ex - clr, wall - eps), y0 - 0.2, z0]) cube([b[0], D, top ? b[2] + 0.3 : b[2] + 0.3 + rib + eps]);
+        translate([clr == undef ? wall - eps : ex - clr, y0 - 0.2, z0]) cube([b[0], D, top ? b[2] + 0.3 : b[2] + 0.3 + rib + eps]);
     }
 }
 
@@ -1522,11 +1545,45 @@ if (battery) {
     if (fuse[0] + 0.4 + 2 * rib > col_w - 2 * wall) echo("WARNING: polyfuse holder wider than the leg");
     echo(str("polyfuses on the inner front walls in front of the cells: z ", fuse_z0, " - ", fuse_z0 + fuse[1]));
 }
+// flat boards located by their grooves (TECH-MECH-MOUNT-001): total side play <= 1 mm
+function flat_play(b, clr) = clr == undef ? col_w - 2 * wall - b[0] : 2 * clr;
+for (f = [["microSD", sd, sd_side_clr], ["TP4056", charger, undef], ["power-path", pp_b, undef], ["buck-boost", bk, bk_clr]])
+    if (flat_play(f[1], f[2]) > 1) echo(str("WARNING: ", f[0], " board side play ", flat_play(f[1], f[2]), " mm in its grooves (> 1 mm)"));
 if (bme) {
     if (bme_b[0] + 0.4 + 2 * rib > col_w - 2 * wall) echo("WARNING: weather sensor slot wider than the leg");
     if (bme_z0 + bme_b[1] + 0.3 + rib > leg_rows[3] - lid_boss_d / 2 - 0.3) echo("WARNING: weather sensor runs into the fourth leg screw row");
     if (wall + bme_b[2] + wire_room > lid_y) echo("WARNING: no wire room behind the weather sensor");
 }
+// lid supports of column i as z intervals (TECH-MECH-LID-001): screw posts, lid stops, lid tabs / ribs bearing on a
+// board (controller: left middle column only; distribution boards and screens: both middle columns), flat boards
+// whose back edge sits 0.3 under the lid (power leg), and the two lid ends (a free end counts as a span too)
+function lid_supports(i) = concat(
+    [[wall + clr, wall + clr], [H - wall - clr, H - wall - clr]],
+    [for (p = lid_bosses(col_mid[i])) [p[1] - lid_boss_d / 2, p[1] + lid_boss_d / 2]],
+    [for (st = lid_stops) if (st[0] == i) [st[1] - stop_len(st) / 2, st[1] + stop_len(st) / 2]],
+    i == 1 ? [for (z = d1_holds) [z, z + d1_end]] : [],
+    col_mid[i] && hub ? [[hub_z0 + 1, hub_z0 + 1 + hub_tab], [hub_z0 + hub_b[1] - 1 - hub_tab, hub_z0 + hub_b[1] - 1]] : [],
+    col_mid[i] ? [[scr_z - scr_pcb[1] / 2 + 1, scr_z + scr_pcb[1] / 2 - 1]] : [],
+    i == power_col ? concat(buck ? [[bk_z0, bk_z0 + bk[2]]] : [], battery ? [[charger_z0, charger_z0 + charger[2]]] : [],
+        pp ? [[pp_z0, pp_z0 + pp_b[2]]] : []) : []);
+function qsort(v) = len(v) <= 1 ? v : let(p = v[0][0])
+    concat(qsort([for (x = v) if (x[0] < p) x]), [for (x = v) if (x[0] == p) x], qsort([for (x = v) if (x[0] > p) x]));
+function max_gap(v, i = 1, e = undef, g = 0) = i >= len(v) ? g :
+    let(end = e == undef ? v[0][1] : e) max_gap(v, i + 1, max(end, v[i][1]), max(g, v[i][0] - end));
+for (i = [0:3]) let(g = max_gap(qsort(lid_supports(i)))) {
+    if (g > 30) echo(str("WARNING: column ", i, " lid: ", g, " mm without support (> 30 mm)"));
+}
+echo(str("lid spans (max, mm): ", [for (i = [0:3]) round(10 * max_gap(qsort(lid_supports(i)))) / 10]));
+// lid stops: clear of the cell and its cradles in the legs, and under the lid edge
+if (battery) {
+    if (min([for (t = [0:0.1:1]) norm([wall + lid_stop[1] * t - col_w / 2, lid_y - lid_stop[1] * (1 - t) - bat_y])]) - (bat[0] + bat_clr) / 2 < 4)
+        echo("WARNING: lid stops closer than 4 mm to the cell");
+    for (st = lid_stops, c = [bat_z0 + 4, bat_z0 + bat[1] - 9]) if (!col_mid[st[0]] && abs(st[1] - (c + 2.5)) < 2.5 + stop_len(st) / 2)
+        echo(str("WARNING: lid stop at z ", st[1], " runs into a cell cradle"));
+}
+for (st = lid_stops) if (abs(st[1] - seam_z[st[0]]) < splint_h / 2 + 0.5 + stop_len(st) / 2 - 0.01)
+    echo(str("WARNING: lid stop at column ", st[0], " z ", st[1], " in the splint zone"));
+if (wall + lid_stop[1] < wall + clr + 1) echo("WARNING: lid stops reach less than 1 mm under the lid edge");
 if (pir) {
     if (pir_top) { // cap skirt and breakout in the band; the sleeve may merge into the frame / post
         let(z0 = min(-pir_cap_d / 2, pir_pcb_fp[1]), z1 = max(pir_cap_d / 2, pir_pcb_fp[3]))

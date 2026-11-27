@@ -182,3 +182,23 @@
 **Dependencies:** none
 
 **Description:** Each hand-wired board described in `tools/boards.py` (P1, P2, the S3 carrier P3, the power-path board P4) is laid out to minimise its assembly effort, counted by `tools/boards.py` as a score: 1 per solder bridge between two neighbouring holes, 1 per strip cut, 2 per insulated jumper, 2 per bare bus or bare link. The board may be enlarged up to the room the model leaves for it (`hub_b`, `pp_b` within their columns; the carrier stays the size of the S3); the parts, nets, harness wires and their colours do not change, and every existing check of `tools/boards.py` keeps passing (net connectivity, no shared hole, power-net isolation on the pad boards, schematic cross-check, keep-out holes). Each layout is a local minimum: no single move of one part or one wire end to a free hole, on a board of the same size, lowers its score; and the score of each board is no higher than its score when this requirement was validated (commit 757b539): P1 2, P2 4, P3 28, P4 20.
+
+### TECH-MECH-MOUNT-001
+
+**Title:** Boards lying flat in a leg are located by their grooves
+
+**Status:** validated
+
+**Dependencies:** none
+
+**Description:** Each board lying flat in a leg (`flat_slot`: microSD reader, TP4056, power-path board, buck-boost) slides into its grooves from the lid side and is then located without glue: total side play (x) ≤ 1 mm, front edge against the solid stop in front of its grooves, held in z by its grooves or by a lid tab. Acceptance (pytest): the model computes the side play of each flat board and prints no WARNING (play > 1 mm warns); print: each board slides in without forcing and does not move sideways by more than 1 mm.
+
+### TECH-MECH-LID-001
+
+**Title:** Lids do not flex between their supports
+
+**Status:** validated
+
+**Dependencies:** none
+
+**Description:** No lid (1.6 mm plate screwed onto the back of a column) has more than 30 mm along the column without a support under it (print feedback 2026-11-21: the left leg lid flexed over the battery bay, its screw rows 77 mm apart). A support is a screw post, a lid stop standing on the column walls, a lid tab or rib bearing on a board (≤ 0.2 mm play), or a flat board whose back edge sits ≤ 0.3 mm under the lid. The stops take no room needed by a module, a wire or a lid tab, and add no overhang over 45° when the column prints front face down. Acceptance (pytest): the model is clean; it lists the lid supports of each column and warns when a gap between them, or from a lid end to its first support, exceeds 30 mm; print: a thumb press on each lid between its supports gives no visible flex.

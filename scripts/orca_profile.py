@@ -2,8 +2,10 @@
 
 usage: python3 -I scripts/orca_profile.py machine|process|filament "<preset name>" out.json
 
-Presets are looked up in ~/.config/OrcaSlicer/user/default/<kind>/ then system/*/<kind>/ (recursive), and their
-"inherits" chain is merged parent first. The CLI does not resolve the chain itself (it looks for the parent in the
+Presets are looked up in <config>/user/default/<kind>/ then <config>/system/*/<kind>/ and, on Windows, the install's
+resources/profiles/*/<kind>/ (recursive); <config> is ~/.config/OrcaSlicer on Linux, %APPDATA%/OrcaSlicer on Windows. Their
+"inherits" chain is merged parent first. Exit 2: the preset itself is missing; exit 3: a preset it inherits from is
+missing (OrcaSlicer >= 2.5 packs its system presets in resources/profiles/*.opc archives, unreadable here). The CLI does not resolve the chain itself (it looks for the parent in the
 wrong vendor folder), so the result carries every key.
 """
 import glob
@@ -11,11 +13,16 @@ import json
 import os
 import sys
 
-ROOT = os.path.expanduser("~/.config/OrcaSlicer")   # Linux only (the orca stage runs the Linux AppImage)
+if os.name == "nt":
+    ROOT = os.path.join(os.environ.get("APPDATA", ""), "OrcaSlicer")
+    SYSTEM = [os.path.join(os.environ.get("ProgramFiles", r"C:\Program Files"), "OrcaSlicer", "resources", "profiles")]
+else:
+    ROOT = os.path.expanduser("~/.config/OrcaSlicer")
+    SYSTEM = []
 
 
-def find(kind, name):
-    pats = [f"{ROOT}/user/default/{kind}/**/*.json", f"{ROOT}/system/*/{kind}/**/*.json"]
+def find(kind, name, code=2):
+    pats = [f"{ROOT}/user/default/{kind}/**/*.json", f"{ROOT}/system/*/{kind}/**/*.json"] + [f"{d}/*/{kind}/**/*.json" for d in SYSTEM]
     for pat in pats:
         for f in glob.glob(pat, recursive=True):
             if os.path.basename(f)[:-5] == name:
@@ -27,13 +34,14 @@ def find(kind, name):
                     return f
             except (OSError, ValueError):
                 pass
-    sys.exit(f"orca_profile: {kind} preset '{name}' not found under {ROOT}")
+    print(f"orca_profile: {kind} preset '{name}' not found under {ROOT}", file=sys.stderr)
+    sys.exit(code)
 
 
 def resolve(kind, name, depth=0):
     if depth > 10:
         sys.exit(f"orca_profile: inherits loop at '{name}'")
-    d = json.load(open(find(kind, name)))
+    d = json.load(open(find(kind, name, 2 if depth == 0 else 3)))
     parent = d.get("inherits")
     merged = resolve(kind, parent, depth + 1) if parent else {}
     merged.update(d)

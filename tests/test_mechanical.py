@@ -53,3 +53,53 @@ def test_plat_mech_pivot_001_teardrop_bores_sized_from_tube_test3(model):
     assert 'xtear(' in body and 'cylinder(' not in body
     # And the model is clean
     assert warnings == []
+
+
+@pytest.mark.req('TECH-MECH-MOUNT-001')
+def test_tech_mech_mount_001_flat_boards_side_play_within_1_mm(model):
+    # Given the model with its side play assert over every flat board
+    src = source()
+    assert 'function flat_play(b, clr)' in src
+    for board in ('microSD', 'TP4056', 'power-path', 'buck-boost'):
+        assert f'["{board}", ' in src
+    # When it is evaluated
+    _, warnings = model
+    # Then no board has more than 1 mm of side play (no WARNING at all)
+    assert warnings == []
+
+
+@pytest.mark.req('PLAT-MECH-SDSLOT-001')
+def test_plat_mech_sdslot_001_microsd_grooves_0_5_mm_per_side(model):
+    # Given the model
+    src = source()
+    # Then the microSD grooves stop 0.5 mm from each board edge
+    assert re.search(r'^sd_side_clr = 0\.5;', src, re.M)
+    assert 'flat_slot(sd, sd_z0, sd_y0, sd_lip, clr = sd_side_clr)' in src
+    # And the model is clean
+    _, warnings = model
+    assert warnings == []
+
+
+@pytest.mark.req('TECH-MECH-LID-001')
+def test_tech_mech_lid_001_no_lid_span_over_30_mm(model):
+    # Given the model with its lid support list and span assert
+    src = source()
+    assert 'function lid_supports(i)' in src and 'mm without support (> 30 mm)' in src
+    # When it is evaluated
+    _, warnings = model
+    # Then no lid span exceeds 30 mm (no WARNING at all)
+    assert warnings == []
+
+
+@pytest.mark.req('PLAT-MECH-LIDSTOP-001')
+def test_plat_mech_lidstop_001_lid_stops_on_side_walls(model):
+    # Given the model
+    src = source()
+    # Then the stops are 5 mm long, 2.5 mm out, listed per column and built in every column
+    assert re.search(r'^lid_stop = \[5, 2\.5\];', src, re.M)
+    assert re.search(r'^lid_stops = ', src, re.M) and 'lid_stops(i);' in src
+    # And their clearance asserts are there
+    assert 'WARNING: lid stops closer than 4 mm to the cell' in src
+    # And the model is clean
+    _, warnings = model
+    assert warnings == []

@@ -117,12 +117,26 @@ EOF
     printf 'include <%s/mechanical/scad/spit.scad>\nintersection() { union() { color([0.6, 0.6, 0.6]) column(0); dummies(0); } translate([-5, -5, 100]) cube([col_w / 2 + 5, 45, 50]); }\n' "$ROOT" > "$TMP/sd.scad"
     openscad -D 'part="none"' -o renders/spit_sd_reader.png --imgsize=900,900 --camera=12,15,118,60,0,120,75 --colorscheme=Tomorrow "$TMP/sd.scad" 2>>"$TMP/renders.err"
     openscad -D 'part="none"' -o renders/spit_buck_sd.png --imgsize=900,900 --camera=12,15,128,55,0,120,95 --colorscheme=Tomorrow "$TMP/sd.scad" 2>>"$TMP/renders.err"
+    # microSD grooves seen from above and behind, cut through the board: side blocks, 0.5 mm play each side (PLAT-MECH-SDSLOT-001)
+    printf 'include <%s/mechanical/scad/spit.scad>
+intersection() { union() { color([0.6, 0.6, 0.6]) column(0); dummies(0); } translate([-5, -5, sd_z0 - 12]) cube([45, 45, 12 + sd[2] + 0.05]); }
+' "$ROOT" > "$TMP/grooves.scad"
+    openscad -D 'part="none"' -o renders/spit_sd_grooves.png --imgsize=1200,1000 --camera=15.2,14,112,40,0,180,85 --colorscheme=Tomorrow "$TMP/grooves.scad" 2>>"$TMP/renders.err"
     # heel of the left leg (charge port + switch): from behind with the lid on, then lid off seen from the back right,
     # cut under the bottom shelf
     printf 'include <%s/mechanical/scad/spit.scad>\nintersection() { union() { color([0.6, 0.6, 0.6]) column(0); color([0.45, 0.45, 0.45]) lid(false, true); } translate([-5, -5, -1]) cube([45, 45, 27]); }\n' "$ROOT" > "$TMP/heel.scad"
     printf 'include <%s/mechanical/scad/spit.scad>\nintersection() { union() { color([0.6, 0.6, 0.6]) column(0); dummies(0); } translate([-5, -5, -1]) cube([45, 45, shelf_z - shelf_t - 0.5]); }\n' "$ROOT" > "$TMP/heel_open.scad"
     openscad -D 'part="none"' -o renders/spit_heel_back.png --imgsize=1200,900 --camera=-35,85,30,10,26,9 --colorscheme=Tomorrow "$TMP/heel.scad" 2>>"$TMP/renders.err"
     openscad -D 'part="none"' -o renders/spit_heel_open.png --imgsize=1200,1000 --camera=45,85,45,8,18,7 --colorscheme=Tomorrow "$TMP/heel_open.scad" 2>>"$TMP/renders.err"
+    # the 4 lids in place, columns removed, seen from the front and above: their inner faces (tabs, guides, microSD slot,
+    # charge port notch, vents), left leg on the left
+    printf 'include <%s/mechanical/scad/spit.scad>
+for (i = [0:3]) translate([col_x[i], 0, 0]) {
+    color([0.72, 0.72, 0.70]) if (col_mid[i]) lid(true, spk = i == 2); else lid(false, i == sd_col);
+    color("black") translate([col_w / 2, lid_y, -12]) rotate([90, 0, 0]) linear_extrude(0.2) text(["left leg", "left mid", "right mid", "right leg"][i], size = 4.5, halign = "center", font = "Liberation Sans:style=Bold");
+}
+' "$ROOT" > "$TMP/lids.scad"
+    openscad -D 'part="none"' -o renders/spit_lids_inside.png --imgsize=1100,1600 --camera=62,0,124,68,0,18,0 --viewall --autocenter --colorscheme=Tomorrow "$TMP/lids.scad" 2>>"$TMP/renders.err"
     # inside of a middle column, lid removed
     echo "color([0.78,0.78,0.76]) import(\"$TMP/col1.stl\");" > "$TMP/inside.scad"
     openscad -o renders/spit_mid_column_inside.png --imgsize=800,1400 --camera=14,200,114,14,14,114 --viewall --colorscheme=Tomorrow "$TMP/inside.scad" 2>>"$TMP/renders.err"
