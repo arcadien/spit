@@ -24,3 +24,6 @@ test_tagging:
 linter:
   # firmware lint (uvx platformio check -d <firmware dir>) is added once firmware lives on this branch
   command: "uvx ruff check tools scripts"
+
+# a bench sheet may be written for a requirement still in draft (pending measurement): test(ID) may cite a draft ID
+draft_ok_prefixes: [test]
