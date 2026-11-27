@@ -41,10 +41,10 @@ What is left to buy: [shopping_list.md](../../hardware/shopping_list.md). Open q
       tied to VIN, cut the trace.
 - [ ] D1 (1N5822) reverse leakage at 4.2 V, at 35 °C (hot room; D1 only blocks on battery, the charger is off then and does not heat the leg): > 50 µA → a lower-leakage Schottky (R1 is already 4.7 k).
 - [ ] AM312 output high level at 3.3 V > 2.5 V; DW01: does it switch on by itself when the cells are first connected?
-- [ ] TP4056 R_PROG 2.4 k → [PLAT-POWER-CHARGE-002](PLAT-POWER-CHARGE-002.md)
+- [ ] TP4056 R_PROG 1.2 k (factory, kept) → [PLAT-POWER-CHARGE-002](PLAT-POWER-CHARGE-002.md)
 - [ ] Battery-fed LEDs removed → [PLAT-POWER-SLEEP-001](PLAT-POWER-SLEEP-001.md), [TECH-POWER-SLEEP-001](TECH-POWER-SLEEP-001.md)
-- [ ] TPS63020 output and idle current → [PLAT-POWER-REG-001](PLAT-POWER-REG-001.md)
-- [ ] Slide switch current rating (≥ 1 A).
+- [ ] TPS63020 output and idle current → [PLAT-POWER-REG-001](PLAT-POWER-REG-001.md); PS/SYNC to GND (continuity).
+- [ ] Slide switch current rating (≥ 1 A) → [PLAT-POWER-SWITCH-001](PLAT-POWER-SWITCH-001.md)
 - [ ] ZS-042: CR2032 charging resistor removed.
 - [ ] Cells matched → [TECH-POWER-CELL-002](TECH-POWER-CELL-002.md)
 
@@ -59,15 +59,15 @@ cells until step 3.5; nothing goes on the 3V3 before step 3.6 is green)
 
 *3.2 Power path (Q1, D1, R1) + SW1, VSYS loaded with 33 Ω (~110 mA)*
 - [ ] Power-path drops → [PERF-POWER-PATH-001](PERF-POWER-PATH-001.md); USB out: VUSB < 0.5 V within ~1 s.
-- [ ] Switch off → [FUNC-POWER-SWITCH-001](FUNC-POWER-SWITCH-001.md). SW1 on with a 1 A load (3.9 Ω ≥ 10 W; the bench supply limit raised to 1.5 A for this check): Q1 and SW1 barely warm.
+- [ ] Switch off → [FUNC-POWER-SWITCH-001](FUNC-POWER-SWITCH-001.md). SW1 on with a 1 A load (3.9 Ω ≥ 10 W; the bench supply limit raised to 1.5 A for this check): Q1 barely warm, SW1 → [PLAT-POWER-SWITCH-001](PLAT-POWER-SWITCH-001.md).
 
 *3.3 Dividers on the power-path board*
 - [ ] VBAT/2 with the switch on **and** off, and with the charger plugged in: a 10 MΩ multimeter loads the 500 kΩ node,
       so expect **0.476 × B+ ± 2 %** (or check R2 / R3 unpowered); compare with GPIO1 later.
-- [ ] USB_DET ≈ 3.0 V with USB in (never > 3.3 V), < 0.2 V with USB out.
+- [ ] USB_DET 2.8–3.3 V with USB in (never > 3.3 V), < 0.2 V within 1 s of unplugging.
 
 *3.4 Polyfuses, cells, star ground*
-- [ ] Polyfuses → [PLAT-POWER-FUSE-001](PLAT-POWER-FUSE-001.md)
+- [ ] Polyfuses → [PLAT-POWER-FUSE-001](PLAT-POWER-FUSE-001.md); each one in its cell bay, next to the cell's + contact.
 - [ ] Cell charge current on mains, switch on (Q1 the right way round) → [PERF-POWER-PATH-001](PERF-POWER-PATH-001.md) step 3
 - [ ] Cells in: the load does not draw from the cells on the supply, plug / unplug under load → [FUNC-POWER-PATH-001](FUNC-POWER-PATH-001.md), [FUNC-POWER-PATH-002](FUNC-POWER-PATH-002.md)
 - [ ] Star ground → [TECH-POWER-GROUND-001](TECH-POWER-GROUND-001.md)
@@ -81,9 +81,11 @@ cells until step 3.5; nothing goes on the 3V3 before step 3.6 is green)
 
 *3.7 S3 Mini alone on the 3V3*
 - [ ] Boots from the TPS (no USB-C): idle current on VSYS.
-- [ ] VBAT/2 read by GPIO1 = multimeter value ± 3 % (ADC calibration); USB_DET on GPIO21 follows the charger.
+- [ ] VBAT/2 read by GPIO1 = multimeter value ± 3 % (ADC calibration) → [PERF-POWER-MONITOR-001](PERF-POWER-MONITOR-001.md); USB_DET on GPIO21 follows the charger.
+- [ ] VSYS sense: GPIO37 low at VSYS 3.0 V and 5.0 V, high at 0 V (internal pull-up on while reading).
+- [ ] Before the S3 goes on the carrier: its VBUS pin has no continuity to any carrier pad (its header contact pulled).
 - [ ] S3's USB-C in a PC that is **off**, on battery: current from the cells into its VBUS ≈ 0; with the PC on,
-      flashing works with SW1 on or off; second 3V3 source → [TECH-POWER-REG-002](TECH-POWER-REG-002.md)
+      flashing works with SW1 on or off → [TECH-POWER-VBUS-001](TECH-POWER-VBUS-001.md); second 3V3 source → [TECH-POWER-REG-002](TECH-POWER-REG-002.md)
 
 *3.8 Peripherals, one at a time, measuring the 3V3 current added by each*
 - [ ] Screen 1, then screen 2 (backlight off at boot unless BLK has a pull-up; PWM dimming works); total BLK current at
@@ -99,8 +101,9 @@ cells until step 3.5; nothing goes on the 3V3 before step 3.6 is green)
 
 *3.9 Whole robot*
 - [ ] Hot-plug overshoot at the charger and at the amplifier VIN → [TECH-POWER-HOTPLUG-001](TECH-POWER-HOTPLUG-001.md)
-- [ ] Deep-sleep current from the cells (target above; LEDs removed, DS3231 32 kHz off, pins held); wake by USB_DET,
+- [ ] Deep-sleep current from the cells (LEDs removed, DS3231 32 kHz off, pins held) → [PERF-POWER-SLEEP-001](PERF-POWER-SLEEP-001.md); wake by USB_DET,
       ADXL INT1, PIR and the S3 timer.
+- [ ] Battery drain with the switch off → [PERF-POWER-OFF-001](PERF-POWER-OFF-001.md)
 - [ ] Charge from the heel, switch on / off, time, wall temperature, supply voltage → [FUNC-POWER-CHARGE-001](FUNC-POWER-CHARGE-001.md), [FUNC-POWER-SWITCH-002](FUNC-POWER-SWITCH-002.md), [PERF-POWER-CHARGE-001](PERF-POWER-CHARGE-001.md), [PERF-POWER-THERMAL-001](PERF-POWER-THERMAL-001.md), [PERF-POWER-MAINS-001](PERF-POWER-MAINS-001.md); TP4056, Q1, D1, TPS63020 finger-warm at most.
 - [ ] Note every measured value here (it feeds the `MEASURE` values and the firmware thresholds).
 
@@ -117,4 +120,5 @@ cells until step 3.5; nothing goes on the 3V3 before step 3.6 is green)
 - [ ] Battery: cut-off 3.3 V on B+ (ignore below 2.5 V), "empty" flag in RTC memory; BL_EN, AMP_SD and I2S0 off until
       the VSYS sense (GPIO37) reports the rail; Wi-Fi TX power limited if needed.
 - [ ] Deep sleep / wake-up as in *Deep sleep and wake-up*.
+- [ ] Runtime on a full charge, reference profile → [PERF-POWER-RUNTIME-001](PERF-POWER-RUNTIME-001.md)
 - [ ] **Irony cue**: in the film it is a white dot that appears *inside* the screen → drawn on the right screen, no LED.

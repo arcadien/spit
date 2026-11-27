@@ -29,7 +29,7 @@ links were found on 2026-10-21, price and stock not guaranteed.
 
 | Item | Qty | Role | Links |
 |---|---|---|---|
-| **2.4 kΩ** resistor, through-hole 1/4 W or 1/8 W (or SMD 0805 / 1206) | 1 (+ spare) | TP4056 R_PROG (0.5 A charge): original SMD removed, through-hole one lying on the board, legs soldered to its two pads; often already in a 1/4 W resistor assortment (else 2.2 k + 220 Ω in series) | [Amazon (search, 1/4 W assortment)](https://www.amazon.fr/s?k=assortiment+resistances+1%2F4W+1%25) |
+| **2.4 kΩ** resistor, through-hole 1/4 W or 1/8 W (or SMD 0805 / 1206) | 1 (+ spare) | only if E-M8 fails at 1 A: TP4056 R_PROG (0.5 A charge), original SMD removed, through-hole one lying on the board, legs soldered to its two pads; often already in a 1/4 W resistor assortment (else 2.2 k + 220 Ω in series) | [Amazon (search, 1/4 W assortment)](https://www.amazon.fr/s?k=assortiment+resistances+1%2F4W+1%25) |
 | **22 µF 16 V** electrolytic | 1 | C9, TP4056 input: **in stock** (Ø5.15, lying; `charger_h` raised to 6) | — |
 | Through-hole 1/4 W resistors: **1 kΩ** ×2, **10 kΩ** ×1, **47 Ω** ×2, **33 Ω** ×1, **100 Ω** ×1, **100 kΩ** ×1 | — | R17, R18; R12 / R19 (split SCK); R20 (MOSI); R21 (AM312 filter); R22 (Q5 gate); not needed if the assortment is already there |
 | **AO3401A** P-MOSFET (SOT-23) | 1 more | Q5, cuts the microSD 3V3 in sleep (already ordered for Q1: check one is left) |

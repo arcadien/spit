@@ -1,3 +1,4 @@
+<!-- @req PERF-POWER-REG-001 -->
 # Bench test PERF-POWER-REG-001 — 3.3 V rail static regulation
 
 Requirement: [PERF-POWER-REG-001](../../requirements/performance.md#perf-power-reg-001). Manual test, run at bring-up step **3.5** ([bring-up.md](bring-up.md)); add a line to *Results* every time it is run.

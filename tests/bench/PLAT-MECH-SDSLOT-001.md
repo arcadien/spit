@@ -1,3 +1,4 @@
+<!-- @req PLAT-MECH-SDSLOT-001 -->
 # Bench test PLAT-MECH-SDSLOT-001 — microSD breakout located by its grooves
 
 Requirement: [PLAT-MECH-SDSLOT-001](../../requirements/platform.md#plat-mech-sdslot-001), parent

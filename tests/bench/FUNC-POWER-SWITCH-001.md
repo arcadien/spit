@@ -1,3 +1,4 @@
+<!-- @req FUNC-POWER-SWITCH-001 -->
 # Bench test FUNC-POWER-SWITCH-001 — the switch turns the system rail off
 
 Requirement: [FUNC-POWER-SWITCH-001](../../requirements/functional.md#func-power-switch-001). Manual test, run at bring-up step **3.2** ([bring-up.md](bring-up.md)); add a line to *Results* every time it is run.

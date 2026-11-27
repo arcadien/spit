@@ -1,9 +1,10 @@
-"""Requirement coverage: every validated requirement is checked somewhere, or justified in audits/exclusions.yml.
+"""Requirement coverage: every validated requirement is checked somewhere, or justified in audits/exclusions.yml
+(a coverage exclusion, `id: COVERAGE-…`).
 
-Covered = a pytest test tagged @pytest.mark.req('<ID>'), a manual test sheet tests/bench/<ID>.md or
-tests/manual/<ID>.md, or a firmware Unity test tagged `// req: <ID>` under software/. A requirement whose acceptance
-needs the firmware (Unity, on-target) is only reported (warning) while no firmware test exists yet; it becomes
-mandatory with the first one. A pytest named in the acceptance is required at once. A manual sheet that was never run (no result line) is reported too.
+Covered = a pytest test tagged @pytest.mark.req('<ID>'), a bench sheet under tests/bench/ (the RBD bench sheet path)
+carrying a `<!-- @req <ID> -->` line, or a firmware Unity test tagged `// req: <ID>` under software/. A requirement
+listed in the firmware exclusion (id: COVERAGE-FIRMWARE-…) is only reported (warning) while software/ has no Unity test;
+it becomes mandatory with the first one. A bench sheet that was never run (no result line) is reported.
 """
 import glob
 import os
@@ -20,18 +21,17 @@ def read(path):
 
 
 def requirements():
-    """{id: (status, acceptance text)}"""
+    """{id: status}"""
     reqs = {}
     for f in glob.glob(os.path.join(ROOT, 'requirements', '*.md')):
         for m in re.finditer(rf'^### ({ID})\n(?:(?:\*\*.*)?\n)*?\*\*Status:\*\* (\S+)\n(?:.*\n)*?\*\*Description:\*\* (.*)',
                              read(f), re.M):
-            reqs[m.group(1)] = (m.group(2), m.group(3).split('Acceptance', 1)[-1])
+            reqs[m.group(1)] = m.group(2)
     return reqs
 
 
 def sheets():
-    return glob.glob(os.path.join(ROOT, 'tests', 'bench', '*-*-*-*.md')) + \
-        glob.glob(os.path.join(ROOT, 'tests', 'manual', '*-*-*-*.md'))
+    return glob.glob(os.path.join(ROOT, 'tests', 'bench', '*-*-*-*.md'))
 
 
 def unity_tagged():
@@ -42,20 +42,21 @@ def unity_tagged():
 
 def test_every_validated_requirement_is_tested_or_excluded():
     # Given the validated requirements, the tests, the test sheets and the exclusions
-    reqs = {i: acc for i, (st, acc) in requirements().items() if st == 'validated'}
+    reqs = {i for i, st in requirements().items() if st == 'validated'}
     tagged = {i for f in glob.glob(os.path.join(ROOT, 'tests', '*.py'))
               for i in re.findall(rf"@pytest\.mark\.req\('({ID})'\)", read(f))}
     unity = unity_tagged()
-    covered = tagged | {os.path.basename(f)[:-3] for f in sheets()} | unity
-    excluded = set(re.findall(ID, read(os.path.join(ROOT, 'audits', 'exclusions.yml'))))
-    # When the firmware has no test yet, its requirements are pending, not missing; a pytest named in the acceptance
-    # is never deferred (it does not need the firmware)
-    pending = sorted(i for i, acc in reqs.items() if i not in covered | excluded and not unity
-                     and re.search(r'Unity|on-target|firmware', acc) and 'pytest' not in acc)
+    covered = tagged | {i for f in sheets() for i in re.findall(rf'^<!-- @req ({ID}) -->$', read(f), re.M)} | unity
+    # only a coverage exclusion (id: COVERAGE-…) stands for a test; other exclusions only name the requirements they waive
+    entries = read(os.path.join(ROOT, 'audits', 'exclusions.yml')).split('  - id: ')[1:]
+    listed = lambda prefix: {i for e in entries if e.startswith(prefix) for i in re.findall(ID, e.split('\n', 1)[1])}
+    firmware, excluded = listed('COVERAGE-FIRMWARE-'), listed('COVERAGE-') - listed('COVERAGE-FIRMWARE-')
+    # When the firmware has no test yet, its requirements are pending, not missing; with the first Unity test they are due
+    pending = sorted(reqs & firmware - covered) if not unity else []
     if pending:
         warnings.warn(f'{len(pending)} requirement(s) wait for firmware tests: {", ".join(pending)}')
     # Then every other validated requirement is covered or excluded
-    assert sorted(set(reqs) - covered - excluded - set(pending)) == []
+    assert sorted(reqs - covered - excluded - set(pending)) == []
 
 
 def test_every_test_sheet_is_complete_and_names_a_requirement():
@@ -66,6 +67,9 @@ def test_every_test_sheet_is_complete_and_names_a_requirement():
         # Given a manual test sheet: it is named after an existing requirement and links to it
         assert rid in reqs, f'{f}: no requirement {rid}'
         assert f'[{rid}](../../requirements/' in text, f'{f}: no link to its requirement'
+        # And it carries the RBD tag of its requirement on its first line
+        assert text.startswith(f'<!-- @req {rid} -->\n'), f'{f}: first line is not <!-- @req {rid} -->'
+        # When reading its sections and result table
         # Then it has every section, in order
         pos = [text.find(s) for s in SECTIONS]
         assert -1 not in pos and pos == sorted(pos), f'{f}: sections missing or out of order'

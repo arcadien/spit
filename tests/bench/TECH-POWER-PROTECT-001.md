@@ -1,10 +1,12 @@
+<!-- @req TECH-POWER-PROTECT-001 -->
+<!-- @req PLAT-POWER-PROTECT-001 -->
 # Bench test TECH-POWER-PROTECT-001 — pack protection opens on over-discharge and overcurrent
 
-Requirement: [TECH-POWER-PROTECT-001](../../requirements/technical.md#tech-power-protect-001). Manual test, run at bring-up step **3.1** ([bring-up.md](bring-up.md)); add a line to *Results* every time it is run.
+Requirements: [TECH-POWER-PROTECT-001](../../requirements/technical.md#tech-power-protect-001), [PLAT-POWER-PROTECT-001](../../requirements/platform.md#plat-power-protect-001) (the DW01 on the TP4056 module). Manual test, run at bring-up step **3.1** ([bring-up.md](bring-up.md)); add a line to *Results* every time it is run.
 
 ## Equipment
 - An adjustable bench supply in place of the cells (current limit 300 mA for steps 1–2, 5 A for step 3).
-- A multimeter (V range, and mA / 10 A ranges for currents).
+- A multimeter (V range, and µA / mA / 10 A ranges for currents).
 - A 1 kΩ resistor, and a 1 Ω ≥ 5 W resistor (it only carries ~3.7 A for well under a second).
 
 ## Setup
@@ -15,11 +17,13 @@ Requirement: [TECH-POWER-PROTECT-001](../../requirements/technical.md#tech-power
 1. Check OUT ≈ B+ (the protection conducts).
 2. Lower the supply in 0.05 V steps (slowly below 2.7 V), waiting 2 s per step, until OUT drops to 0 V. Note the supply voltage.
 3. Back to 3.7 V, current limit 5 A. Swap the 1 kΩ for the 1 Ω resistor across OUT+ / OUT− (≈ 3.7 A), meter (V) still across it: note whether OUT drops to 0 V and within how long (count, or a scope on OUT). Disconnect the load at once; the protection recovers once the load is removed (or after briefly connecting a charger).
+4. Supply back to 3.7 V, nothing on OUT+ / OUT−, nothing on the IN pads (USB out): meter on µA in series with the supply (+), power up on the A range first, then read the supply current.
 
 ## Pass criteria
 - Step 2: OUT opens between 2.3 and 2.5 V.
 - Step 3: OUT opens within 1 s with the 1 Ω load (overcurrent).
+- Step 4: the module's quiescent current is < 10 µA.
 
 ## Results
-| Date | Commit / build | Cut-off voltage | Overcurrent cut (time) | Pass | By | Notes |
-|---|---|---|---|---|---|---|
+| Date | Commit / build | Cut-off voltage | Overcurrent cut (time) | Quiescent | Pass | By | Notes |
+|---|---|---|---|---|---|---|---|

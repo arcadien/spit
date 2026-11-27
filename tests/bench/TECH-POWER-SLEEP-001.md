@@ -1,3 +1,4 @@
+<!-- @req TECH-POWER-SLEEP-001 -->
 # Bench test TECH-POWER-SLEEP-001 — no always-on indicator on battery-fed rails
 
 Requirement: [TECH-POWER-SLEEP-001](../../requirements/technical.md#tech-power-sleep-001). Manual test, run at bring-up step **2 and 3.9** ([bring-up.md](bring-up.md)); add a line to *Results* every time it is run.

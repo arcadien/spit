@@ -12496,7 +12496,7 @@
 				)
 			)
 		)
-		(property "Value" "TP4056 + DW01, R_PROG 2,4k"
+		(property "Value" "TP4056 + DW01, R_PROG 1,2k"
 			(at 73.66 74.93 0)
 			(show_name no)
 			(do_not_autoplace no)

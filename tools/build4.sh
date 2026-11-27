@@ -13,7 +13,7 @@ command -v cygpath >/dev/null && TMP=$(cygpath -m "$TMP") && ROOT=$(cygpath -m "
 # on failure, show the end of the OpenSCAD messages of the renders (a failing render stops the script, set -e)
 trap 'rc=$?; [ $rc = 0 ] || tail -20 "$TMP/renders.err" 2>/dev/null; rm -rf "$TMP"' EXIT
 CR10_PARTS="col0 col1 col2 col3 lid_leg lid_leg_sd lid_mid lid_mid_left"
-TEST_PARTS="tube_test3"
+TEST_PARTS="tube_test3 pivot_test1 pivot_test2"
 PARTS="col0_bottom col0_top col1_bottom col1_top col2_bottom col2_top col3_bottom col3_top lid_leg_bottom lid_leg_sd_bottom lid_leg_top lid_mid_bottom lid_mid_top lid_mid_left_bottom lid_mid_left_top splint inserts inserts_speaker collar"
 
 # export_stl <file prefix> <parts...>: print_<part> -> mechanical/stl/spit_<prefix><part>.stl, in parallel; fails on WARNING / ERROR

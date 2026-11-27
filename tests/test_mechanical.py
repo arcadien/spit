@@ -45,6 +45,7 @@ def test_plat_mech_chargeport_001_charge_port_geometry_asserts_hold(model):
 def test_plat_mech_pivot_001_teardrop_bores_sized_from_tube_test3(model):
     # Given the evaluated model
     values, warnings = model
+    # When reading the tube parameters and the pivot cut
     # Then the tube and its two clearances are the measured ones
     assert values == {'tube_od': 7.93, 'tube_glue_clr': 0.07, 'tube_run_clr': 0.12}
     # And every pivot bore is a teardrop (pivot_cut cuts with xtear only)

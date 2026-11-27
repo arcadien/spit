@@ -1,3 +1,4 @@
+<!-- @req PERF-POWER-PATH-001 -->
 # Bench test PERF-POWER-PATH-001 — power-path voltage drop
 
 Requirement: [PERF-POWER-PATH-001](../../requirements/performance.md#perf-power-path-001). Manual test, run at bring-up steps **3.2** (drops) and **3.4** (charge current, cells in) ([bring-up.md](bring-up.md)); add a line to *Results* every time it is run.
@@ -22,7 +23,7 @@ Requirement: [PERF-POWER-PATH-001](../../requirements/performance.md#perf-power-
 ## Pass criteria
 - On battery: drop ≤ 0.10 V. A 0.5–0.7 V drop fails: Q1 runs on its body diode (R1 missing or wrong, or D1 leaking): fix it before going on.
 - On the supply: drop ≤ 0.50 V.
-- Step 3: cell current = the R_PROG value ± 10 % (0.45–0.55 A with 2.4 kΩ). Clearly more (~1 A) means Q1 is reversed: its body diode charges the cell from VUSB around the charger.
+- Step 3: cell current = the R_PROG value ± 10 % (0.90–1.10 A with 1.2 kΩ). Clearly more (well over 1.1 A, up to the supply limit) means Q1 is reversed: its body diode charges the cell from VUSB around the charger.
 
 ## Results
 | Date | Commit / build | Drop on battery | Drop on supply | Cell current on mains | Pass | By | Notes |

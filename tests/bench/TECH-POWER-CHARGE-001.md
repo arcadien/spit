@@ -1,3 +1,4 @@
+<!-- @req TECH-POWER-CHARGE-001 -->
 # Bench test TECH-POWER-CHARGE-001 — CC/CV charge ending at 4.20 V
 
 Requirement: [TECH-POWER-CHARGE-001](../../requirements/technical.md#tech-power-charge-001). Manual test, run at bring-up step **3.1** ([bring-up.md](bring-up.md)); add a line to *Results* every time it is run.

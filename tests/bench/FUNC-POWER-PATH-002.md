@@ -1,3 +1,4 @@
+<!-- @req FUNC-POWER-PATH-002 -->
 # Bench test FUNC-POWER-PATH-002 — plugging or unplugging the supply does not drop the system rail
 
 Requirement: [FUNC-POWER-PATH-002](../../requirements/functional.md#func-power-path-002). Manual test, run at bring-up step **3.4** ([bring-up.md](bring-up.md)); add a line to *Results* every time it is run.

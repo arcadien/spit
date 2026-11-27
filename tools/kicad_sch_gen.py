@@ -299,7 +299,7 @@ place("Device:R", "R1", "4.7k", 30.48, 46.99, {"1": "VUSB", "2": "GND"})
 mod(usb, usbh, "J1", "USB charging socket", 22.86, 80.01, {"VBUS": "VUSB", "GND": "GND"})
 place("Device:R", "R15", "68k", 40.64, 46.99, {"1": "VUSB", "2": "USB_DET"})
 place("Device:R", "R16", "100k", 40.64, 62.23, {"1": "USB_DET", "2": "GND"})
-mod(tp, tph, "U1", "TP4056 + DW01, R_PROG 2,4k", 73.66, PATH + 7.62,
+mod(tp, tph, "U1", "TP4056 + DW01, R_PROG 1,2k", 73.66, PATH + 7.62,
     {"IN+": "VUSB", "IN-": "GND", "OUT+": "OUTP", "OUT-": "GND", "B+": "BAT+", "B-": "BAT-"})
 place("Device:Q_PMOS", "Q1", "AO3401A", 101.6, PATH - 2.54, {"D": "OUTP", "G": "VUSB", "S": "VPATH"}, rot=90, mirror="x",
       txt=((95.25, 48.26), (101.6, 60.96)))

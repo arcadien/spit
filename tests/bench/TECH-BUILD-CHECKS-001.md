@@ -1,3 +1,4 @@
+<!-- @req TECH-BUILD-CHECKS-001 -->
 # Manual test TECH-BUILD-CHECKS-001 — fast checks on commit, slow on push, CI gate on main
 
 Requirement: [TECH-BUILD-CHECKS-001](../../requirements/technical.md#tech-build-checks-001). Manual test of the check

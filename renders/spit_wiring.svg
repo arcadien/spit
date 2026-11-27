@@ -97,7 +97,7 @@
 <rect x="95.8" y="112.5" width="26" height="1.6" fill="#f6d5c6" stroke="#7b858a" stroke-width="0.25"></rect>
 <rect x="110.8" y="109.19999999999999" width="7" height="3.3" fill="#d3d9d4" stroke="#7b858a" stroke-width="0.25"></rect>
 <text x="104.8" y="104.6" font-size="1.7" text-anchor="middle" class="t h" dominant-baseline="middle">TP4056 + DW01</text>
-<text x="104.8" y="107.4" font-size="1.2" text-anchor="middle" class="t m" dominant-baseline="middle">D3 + C9 · R_PROG 2.4 k</text>
+<text x="104.8" y="107.4" font-size="1.2" text-anchor="middle" class="t m" dominant-baseline="middle">D3 + C9 · R_PROG 1.2 k</text>
 <rect x="95.5" y="77.6" width="26.6" height="1.6" fill="#f6d5c6" stroke="#7b858a" stroke-width="0.25"></rect>
 <rect x="103.8" y="71.6" width="10" height="6" fill="#d3d9d4" stroke="#7b858a" stroke-width="0.25"></rect>
 <text x="108.8" y="68" font-size="1.6" text-anchor="middle" class="t h" dominant-baseline="middle">power path</text>

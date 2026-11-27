@@ -10,7 +10,7 @@ and the harness guide [spit_harness.html](spit_harness.html). Requirements: `req
 
 | Ref | Part | Why / where |
 |---|---|---|
-| U1 | TP4056 + DW01 + FS8205A | 0.5 A charge: its R_PROG (1.2 k, "122") is replaced by 2.4 k ("242"); at 1 A it would dissipate 1–1.8 W in the closed leg. Cell protection. |
+| U1 | TP4056 + DW01 + FS8205A | 1 A charge: factory R_PROG (1.2 k, "122") kept until E-M8; it dissipates 1–1.8 W in the closed leg, so a wall > 45 °C swaps it for 2.4 k ("242", 0.5 A). Cell protection. |
 | BT1, BT2 | 18650, in parallel | same model, voltages equal within ±0.05 V before joining them; each cell comes through its XH connector (X12 left, X16 right), joined on the TP4056 B+ / B− pads |
 | F1, F2 | PPTC 30 V, 1.6 A hold (~3.2 A trip), XF160 | on the + of each cell, right after the + plate; standing on the inner front wall in front of each cell (15 mm wide: too wide for the top shelf) |
 | J1 | micro-USB breakout (`usbb` in the model) | the charge port, at the heel of the left leg; its VBUS / GND go to the TP4056 IN pads |
@@ -75,27 +75,27 @@ TP4056 OUT+ (cells)   ──► AO3401A P-MOSFET Q1 (D → S) ──┘
                            gate → IN+, R1 4.7 kΩ gate → GND
 ```
 
-- The switch sits after the merge: off = robot off, charging still works. Use a 5 V ≥ 2 A charger (0.5 A charge + up to
+- The switch sits after the merge: off = robot off, charging still works. Use a 5 V ≥ 2 A charger (1 A charge + up to
   ~1 A for the robot on mains: a PC port is not enough).
 - The battery is read on the cells, not on VSYS: on mains VSYS is the USB rail (~4.7 V) and says nothing about the
   battery. B− needs no wire (it differs from GND only by the DW01 switches, < 50 mV).
 
 ### Battery thresholds
 
-Defaults of the configuration constants of [CONF-POWER-THRESH-001](../requirements/configuration.md#conf-power-thresh-001)
-(used by FUNC-POWER-MONITOR-002, FUNC-POWER-CUTOFF-001 / 002, FUNC-POWER-DETECT-002), from the cell datasheet and the
-TPS63020 input range; the bench measurements may move them (record the measured value in
+Why each default of the configuration constants of [CONF-POWER-THRESH-001](../requirements/configuration.md#conf-power-thresh-001)
+(the values are there; used by FUNC-POWER-MONITOR-002, FUNC-POWER-CUTOFF-001 / 002, FUNC-POWER-DETECT-002): from the
+cell datasheet and the TPS63020 input range; the bench measurements may move them (record the measured value in
 [measurements.md](measurements.md)).
 
-| Constant | Default | Why |
-|---|---|---|
-| Level bounds fed / peckish / hungry | 3.90 / 3.70 / 3.50 V | hunger levels; to check against the cells' discharge on the bench |
-| Cut-off (empty) | 3.30 V | ~5–10 % left (*Sleep and wake-up*); the TPS63020 holds 3.3 V down to ~2.5 V in, so the cut-off only spares the cells |
-| No-battery limit | 2.50 V | GPIO1 < 1.25 V: no cells, the S3 runs from a PC's USB: the cut-off is ignored |
-| Averaging window | 60 s | longer than any Wi-Fi / amplifier peak: the only hysteresis of the levels |
-| Charge full | peak ≥ 4.10 V, then 20 mV below the peak | end of charge deduced from B+ while USB_DET stays high (*Signals*; audit D5) |
-| Empty-lockout release | 3.50 V | = the hungry bound: the robot wakes up hungry, not starving |
-| Lockout re-check interval | 10 min | timer wake on the supply only; no wake on battery alone |
+| Constant | Why |
+|---|---|
+| Level bounds fed / peckish / hungry | hunger levels; to check against the cells' discharge on the bench |
+| Cut-off (empty) | ~5–10 % left (*Sleep and wake-up*); the TPS63020 holds 3.3 V down to ~2.5 V in, so the cut-off only spares the cells |
+| No-battery limit | GPIO1 < 1.25 V: no cells, the S3 runs from a PC's USB: the cut-off is ignored |
+| Averaging window | longer than any Wi-Fi / amplifier peak: the only hysteresis of the levels |
+| Charge full | end of charge deduced from B+ while USB_DET stays high (*Signals*; audit D5) |
+| Empty-lockout release | = the hungry bound: the robot wakes up hungry, not starving |
+| Lockout re-check interval | timer wake on the supply only; no wake on battery alone |
 
 ## Signals
 

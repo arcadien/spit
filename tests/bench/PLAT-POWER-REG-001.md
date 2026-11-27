@@ -1,3 +1,4 @@
+<!-- @req PLAT-POWER-REG-001 -->
 # Bench test PLAT-POWER-REG-001 — TPS63020 module output and idle current
 
 Requirement: [PLAT-POWER-REG-001](../../requirements/platform.md#plat-power-reg-001). Manual test, run at bring-up step **2 and 3.5** ([bring-up.md](bring-up.md)); add a line to *Results* every time it is run.

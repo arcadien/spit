@@ -13,7 +13,7 @@ cells in the legs. Model: OpenSCAD `mechanical/scad/spit.scad`, fully parametric
 | Screens | 2 × 1.3" IPS 240×240 ST7789 with CS (square) |
 | Sound | MAX98357A I2S amplifier + speaker behind the lower black panel; INMP441 microphone |
 | Sensors | ADXL345 accelerometer, AM312 motion sensor, BME280 weather sensor, DS3231 clock, microSD |
-| Power | 2 × 18650 in parallel, one protected TP4056 (0.5 A), power path for mains use, TPS63020 3.3 V buck-boost |
+| Power | 2 × 18650 in parallel, one protected TP4056 (1 A), power path for mains use, TPS63020 3.3 V buck-boost |
 | Joints | brass tubes 8 / 7 mm at the top of each joint, wires inside, a detent click every 15° |
 
 Lying face down, lids off (`part="open"`): pivots and screens at the top of the image, cells at the bottom of the legs.
@@ -179,7 +179,7 @@ crisp fine lines / braille / text, hides layer lines), **matte black PLA** for t
   joint (teardrop hole 8.00), turning in the right-hand one (teardrop hole 8.05, PLAT-MECH-PIVOT-001) on a Ø16 bearing ring with 2 detent bumps; 24 dimples on the fixed side
   → a click every 15°. A printed collar (Ø13 × 2, `collar`) glued on the tube inside the turning column holds the joint
   together; the tube sticks out 0.5 past it (`tube_over`). Bosses Ø14 × 5 inside the walls; nothing else at that height.
-- Swinging back and forth is fine; endless rotation would need a Ø12.5 slip ring.
+- Swinging back and forth over ±45° is fine (FUNC-MECH-JOINT-001); endless rotation would need a Ø12.5 slip ring.
 
 ## Assembly order
 

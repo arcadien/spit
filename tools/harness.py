@@ -95,7 +95,7 @@ EXTRA = [
 STEPS = [
     (1, 'Power block, on the bench', 'left leg: TP4056, power-path board, TPS63020 soldered together',
      ['Power-path board: parts, bridges and GND bus per renders/spit_board_power.svg (Q1 / Q5 with wire-wrap wire).',
-      'TP4056: R_PROG replaced by 2.4 k, then tested alone: 3.7 V bench supply on B+ / B−, current < 10 µA. Polarities: C9 + on IN+, D3 band (cathode) on IN+ (reversed, it shorts the 5 V). TPS63020: EN tied to VIN, PS/SYNC to GND.',
+      'TP4056: factory R_PROG 1.2 k checked, then tested alone: 3.7 V bench supply on B+ / B−, current < 10 µA. Polarities: C9 + on IN+, D3 band (cathode) on IN+ (reversed, it shorts the 5 V). TPS63020: EN tied to VIN, PS/SYNC to GND.',
       'Crowded pads (joints ≥ 0.65 mm from the board end): splice 1 cm before the pad the two VUSB wires of IN+ (to X10 and to the power-path board), the two B+ (to X12 and X16, with the B+ sense wire to the power-path board) and the two B−: a single conductor per pad, next to C9 / D3.',
       'Solder the wires below (4–5 cm loops between the three boards), then crimp the XH contacts and slide them into X10, X12, X13 and X14.',
       'X12 and X16 on the block side (M): while unplugged, capped with an empty female XH housing. Their pins carry B+ / B− as soon as a cell is plugged in, until step 7.'],

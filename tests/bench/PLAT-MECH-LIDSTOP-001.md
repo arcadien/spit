@@ -1,3 +1,4 @@
+<!-- @req PLAT-MECH-LIDSTOP-001 -->
 # Bench test PLAT-MECH-LIDSTOP-001 — lids stiff between their supports
 
 Requirement: [PLAT-MECH-LIDSTOP-001](../../requirements/platform.md#plat-mech-lidstop-001), parent

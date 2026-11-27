@@ -1,3 +1,4 @@
+<!-- @req PERF-POWER-REG-002 -->
 # Bench test PERF-POWER-REG-002 — 3.3 V rail under Wi-Fi and audio load transients
 
 Requirement: [PERF-POWER-REG-002](../../requirements/performance.md#perf-power-reg-002). Manual test, run at bring-up step **3.8** ([bring-up.md](bring-up.md)); add a line to *Results* every time it is run.
