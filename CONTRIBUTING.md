@@ -24,7 +24,7 @@ Every change starts from a requirement in `requirements/` (see the README, *Requ
 2. **Tests** where they apply (firmware: Unity, tag `// req: <ID>`; tools: pytest, `@pytest.mark.req('<ID>')`), commit
    `test(<ID>): …`.
 3. **Change**, commit `<feat|tech|perf|ui|conf|fix>(<ID>): …`. Run `make hook` once: the `commit-msg` hook refuses a
-   commit that touches `mechanical/` or `hardware/` without a validated requirement ID, the `pre-commit` hook runs
+   commit that touches `mechanical/` or `hardware/` without a validated requirement ID, and, when the RBD plugin is installed, one that touches a plan file (`.rbd/plan-files.yml`) without `plan:` or its accepted prefix (`req(ID):` for `requirements/*.md`), the `pre-commit` hook runs
    the fast checks (model, ERC, docs: seconds), the `pre-push` hook the slow ones (STL export, renders, Orca project meshes). The CI job
    `check` (model, STL, ERC, docs) must pass before a pull request is merged into main.
 

@@ -6,6 +6,10 @@
 set -uo pipefail
 cd "$(git rev-parse --show-toplevel)"
 [ -f "$(git rev-parse --git-dir)/MERGE_HEAD" ] && exit 0
+# RBD plugin plan file gate (TECH-BUILD-CHECKS-001): a commit touching a plan file needs plan: or an accepted prefix;
+# skipped when the plugin is not installed (manual workflow without the assistant)
+gate=$(ls -d "$HOME"/.claude/plugins/cache/*/rbd/*/hooks/rbd-plan-file-check.sh 2>/dev/null | sort -V | tail -1)
+if [ -n "$gate" ]; then bash "$gate" "$1" || exit 1; fi
 files=$(git diff --cached --name-only | grep -E '^(mechanical|hardware)/' | grep -v -x 'hardware/measurements.md' || true)
 [ -z "$files" ] && exit 0
 subject=$(grep -v '^#' "$1" | head -1)
