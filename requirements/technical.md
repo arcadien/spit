@@ -191,7 +191,7 @@
 
 **Dependencies:** none
 
-**Description:** Each board lying flat in a leg (`flat_slot`: microSD reader, TP4056, power-path board, buck-boost) slides into its grooves from the lid side and is then located without glue: total side play (x) ≤ 1 mm, front edge against the solid stop in front of its grooves, held in z by its grooves or by a lid tab. Acceptance (pytest): the model computes the side play of each flat board and prints no WARNING (play > 1 mm warns); print: each board slides in without forcing and does not move sideways by more than 1 mm.
+**Description:** Each board lying flat in a leg (`flat_slot`: microSD reader, TP4056, power-path board, buck-boost) slides into its grooves from the lid side and is then located without glue: total side play (x) ≤ 1 mm, front edge against the solid stop in front of its grooves, held in z by its grooves or by a lid tab. Each board slides in without forcing.
 
 ### TECH-MECH-LID-001
 
@@ -201,4 +201,4 @@
 
 **Dependencies:** none
 
-**Description:** No lid (1.6 mm plate screwed onto the back of a column) has more than 30 mm along the column without a support under it (print feedback 2026-11-21: the left leg lid flexed over the battery bay, its screw rows 77 mm apart). A support is a screw post, a lid stop standing on the column walls, a lid tab or rib bearing on a board (≤ 0.2 mm play), or a flat board whose back edge sits ≤ 0.3 mm under the lid. The stops take no room needed by a module, a wire or a lid tab, and add no overhang over 45° when the column prints front face down. Acceptance (pytest): the model is clean; it lists the lid supports of each column and warns when a gap between them, or from a lid end to its first support, exceeds 30 mm; print: a thumb press on each lid between its supports gives no visible flex.
+**Description:** No lid (1.6 mm plate screwed onto the back of a column) has more than 30 mm along the column without a support under it (print feedback 2026-11-21: the left leg lid flexed over the battery bay, its screw rows 77 mm apart). A support is a screw post, a lid stop standing on the column walls, a lid tab or rib bearing on a board (≤ 0.2 mm play), or a flat board whose back edge sits ≤ 0.3 mm under the lid. The stops take no room needed by a module, a wire or a lid tab, and add no overhang over 45° when the column prints front face down. The 30 mm also holds from a lid end to its first support. A thumb press on a lid between its supports gives no visible flex.
